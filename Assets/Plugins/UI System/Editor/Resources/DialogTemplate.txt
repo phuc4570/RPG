@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public class #SCRIPTNAME# : UIView
+{
+#region Static Method
+	public static #SCRIPTNAME# Show(params object[] @params) => DialogController.Ins.Show(DialogDefine.#ID#, @params) as #SCRIPTNAME#;
+#endregion
+
+	protected override void OnShow()
+    {
+        base.OnShow();
+	}
+
+	protected override void OnHide()
+    {
+        base.OnHide();
+	}
+}

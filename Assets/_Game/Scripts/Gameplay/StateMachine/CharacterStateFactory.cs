@@ -2,11 +2,14 @@ using UnityEngine;
 
 public enum CharacterStateType
 {
-    Idle            = 0,
-    Moving          = 1,
-    Block           = 2,
-    BlockIdle       = 3,  
-    Dodge           = 4
+    Idle                = 0,
+    Moving              = 1,
+    Block               = 2,
+    BlockIdle           = 3,  
+    Dodge               = 4,
+    LightAttack         = 5,
+    HeavyAttackCharge   = 6,
+    HeavyAttack  = 7,
 }
 
 public class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> where T : Character

@@ -14,6 +14,7 @@ public class MainCharacterIdleState : CharacterIdleState<MainCharacter>
         entity.MainCharacterMovementController.StopMovement();
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
+        mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;
     }
 
     public override void Update()
@@ -30,6 +31,7 @@ public class MainCharacterIdleState : CharacterIdleState<MainCharacter>
         base.Exit();
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed -= HandleDodgePerformed;
+        mainCharacterInputReader.OnLightAttackPerformed -= HandleLightAttackPerformed;
     }
 
     private void HandleBlockPerformed(bool isBlocking)
@@ -43,5 +45,10 @@ public class MainCharacterIdleState : CharacterIdleState<MainCharacter>
     private void HandleDodgePerformed()
     {
         entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Dodge));
+    }
+
+    private void HandleLightAttackPerformed()
+    {
+        entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
     }
 }

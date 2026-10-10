@@ -29,6 +29,22 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_Dodge();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
+            case CharacterAnimationState.LightAttack1:
+                PlayAnimation_Attack1();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+            case CharacterAnimationState.LightAttack2:
+                PlayAnimation_Attack2();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+            case CharacterAnimationState.LightAttack3:
+                PlayAnimation_Attack3();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+            case CharacterAnimationState.HeavyAttack:
+                PlayAnimation_HeavyAttack();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
         }
     }
 
@@ -55,6 +71,26 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
     protected virtual void PlayAnimation_Dodge()
     {
         animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DodgeHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Attack1()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack1Hash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Attack2()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack2Hash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Attack3()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack3Hash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_HeavyAttack()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HeavyAttackHash, 0.05f);
     }
 
     #endregion

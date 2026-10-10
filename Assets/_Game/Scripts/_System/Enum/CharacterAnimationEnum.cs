@@ -7,4 +7,8 @@ public enum CharacterAnimationState
     Dodge = 500,
     Hurt = 600,
     Dead = 700,
+    LightAttack1 = 800,
+    LightAttack2 = 900,
+    LightAttack3 = 1000,
+    HeavyAttack = 1100,
 }

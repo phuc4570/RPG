@@ -2,16 +2,22 @@ using UnityEngine;
 
 public class MainCharacterDodgeState : EntityState<MainCharacter>
 {
-    private float dodgeDuration = 0.5f;
+    private const float dodgeDuration = 0.5f;
     private float dodgeTimer = 0f;
 
-    public MainCharacterDodgeState(MainCharacter character) : base(character)
-    {
+    private bool isBlockPerformed = false;
 
+    private MainCharacterInputReader mainCharacterInputReader;
+
+    public MainCharacterDodgeState(MainCharacter mainCharacter) : base(mainCharacter)
+    {
+        this.mainCharacterInputReader = mainCharacter.MainCharacterInputReader;
     }
 
     public override void Enter()
     {
+        Vector2 input = mainCharacterInputReader.MoveInput;
+        entity.Direction = input.normalized;
         entity.IsInvincible = true;
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementSpeed);
         entity.MainCharacterMovementController.ApplyDodgeImpulse(entity.Direction, entity.DodgeForce);
@@ -20,6 +26,9 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         //{
         //    TriggerPerfectDodge();
         //}
+        isBlockPerformed = mainCharacterInputReader.IsBlocking;
+
+        mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
 
     public override void Update()
@@ -28,7 +37,14 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
         if (dodgeTimer >= dodgeDuration)
         {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+            if (isBlockPerformed)
+            {
+                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.BlockIdle));
+            }
+            else
+            {
+                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+            }
         }
     }
 
@@ -40,6 +56,8 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     public override void Exit()
     {
         entity.IsInvincible = false;
+
+        mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }
 
     //private void TriggerPerfectDodge()
@@ -52,4 +70,9 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     //    entity.VFXController.PlayPerfectDodgeVFX();
     //    entity.AudioController.PlayPerfectDodgeSFX();
     //}
+
+    private void HandleBlockPerformed(bool isBlocking)
+    {
+        isBlockPerformed = isBlocking;
+    }
 }

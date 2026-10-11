@@ -45,6 +45,14 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_HeavyAttack();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
+            case CharacterAnimationState.Hurt:
+                PlayAnimation_Hurt();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+            case CharacterAnimationState.Dead:
+                PlayAnimation_Dead();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
         }
     }
 
@@ -91,6 +99,16 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
     protected virtual void PlayAnimation_HeavyAttack()
     {
         animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HeavyAttackHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Hurt()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HurtHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Dead()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DeadHash, 0.05f);
     }
 
     #endregion

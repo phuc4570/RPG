@@ -11,4 +11,6 @@ public class CharacterAnimationPropertyConfig
     public static readonly int LightAttack2Hash = Animator.StringToHash("LightAttack2");
     public static readonly int LightAttack3Hash = Animator.StringToHash("LightAttack3");
     public static readonly int HeavyAttackHash = Animator.StringToHash("HeavyAttack");
+    public static readonly int HurtHash = Animator.StringToHash("Hurt");
+    public static readonly int DeadHash = Animator.StringToHash("Dead");
 }

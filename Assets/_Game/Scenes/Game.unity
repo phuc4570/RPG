@@ -756,6 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1257640355}
   - component: {fileID: 1257640357}
+  - component: {fileID: 1257640361}
   - component: {fileID: 1257640359}
   - component: {fileID: 1257640358}
   - component: {fileID: 1257640360}
@@ -849,6 +850,7 @@ MonoBehaviour:
   animationController: {fileID: 1257640360}
   mainCharacterInputReader: {fileID: 1257640358}
   mainCharacterMovementController: {fileID: 1257640359}
+  mainCharacterFocusSystem: {fileID: 1257640361}
 --- !u!114 &1257640358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,6 +890,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationController
   animator: {fileID: 1257640356}
+--- !u!114 &1257640361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257640353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8966cacd0a07d0445ae0832f7ac8102d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainCharacterFocusSystem
 --- !u!1 &1416574955
 GameObject:
   m_ObjectHideFlags: 0

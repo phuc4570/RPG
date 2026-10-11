@@ -6,11 +6,13 @@ public class MainCharacter : Character
     #region References
     [SerializeField] private MainCharacterInputReader mainCharacterInputReader;
     [SerializeField] private MainCharacterMovementController mainCharacterMovementController;
+    [SerializeField] private MainCharacterFocusSystem mainCharacterFocusSystem;
     #endregion
 
     #region Public Properties
     public MainCharacterInputReader MainCharacterInputReader => mainCharacterInputReader;
     public MainCharacterMovementController MainCharacterMovementController => mainCharacterMovementController;
+    public MainCharacterFocusSystem MainCharacterFocusSystem => mainCharacterFocusSystem;
     public bool IsBlocking { get; set; }
     public bool IsInvincible { get; set; }
     public float DodgeForce { get; set; }

@@ -1,16 +1,30 @@
 using UnityEngine;
 
-public class CharacterDeadState : MonoBehaviour
+public class CharacterDeadState<T> : EntityState<T> where T : Character
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public CharacterDeadState(T character) : base(character)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Dead, entity.MovementSpeed);
+        //entity.DisableCharacter();
+    }
+
+    public override void Update()
+    {
+
+    }
+
+    public override void FixedUpdate()
+    {
+
+    }
+
+    public override void Exit()
+    {
+
     }
 }

@@ -15,8 +15,10 @@ public class MainCharacterStateFactory : CharacterStateFactory<MainCharacter>
         RegisterState(CharacterStateType.BlockIdle, new MainCharacterBlockIdleState(entity));
         RegisterState(CharacterStateType.Dodge, new MainCharacterDodgeState(entity));
         RegisterState(CharacterStateType.LightAttack, new MainCharacterLightAttackState(entity));
-        //RegisterState(CharacterStateType.HeavyAttackCharge, new MainCharacterHeavyAttackChargeState(entity));
-        //RegisterState(CharacterStateType.HeavyAttack, new MainCharacterHeavyAttackState(entity));
+        RegisterState(CharacterStateType.HeavyAttackCharge, new MainCharacterHeavyAttackChargeState(entity));
+        RegisterState(CharacterStateType.HeavyAttack, new MainCharacterHeavyAttackState(entity));
+        RegisterState(CharacterStateType.Hurt, new MainCharacterHurtState(entity));
+        RegisterState(CharacterStateType.Dead, new MainCharacterDeadState(entity));
         IsStagesRegistered = true;
     }
 }

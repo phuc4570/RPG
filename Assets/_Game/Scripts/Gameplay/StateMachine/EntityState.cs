@@ -9,9 +9,9 @@ public abstract class EntityState<T> : IState where T: Entity
     }
     public abstract void Enter();
 
-    public abstract void Update();
+    public abstract void Update(float deltaTime);
 
-    public abstract void FixedUpdate();
+    public abstract void FixedUpdate(float fixedDeltaTime);
 
     public abstract void Exit();
 }

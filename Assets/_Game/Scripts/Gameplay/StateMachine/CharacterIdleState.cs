@@ -12,12 +12,12 @@ public class CharacterIdleState<T> : EntityState<T> where T: Character
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementSpeed);
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
 
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
 
     }

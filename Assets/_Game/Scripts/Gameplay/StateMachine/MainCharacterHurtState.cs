@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
 {
+    private const float hurtDuration = 0.25f;
+    private float hurtTimer = 0f;
     public MainCharacterHurtState(MainCharacter mainCharacter) : base(mainCharacter)
     {
 
@@ -9,25 +11,36 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
 
     public override void Enter()
     {
+        base.Enter();
+        hurtTimer = 0f;
+        entity.MainCharacterMovementController.StopMovement();
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, hurtDuration);
         //entity.SetInvincible(true);
         //GameEvent.RaiseMainCharacterHurt();
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
+        base.Update(deltaTime);
+        hurtTimer += deltaTime;
+        if(hurtTimer >= hurtDuration)
+        {
+            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+        }
         //if (entity.AnimationController.IsAnimationFinished())
         //{
         //    entity.StateMachine.ChangeState(new MainCharacterIdleState(entity));
         //}
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
-
+        base.FixedUpdate(fixedDeltaTime);
     }
 
     public override void Exit()
     {
+        base.Exit();
         //entity.SetInvincible(false);
     }
 }

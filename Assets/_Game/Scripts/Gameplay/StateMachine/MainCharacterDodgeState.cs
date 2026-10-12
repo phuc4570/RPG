@@ -18,7 +18,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     {
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
-        entity.IsInvincible = true;
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, dodgeDuration);
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementSpeed);
         entity.MainCharacterMovementController.ApplyDodgeImpulse(entity.Direction, entity.DodgeForce);
         dodgeTimer = 0f;
@@ -31,9 +31,9 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        dodgeTimer += Time.deltaTime;
+        dodgeTimer += deltaTime;
 
         if (dodgeTimer >= dodgeDuration)
         {
@@ -48,15 +48,13 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         }
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
 
     }
 
     public override void Exit()
     {
-        entity.IsInvincible = false;
-
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }
 

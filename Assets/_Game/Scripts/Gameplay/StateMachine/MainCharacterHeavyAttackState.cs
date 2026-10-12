@@ -8,6 +8,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
     private bool isAttackPerformed = false;
     private bool isBlockPerformed = false;
     private bool isDodgePerformed = false;
+    private bool isHeavyAttackCharged = false;
 
     private MainCharacterInputReader mainCharacterInputReader;
     public MainCharacterHeavyAttackState(MainCharacter mainCharacter) : base(mainCharacter)
@@ -24,15 +25,18 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         isAttackPerformed = false;
         isBlockPerformed = false;
         isDodgePerformed = false;
+        isHeavyAttackCharged = false;
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;
+        mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
+        mainCharacterInputReader.OnHeavyAttackPerformed += HandleHeavyAttackPerformed;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        timer -= Time.deltaTime;
+        timer -= deltaTime;
         if (timer <= 0f)
         {
             if (isDodgePerformed)
@@ -47,6 +51,10 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
             {
                 entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
             }
+            else if (isHeavyAttackCharged)
+            {
+                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge));
+            }
             else
             {
                 entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
@@ -54,7 +62,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         }
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
 
     }
@@ -64,6 +72,8 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed -= HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed -= HandleLightAttackPerformed;
+        mainCharacterInputReader.OnHeavyAttackCharged -= HandleHeavyAttackCharged;
+        mainCharacterInputReader.OnHeavyAttackPerformed -= HandleHeavyAttackPerformed;
     }
 
     public void SetChargeLevel(int level)
@@ -73,10 +83,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 
     private void HandleBlockPerformed(bool isBlocking)
     {
-        if (isBlocking)
-        {
-            isBlockPerformed = true;
-        }
+        isBlockPerformed = isBlocking;
     }
 
     private void HandleDodgePerformed()
@@ -87,5 +94,15 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
     private void HandleLightAttackPerformed()
     {
         isAttackPerformed = true;
+    }
+
+    private void HandleHeavyAttackCharged()
+    {
+        isHeavyAttackCharged = true;
+    }
+
+    private void HandleHeavyAttackPerformed()
+    {
+        isHeavyAttackCharged = false;
     }
 }

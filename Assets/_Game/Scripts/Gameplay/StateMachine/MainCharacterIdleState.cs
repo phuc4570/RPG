@@ -18,9 +18,9 @@ public class MainCharacterIdleState : CharacterIdleState<MainCharacter>
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        base.Update();
+        base.Update(deltaTime);
         if(mainCharacterInputReader.MoveInput.sqrMagnitude > 0.001f)
         {
             entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Moving));

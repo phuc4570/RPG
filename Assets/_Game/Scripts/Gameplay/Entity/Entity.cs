@@ -11,6 +11,7 @@ public abstract class Entity : MonoBehaviour, ITickable
     public EntityAnimationController AnimationController => animationController;
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
+    public StatusEffectManager StatusEffectManager { get; protected set; }
     private Vector3 leftLocalScale = new Vector3(-1, 1, 1);
     private Vector3 rightLocalScale = new Vector3(1, 1, 1);
     private Vector2 direction;
@@ -43,6 +44,7 @@ public abstract class Entity : MonoBehaviour, ITickable
     protected virtual void Awake()
     {
         StateMachine = new StateMachine();
+        StatusEffectManager = new StatusEffectManager();
         SetUpStateFactory();
     }
 
@@ -63,15 +65,17 @@ public abstract class Entity : MonoBehaviour, ITickable
 
     protected abstract void SetUpStateFactory();
     public abstract void SetUpProperty();
+    public abstract void SetUpStatusEffect();
     public abstract void SetUpAnimation();
 
     public void CustomUpdate(float deltaTime)
     {
-        StateMachine.CurrentState?.Update();
+        StateMachine.CurrentState?.Update(deltaTime);
+        StatusEffectManager.Update(deltaTime);
     }
 
     public void CustomFixedUpdate(float fixedDeltaTime)
     {
-        StateMachine.CurrentState.FixedUpdate();
+        StateMachine.CurrentState.FixedUpdate(fixedDeltaTime);
     }
 }

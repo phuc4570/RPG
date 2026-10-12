@@ -22,7 +22,7 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
         mainCharacterInputReader.OnHeavyAttackPerformed += HandleHeavyAttackPerformed;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
@@ -55,7 +55,7 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
         }
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
 
     }

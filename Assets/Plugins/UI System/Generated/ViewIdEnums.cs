@@ -3,21 +3,13 @@
 public enum ViewDefine
 {
     None,
-    Empty,
-    Lobby,
-    Login,
-    New,
-    CreatePlayer,
+    Menu,
 }
 
 public enum DialogDefine
 {
     None,
     Setting,
-    Warning,
-    Loading,
-    Notification,
-    ConnectServer,
-    Splash,
+    Pause,
 }
 

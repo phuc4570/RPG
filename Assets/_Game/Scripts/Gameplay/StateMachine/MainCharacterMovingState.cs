@@ -16,9 +16,9 @@ public class MainCharacterMovingState : CharacterMovingState<MainCharacter>
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        base.Update();
+        base.Update(deltaTime);
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
         if (input.sqrMagnitude <= 0.001f)

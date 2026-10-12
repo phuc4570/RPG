@@ -1,0 +1,771 @@
+fileFormatVersion: 2
+guid: 42ba7df6195afed4ea90c74ec5a8617d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8665453415327070997
+    second: arcane_impact_0
+  - first:
+      213: -7951411304407420724
+    second: arcane_impact_1
+  - first:
+      213: -9074669145580116193
+    second: arcane_impact_2
+  - first:
+      213: 7152915854745607127
+    second: arcane_impact_3
+  - first:
+      213: 5346890198686419457
+    second: arcane_impact_4
+  - first:
+      213: 3066627935310699104
+    second: arcane_impact_5
+  - first:
+      213: -2661595359499641698
+    second: arcane_impact_6
+  - first:
+      213: -514038300693226908
+    second: arcane_impact_7
+  - first:
+      213: 1773915182901068523
+    second: arcane_impact_8
+  - first:
+      213: 4842094537366290960
+    second: arcane_impact_9
+  - first:
+      213: 2085197017781279727
+    second: arcane_impact_10
+  - first:
+      213: -2881915782172026333
+    second: arcane_impact_11
+  - first:
+      213: 3791556533581730864
+    second: arcane_impact_12
+  - first:
+      213: 7701004249071058999
+    second: arcane_impact_13
+  - first:
+      213: -2353088580156940366
+    second: arcane_impact_14
+  - first:
+      213: -5996695674723977513
+    second: arcane_impact_15
+  - first:
+      213: -5273875194900782125
+    second: arcane_impact_16
+  - first:
+      213: -2959872387473689650
+    second: arcane_impact_17
+  - first:
+      213: -858435615317200423
+    second: arcane_impact_18
+  - first:
+      213: -7501898074528388600
+    second: arcane_impact_19
+  - first:
+      213: 1644268522895074694
+    second: arcane_impact_20
+  - first:
+      213: 6296212307352201917
+    second: arcane_impact_21
+  - first:
+      213: 2404281068623056231
+    second: arcane_impact_22
+  - first:
+      213: -6602624118651490932
+    second: arcane_impact_23
+  - first:
+      213: -8502697507450409357
+    second: arcane_impact_24
+  - first:
+      213: -9221203799532155093
+    second: arcane_impact_25
+  - first:
+      213: 349461569059885665
+    second: arcane_impact_26
+  - first:
+      213: 947643837069275345
+    second: arcane_impact_27
+  - first:
+      213: 7971315888158196025
+    second: arcane_impact_28
+  - first:
+      213: -8546615608040867619
+    second: arcane_impact_29
+  - first:
+      213: 8634905359135030082
+    second: arcane_impact_30
+  - first:
+      213: -1325802736250853956
+    second: arcane_impact_31
+  - first:
+      213: -3818117787562467008
+    second: arcane_impact_32
+  - first:
+      213: -183999958540609389
+    second: arcane_impact_33
+  - first:
+      213: -758567197636682397
+    second: arcane_impact_34
+  - first:
+      213: 1308250994615161102
+    second: arcane_impact_35
+  - first:
+      213: -8986570291584882428
+    second: arcane_impact_36
+  - first:
+      213: -8679944785897640299
+    second: arcane_impact_37
+  - first:
+      213: -5050202527790361798
+    second: arcane_impact_38
+  - first:
+      213: -4368826603335874529
+    second: arcane_impact_39
+  - first:
+      213: -5943353791232307573
+    second: arcane_impact_40
+  - first:
+      213: 3177693191320006825
+    second: arcane_impact_41
+  - first:
+      213: 8160173209453614014
+    second: arcane_impact_42
+  - first:
+      213: 6059397951759273041
+    second: arcane_impact_43
+  - first:
+      213: -6276130052257748043
+    second: arcane_impact_44
+  - first:
+      213: 1434220372444289396
+    second: arcane_impact_45
+  - first:
+      213: -3222158735126263250
+    second: arcane_impact_46
+  - first:
+      213: -1268941703387320584
+    second: arcane_impact_47
+  - first:
+      213: -7071560110065002846
+    second: arcane_impact_48
+  - first:
+      213: 3108315603959043513
+    second: arcane_impact_49
+  - first:
+      213: 2465994398715666036
+    second: arcane_impact_50
+  - first:
+      213: -5017513153330432318
+    second: arcane_impact_51
+  - first:
+      213: 6339043847119962415
+    second: arcane_impact_52
+  - first:
+      213: 1211169363392165700
+    second: arcane_impact_53
+  - first:
+      213: 3082434395062731928
+    second: arcane_impact_54
+  - first:
+      213: 6292430713351752533
+    second: arcane_impact_55
+  - first:
+      213: 4857265312651529705
+    second: arcane_impact_56
+  - first:
+      213: 8596772165107556389
+    second: arcane_impact_57
+  - first:
+      213: -1932760913566726563
+    second: arcane_impact_58
+  - first:
+      213: 6616391457903714966
+    second: arcane_impact_59
+  - first:
+      213: 8842059675477424829
+    second: arcane_impact_60
+  - first:
+      213: -3539171635745198012
+    second: arcane_impact_61
+  - first:
+      213: -7520521184545527807
+    second: arcane_impact_62
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: arcane_impact_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51bf34e38ffd14870800000000000000
+      internalID: 8665453415327070997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc035c90c89e6a190800000000000000
+      internalID: -7951411304407420724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f17ef73ed7c401280800000000000000
+      internalID: -9074669145580116193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db1f567213444360800000000000000
+      internalID: 7152915854745607127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10ac8b18e48f33a40800000000000000
+      internalID: 5346890198686419457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06adb760cd9de8a20800000000000000
+      internalID: 3066627935310699104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9c123d4f1d101bd0800000000000000
+      internalID: -2661595359499641698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46a1c3693e4cdd8f0800000000000000
+      internalID: -514038300693226908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be28d72d5763e9810800000000000000
+      internalID: 1773915182901068523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_9
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 012c394c353923340800000000000000
+      internalID: 4842094537366290960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feb9e8bc3ab10fc10800000000000000
+      internalID: 2085197017781279727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32a5b0b7dd06108d0800000000000000
+      internalID: -2881915782172026333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_12
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03453f924905e9430800000000000000
+      internalID: 3791556533581730864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_13
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73087a710967fda60800000000000000
+      internalID: 7701004249071058999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_14
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf97be4766285fd0800000000000000
+      internalID: -2353088580156940366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_15
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d6b4f14e0577cca0800000000000000
+      internalID: -5996695674723977513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3e132d37e6fc6b0800000000000000
+      internalID: -5273875194900782125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec3b424eebb6ce6d0800000000000000
+      internalID: -2959872387473689650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: arcane_impact_18
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d179762b593614f0800000000000000
+      internalID: -858435615317200423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5b293225c321eaf4f9be448d296a2c82
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":3.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      arcane_impact_0: 8665453415327070997
+      arcane_impact_1: -7951411304407420724
+      arcane_impact_10: 2085197017781279727
+      arcane_impact_11: -2881915782172026333
+      arcane_impact_12: 3791556533581730864
+      arcane_impact_13: 7701004249071058999
+      arcane_impact_14: -2353088580156940366
+      arcane_impact_15: -5996695674723977513
+      arcane_impact_16: -5273875194900782125
+      arcane_impact_17: -2959872387473689650
+      arcane_impact_18: -858435615317200423
+      arcane_impact_2: -9074669145580116193
+      arcane_impact_3: 7152915854745607127
+      arcane_impact_4: 5346890198686419457
+      arcane_impact_5: 3066627935310699104
+      arcane_impact_6: -2661595359499641698
+      arcane_impact_7: -514038300693226908
+      arcane_impact_8: 1773915182901068523
+      arcane_impact_9: 4842094537366290960
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

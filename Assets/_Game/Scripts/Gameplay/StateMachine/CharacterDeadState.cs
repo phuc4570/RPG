@@ -13,12 +13,12 @@ public class CharacterDeadState<T> : EntityState<T> where T : Character
         //entity.DisableCharacter();
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
 
     }
 
-    public override void FixedUpdate()
+    public override void FixedUpdate(float fixedDeltaTime)
     {
 
     }

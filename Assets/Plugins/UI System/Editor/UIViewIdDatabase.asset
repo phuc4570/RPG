@@ -21,6 +21,7 @@ MonoBehaviour:
     - Login
     - New
     - CreatePlayer
+    - Menu
   - name: 1
     views:
     - None

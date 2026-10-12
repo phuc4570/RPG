@@ -53,5 +53,11 @@ TagManager:
   - name: Wall
     uniqueID: 2255387881
     locked: 0
+  - name: View
+    uniqueID: 3036444241
+    locked: 0
+  - name: Dialog
+    uniqueID: 3766726607
+    locked: 0
   m_RenderingLayers:
   - Default

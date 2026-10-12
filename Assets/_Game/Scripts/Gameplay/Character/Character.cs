@@ -15,6 +15,11 @@ public abstract class Character : Entity
         
     }
 
+    public override void SetUpStatusEffect()
+    {
+        StatusEffectManager.ClearStatusEffects();
+    }   
+
     public override void SetUpAnimation()
     {
         AnimationController.Initialize(CharacterAnimationState.Idle, MovementSpeed);

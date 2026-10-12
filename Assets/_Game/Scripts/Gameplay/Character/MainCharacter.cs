@@ -14,7 +14,6 @@ public class MainCharacter : Character
     public MainCharacterMovementController MainCharacterMovementController => mainCharacterMovementController;
     public MainCharacterFocusSystem MainCharacterFocusSystem => mainCharacterFocusSystem;
     public bool IsBlocking { get; set; }
-    public bool IsInvincible { get; set; }
     public float DodgeForce { get; set; }
     #endregion
 
@@ -29,7 +28,12 @@ public class MainCharacter : Character
         BaseMovementSpeed = 5f;
         Direction = Vector2.right;
         IsBlocking = false;
-        IsInvincible = false;
         DodgeForce = 5f;
+    }
+
+    [Button("Change State")]
+    public void ChangeState(CharacterStateType stateType)
+    {
+        StateMachine.ChangeState(StateFactory.GetState(stateType));
     }
 }

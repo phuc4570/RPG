@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class MenuView : UIView
+public class GameView : UIView
 {
 #region Static Method
-	public static MenuView Show(params object[] @params) => ViewController.Ins.Show(ViewDefine.Menu, @params) as MenuView;
+	public static GameView Show(params object[] @params) => ViewController.Ins.Show(ViewDefine.Game, @params) as GameView;
 #endregion
 
 	protected override void OnShow()

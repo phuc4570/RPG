@@ -22,6 +22,7 @@ MonoBehaviour:
     - New
     - CreatePlayer
     - Menu
+    - Game
   - name: 1
     views:
     - None

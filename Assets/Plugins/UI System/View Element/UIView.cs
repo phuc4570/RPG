@@ -4,7 +4,8 @@ using System;
 public class UIView : MonoBehaviour
 {
     [SerializeField] internal UIViewId viewId;
-    
+
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private ShowHideExecute showAction;
     [SerializeField] private ShowHideExecute hideAction;
     private UIViewAnimator uiViewAnimator;
@@ -28,6 +29,7 @@ public class UIView : MonoBehaviour
     public void UIShow(object[] @params = null) 
     { 
         isShowing = true;
+        canvasGroup.interactable = true;
         this.@params = @params;
         onShow?.Invoke(this);
 
@@ -48,6 +50,7 @@ public class UIView : MonoBehaviour
     public void Hide()
     {
         isShowing = false;
+        canvasGroup.interactable = false;
         onHide?.Invoke(this);
         OnHide();
 
@@ -82,6 +85,18 @@ public class UIView : MonoBehaviour
     protected virtual void OnHide() { }
 
     protected virtual void OnHideFinished() { }
+
+    private void OnValidate()
+    {
+        if(canvasGroup == null)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+        }
+    }
 
     public enum ShowHideExecute
     {

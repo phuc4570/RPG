@@ -20,4 +20,9 @@ public class MainCharacterController : SingletonObject<MainCharacterController>
         mainCharacter.SetUpProperty();
         mainCharacter.SetUpAnimation();
     }
+
+    public void ActiveMainCharacter(bool flag)
+    {
+        mainCharacter.gameObject.SetActive(flag);
+    }
 }

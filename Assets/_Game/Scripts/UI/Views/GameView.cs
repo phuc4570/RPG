@@ -4,7 +4,9 @@ public class GameView : UIView
 {
 #region Static Method
 	public static GameView Show(params object[] @params) => ViewController.Ins.Show(ViewDefine.Game, @params) as GameView;
-#endregion
+	#endregion
+
+	[SerializeField] GameObject uIBossInfoObject;
 
 	protected override void OnShow()
     {
@@ -15,4 +17,6 @@ public class GameView : UIView
     {
         base.OnHide();
 	}
+
+
 }

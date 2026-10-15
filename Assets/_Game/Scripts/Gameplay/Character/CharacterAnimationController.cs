@@ -53,6 +53,10 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_Dead();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
+            case CharacterAnimationState.Healing:
+                PlayAnimation_Heal();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
         }
     }
 
@@ -109,6 +113,11 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
     protected virtual void PlayAnimation_Dead()
     {
         animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DeadHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Heal()
+    {
+        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HealingHash, 0.05f);
     }
 
     #endregion

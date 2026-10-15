@@ -39,6 +39,7 @@ public class MenuView : UIView
     {
         Hide();
         GameEvent.RaiseGameStart();
+        GameView.Show();
     }
 
     private void OnSettingButtonClicked()

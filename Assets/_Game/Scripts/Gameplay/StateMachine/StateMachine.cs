@@ -12,12 +12,17 @@ public class StateMachine
         CurrentState?.Enter();
     }
 
-    public void ChangeState(IState state)
+    public bool ChangeState(IState state)
     {
-        if (state == null) return;
+        if (state == null) return false;
 
-        CurrentState?.Exit();
-        CurrentState = state;
-        CurrentState.Enter();
+        if (state.ValidateCondition())
+        {
+            CurrentState?.Exit();
+            CurrentState = state;
+            CurrentState.Enter();
+            return true;
+        }
+        return false;
     }
 }

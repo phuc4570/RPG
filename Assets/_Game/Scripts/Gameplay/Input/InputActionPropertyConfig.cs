@@ -6,4 +6,5 @@ public class InputActionPropertyConfig
     public static readonly string Block = "Block";
     public static readonly string Dodge = "Dodge";
     public static readonly string Attack = "Attack";
+    public static readonly string Heal = "Heal";
 }

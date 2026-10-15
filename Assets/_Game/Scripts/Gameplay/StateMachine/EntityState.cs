@@ -7,6 +7,12 @@ public abstract class EntityState<T> : IState where T: Entity
     {
         this.entity = entity;
     }
+
+    public virtual bool ValidateCondition()
+    {
+        return true;
+    }
+
     public abstract void Enter();
 
     public abstract void Update(float deltaTime);

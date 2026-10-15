@@ -19,6 +19,7 @@ public class MainCharacterStateFactory : CharacterStateFactory<MainCharacter>
         RegisterState(CharacterStateType.HeavyAttack, new MainCharacterHeavyAttackState(entity));
         RegisterState(CharacterStateType.Hurt, new MainCharacterHurtState(entity));
         RegisterState(CharacterStateType.Dead, new MainCharacterDeadState(entity));
+        RegisterState(CharacterStateType.Healing, new MainCharacterHealingState(entity));
         IsStagesRegistered = true;
     }
 }

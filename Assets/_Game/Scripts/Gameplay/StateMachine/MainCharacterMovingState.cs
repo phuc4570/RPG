@@ -14,6 +14,7 @@ public class MainCharacterMovingState : CharacterMovingState<MainCharacter>
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
+        mainCharacterInputReader.OnHealPerformed += HandleHealPerformed;
     }
 
     public override void Update(float deltaTime)
@@ -36,6 +37,7 @@ public class MainCharacterMovingState : CharacterMovingState<MainCharacter>
         mainCharacterInputReader.OnDodgePerformed -= HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed -= HandleLightAttackPerformed;
         mainCharacterInputReader.OnHeavyAttackCharged -= HandleHeavyAttackCharged;
+        mainCharacterInputReader.OnHealPerformed -= HandleHealPerformed;
     }
 
     private void HandleBlockPerformed(bool isBlocking)
@@ -59,5 +61,10 @@ public class MainCharacterMovingState : CharacterMovingState<MainCharacter>
     private void HandleHeavyAttackCharged()
     {
         entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge));
+    }
+
+    private void HandleHealPerformed()
+    {
+        entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Healing));
     }
 }

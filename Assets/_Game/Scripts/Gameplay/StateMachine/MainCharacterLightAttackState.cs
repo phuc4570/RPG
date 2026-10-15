@@ -4,14 +4,12 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
 {
     private const float comboResetTime = 0.5f;
     private const float stateDuration = 0.4f;
+    private const int staminaCost = 1;
 
     private int comboIdx = 0;
     private float lastAttackTime;
     private float timer;
-    private bool isAttackPerformed = false;
-    private bool isBlockPerformed = false;
-    private bool isDodgePerformed = false;
-    private bool isHeavyAttackCharged = false;
+    private CharacterStateType nextState = CharacterStateType.Idle;
 
     private MainCharacterInputReader mainCharacterInputReader;
 
@@ -19,6 +17,17 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
     {
         this.mainCharacterInputReader = mainCharacter.MainCharacterInputReader;
     }
+
+    public override bool ValidateCondition()
+    {
+        if (entity.StaminaSystem.Value >= staminaCost)
+        {
+            entity.StaminaSystem.AddValue(-staminaCost);
+            return true;
+        }
+        return false;
+    }
+
     public override void Enter()
     {
         Vector2 input = mainCharacterInputReader.MoveInput;
@@ -30,6 +39,7 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         }
 
         entity.MainCharacterMovementController.StopMovement();
+        entity.FocusSystem.IncreaseFocusFill(0.2f);
         switch (comboIdx)
         {
             case 0:
@@ -44,10 +54,9 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         }
 
         timer = stateDuration;
-        isAttackPerformed = false;
-        isBlockPerformed = false;
-        isDodgePerformed = false;
-        isHeavyAttackCharged = false;
+        nextState = CharacterStateType.Idle;
+
+        GameEvent.RaiseVisualAttackFillAnim(stateDuration);
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
@@ -55,6 +64,7 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
         mainCharacterInputReader.OnHeavyAttackPerformed += HandleHeavyAttackPerformed;
     }
+
     public override void Update(float deltaTime)
     {
         timer -= deltaTime;
@@ -63,25 +73,30 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
             lastAttackTime = Time.time;
             comboIdx = (comboIdx + 1) % 3;
 
-            if (isDodgePerformed)
+            IState nextStateInterface;
+            switch (nextState)
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Dodge));
+                case CharacterStateType.Dodge:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Dodge);
+                    break;
+                case CharacterStateType.BlockIdle:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.BlockIdle);
+                    break;
+                case CharacterStateType.LightAttack:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.LightAttack);
+                    break;
+                case CharacterStateType.HeavyAttackCharge:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge);
+                    break;
+                default:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                    break;
             }
-            else if (isBlockPerformed)
+
+            if (!entity.StateMachine.ChangeState(nextStateInterface))
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.BlockIdle));
-            }
-            else if (isAttackPerformed)
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
-            }
-            else if (isHeavyAttackCharged)
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge));
-            }
-            else
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                entity.StateMachine.ChangeState(nextStateInterface);
             }
         }
     }
@@ -102,25 +117,25 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
 
     private void HandleBlockPerformed(bool isBlocking)
     {
-        isBlockPerformed = isBlocking;
+        nextState = isBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
     }
 
     private void HandleDodgePerformed()
     {
-        isDodgePerformed = true;
+        nextState = CharacterStateType.Dodge;
     }
 
     private void HandleLightAttackPerformed()
     {
-        isAttackPerformed = true;
+        nextState = CharacterStateType.LightAttack;
     }
     private void HandleHeavyAttackCharged()
     {
-        isHeavyAttackCharged = true;
+        nextState = CharacterStateType.HeavyAttackCharge;
     }
 
     private void HandleHeavyAttackPerformed()
     {
-        isHeavyAttackCharged = false;
+        nextState = CharacterStateType.Idle;
     }
 }

@@ -13,4 +13,5 @@ public class CharacterAnimationPropertyConfig
     public static readonly int HeavyAttackHash = Animator.StringToHash("HeavyAttack");
     public static readonly int HurtHash = Animator.StringToHash("Hurt");
     public static readonly int DeadHash = Animator.StringToHash("Dead");
+    public static readonly int HealingHash = Animator.StringToHash("Healing");
 }

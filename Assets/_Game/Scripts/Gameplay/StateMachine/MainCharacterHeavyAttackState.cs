@@ -27,6 +27,8 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         isDodgePerformed = false;
         isHeavyAttackCharged = false;
 
+        GameEvent.RaiseVisualAttackFillAnim(stateDuration);
+
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;

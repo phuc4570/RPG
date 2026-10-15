@@ -3,8 +3,11 @@ using UnityEngine;
 public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
 {
     private const float chargeTimePerPoint = 1.25f;
+    private const float staminaCostInterval = 0.25f;
+    private const int staminaCost = 1;
     private float chargeTimer = 0f;
     private int chargePoints = 0;
+    private float staminaTimer = 0f;
 
     private MainCharacterInputReader mainCharacterInputReader;
     public MainCharacterHeavyAttackChargeState(MainCharacter mainCharacter) : base(mainCharacter)
@@ -16,6 +19,7 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
     {
         chargeTimer = 0f;
         chargePoints = 0;
+        staminaTimer = 0f;
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
@@ -43,14 +47,29 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
             }
         }
 
-        chargeTimer += Time.deltaTime;
+        chargeTimer += deltaTime;
 
         if(chargeTimer >= chargeTimePerPoint)
         {
             chargeTimer -= chargeTimePerPoint;
-            if (entity.MainCharacterFocusSystem.ConsumeFocus())
+            if (entity.FocusSystem.ConsumeFocus())
             {
                 chargePoints++;
+            }
+        }
+
+        staminaTimer += deltaTime;
+
+        if(staminaTimer >= staminaCostInterval)
+        {
+            staminaTimer -= staminaCostInterval;
+            if(entity.StaminaSystem.Value >= staminaCost)
+            {
+                entity.StaminaSystem.AddValue(-staminaCost);
+            }
+            if(entity.StaminaSystem.Value == 0)
+            {
+                HandleHeavyAttackPerformed();
             }
         }
     }

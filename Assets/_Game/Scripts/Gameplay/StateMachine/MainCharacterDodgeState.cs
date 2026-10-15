@@ -3,15 +3,26 @@ using UnityEngine;
 public class MainCharacterDodgeState : EntityState<MainCharacter>
 {
     private const float dodgeDuration = 0.5f;
+    private const int staminaCost = 10;
     private float dodgeTimer = 0f;
 
-    private bool isBlockPerformed = false;
+    private CharacterStateType nextState = CharacterStateType.Idle;
 
     private MainCharacterInputReader mainCharacterInputReader;
 
     public MainCharacterDodgeState(MainCharacter mainCharacter) : base(mainCharacter)
     {
         this.mainCharacterInputReader = mainCharacter.MainCharacterInputReader;
+    }
+
+    public override bool ValidateCondition()
+    {
+        if (entity.StaminaSystem.Value >= staminaCost)
+        {
+            entity.StaminaSystem.AddValue(-staminaCost);
+            return true;
+        }
+        return false;
     }
 
     public override void Enter()
@@ -26,7 +37,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         //{
         //    TriggerPerfectDodge();
         //}
-        isBlockPerformed = mainCharacterInputReader.IsBlocking;
+        nextState = CharacterStateType.Idle;
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
@@ -37,13 +48,21 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
         if (dodgeTimer >= dodgeDuration)
         {
-            if (isBlockPerformed)
+            IState nextStateInterface;
+            switch (nextState)
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.BlockIdle));
+                case CharacterStateType.BlockIdle:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.BlockIdle);
+                    break;
+                default:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                    break;
             }
-            else
+
+            if (!entity.StateMachine.ChangeState(nextStateInterface))
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                entity.StateMachine.ChangeState(nextStateInterface);
             }
         }
     }
@@ -71,6 +90,6 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     private void HandleBlockPerformed(bool isBlocking)
     {
-        isBlockPerformed = isBlocking;
+        nextState = isBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
     }
 }

@@ -15,7 +15,6 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
         hurtTimer = 0f;
         entity.MainCharacterMovementController.StopMovement();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, hurtDuration);
-        //entity.SetInvincible(true);
         //GameEvent.RaiseMainCharacterHurt();
     }
 
@@ -27,10 +26,6 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
         {
             entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
         }
-        //if (entity.AnimationController.IsAnimationFinished())
-        //{
-        //    entity.StateMachine.ChangeState(new MainCharacterIdleState(entity));
-        //}
     }
 
     public override void FixedUpdate(float fixedDeltaTime)
@@ -41,6 +36,5 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
     public override void Exit()
     {
         base.Exit();
-        //entity.SetInvincible(false);
     }
 }

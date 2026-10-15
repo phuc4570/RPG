@@ -12,6 +12,7 @@ public abstract class Entity : MonoBehaviour, ITickable
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
     public StatusEffectManager StatusEffectManager { get; protected set; }
+    public BarStatSystem HealthSystem { get; protected set; }
     private Vector3 leftLocalScale = new Vector3(-1, 1, 1);
     private Vector3 rightLocalScale = new Vector3(1, 1, 1);
     private Vector2 direction;
@@ -64,17 +65,18 @@ public abstract class Entity : MonoBehaviour, ITickable
     }
 
     protected abstract void SetUpStateFactory();
+    protected abstract void SetUpBarSystem();
     public abstract void SetUpProperty();
     public abstract void SetUpStatusEffect();
     public abstract void SetUpAnimation();
 
-    public void CustomUpdate(float deltaTime)
+    public virtual void CustomUpdate(float deltaTime)
     {
         StateMachine.CurrentState?.Update(deltaTime);
         StatusEffectManager.Update(deltaTime);
     }
 
-    public void CustomFixedUpdate(float fixedDeltaTime)
+    public virtual void CustomFixedUpdate(float fixedDeltaTime)
     {
         StateMachine.CurrentState.FixedUpdate(fixedDeltaTime);
     }

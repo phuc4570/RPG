@@ -1,33 +1,31 @@
 using UnityEngine;
 
-public class MainCharacterFocusSystem : MonoBehaviour
+public class MainCharacterFocusSystem
 {
-    private const int maxFocusCount = 3;
-    private int focusCount = 0;
+    private const float maxFocusFill = 3f;
+    private float focusFill = 0f;
 
-    public void IncreaseFocus()
+    public void IncreaseFocusFill(float amount)
     {
-        focusCount++;
-        if (focusCount > maxFocusCount)
+        if (focusFill < maxFocusFill)
         {
-            focusCount = maxFocusCount;
+            focusFill = Mathf.Clamp(focusFill + amount, 0, maxFocusFill);
+            UpdateFocusFill();
         }
-        UpdateFocusState();
     }
-
     public bool ConsumeFocus()
     {
-        if (focusCount > 0)
+        if (focusFill >= 1)
         {
-            focusCount--;
-            UpdateFocusState();
+            focusFill = Mathf.Clamp(focusFill - 1, 0, maxFocusFill);
+            UpdateFocusFill();
             return true;
         }
         return false;
     }
 
-    private void UpdateFocusState()
+    private void UpdateFocusFill()
     {
-
+        GameEvent.RaiseVisualFocusFillAnim(focusFill);
     }
 }

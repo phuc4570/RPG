@@ -12,6 +12,7 @@ public class MainCharacterInputReader : MonoBehaviour
     public Action OnLightAttackPerformed;
     public Action OnHeavyAttackCharged;
     public Action OnHeavyAttackPerformed;
+    public Action OnHealPerformed;
 
     public bool IsBlocking { get; private set; }
 
@@ -19,6 +20,7 @@ public class MainCharacterInputReader : MonoBehaviour
     private InputAction blockAction;
     private InputAction dodgeAction;
     private InputAction attackAction;
+    private InputAction healAction;
 
     private void Awake()
     {
@@ -51,6 +53,12 @@ public class MainCharacterInputReader : MonoBehaviour
             attackAction.started += OnAttackStarted;
             attackAction.canceled += OnAttackCanceled;
         }
+
+        healAction = inputActionMap.FindAction(InputActionPropertyConfig.Heal);
+        if (healAction != null)
+        {
+            healAction.performed += OnHeal;
+        }
     }
 
     private void OnMove(CallbackContext ctx) => MoveInput = ctx.ReadValue<Vector2>();
@@ -59,6 +67,7 @@ public class MainCharacterInputReader : MonoBehaviour
         IsBlocking = ctx.ReadValueAsButton();
         OnBlockPerformed?.Invoke(IsBlocking);
     }
+
     private void OnDodge(CallbackContext ctx)
     {
         if (ctx.ReadValueAsButton())
@@ -88,6 +97,14 @@ public class MainCharacterInputReader : MonoBehaviour
         if (ctx.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
         {
             OnHeavyAttackPerformed?.Invoke();
+        }
+    }
+
+    private void OnHeal(CallbackContext ctx)
+    {
+        if (ctx.ReadValueAsButton())
+        {
+            OnHealPerformed?.Invoke();
         }
     }
 }

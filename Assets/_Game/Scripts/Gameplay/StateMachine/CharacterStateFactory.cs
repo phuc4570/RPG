@@ -12,6 +12,7 @@ public enum CharacterStateType
     HeavyAttack         = 7,
     Hurt                = 8,
     Dead                = 9,
+    Healing                = 10,
 }
 
 public class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> where T : Character
@@ -27,6 +28,7 @@ public class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> wher
         RegisterState(CharacterStateType.Moving, new CharacterMovingState<T>(entity));
         RegisterState(CharacterStateType.Hurt, new CharacterHurtState<T>(entity));
         RegisterState(CharacterStateType.Dead, new CharacterDeadState<T>(entity));
+        RegisterState(CharacterStateType.Healing, new CharacterHealingState<T>(entity));
         IsStagesRegistered = true;
     }
 }

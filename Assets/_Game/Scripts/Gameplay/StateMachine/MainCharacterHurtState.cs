@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
 {
-    private const float hurtDuration = 0.25f;
-    private float hurtTimer = 0f;
+    protected override float StateDuration => 0.25f;
     public MainCharacterHurtState(MainCharacter mainCharacter) : base(mainCharacter)
     {
 
@@ -12,20 +11,14 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
     public override void Enter()
     {
         base.Enter();
-        hurtTimer = 0f;
         entity.MainCharacterMovementController.StopMovement();
-        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, hurtDuration);
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, StateDuration);
         //GameEvent.RaiseMainCharacterHurt();
     }
 
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
-        hurtTimer += deltaTime;
-        if(hurtTimer >= hurtDuration)
-        {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
-        }
     }
 
     public override void FixedUpdate(float fixedDeltaTime)

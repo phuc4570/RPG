@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public abstract class BarStatSystem
@@ -33,11 +34,13 @@ public abstract class BarStatSystem
 
     public float PercentageValue => Value * 1.0f / MaxValue;
 
-    public BarStatSystem(int maxValue, int value = -1)
+    public BarStatSystem()
     {
-        MaxValue = maxValue;
-        Value = value != -1 ? value : MaxValue;
+        maxValue = 1;
+        value = 1;
     }
+
+    public abstract void Init(int maxValue, int value = -1);
 
     public virtual void UpdateMaxValue(int value)
     {
@@ -77,11 +80,55 @@ public abstract class BarStatSystem
         UpdateValue(MaxValue);
     }
 
-    public abstract void CustomUpdate(float deltaTime);
+    public virtual void CustomUpdate(float deltaTime)
+    {
 
-    protected abstract void OnUpdateMaxValue();
-    protected abstract void OnUpdateValue();
-    protected abstract void OnValueIsOver();
-    protected abstract void OnAddMaxValue(int value);
-    protected abstract void OnAddValue(int value);
+    }
+
+    protected virtual void OnUpdateMaxValue()
+    {
+
+    }
+
+    protected virtual void OnUpdateValue()
+    {
+
+    }
+
+    protected virtual void OnValueIsOver()
+    {
+
+    }
+
+    protected virtual void OnAddMaxValue(int value)
+    {
+
+    }
+
+    protected virtual void OnAddValue(int value)
+    {
+
+    }
+}
+
+public class BarStatSystem<T> : BarStatSystem where T : Entity
+{
+    protected T Entity { get; }
+
+    public BarStatSystem(T entity)
+    {
+        Entity = entity;
+    }
+
+    public override void Init(int maxValue, int value = -1)
+    {
+        MaxValue = maxValue;
+        Value = value != -1 ? value : MaxValue;
+    }
+
+    protected override void OnUpdateValue()
+    {
+        base.OnUpdateValue();
+        Entity.OnHealthValueUpdated();
+    }
 }

@@ -13,8 +13,8 @@ public class MainCharacter : Character
     public MainCharacterMovementController MainCharacterMovementController => mainCharacterMovementController;
     public bool IsBlocking { get; set; }
     public float DodgeForce { get; set; }
-    public BarStatSystem ManaSystem { get; private set; }
-    public BarStatSystem StaminaSystem { get; private set; }
+    public MainCharacterManaSystem ManaSystem { get; private set; }
+    public MainCharacterStaminaSystem StaminaSystem { get; private set; }
     public MainCharacterFocusSystem FocusSystem { get; private set; }
     public MainCharacterHealingPotion HealingPotion { get; private set; }
     #endregion
@@ -22,25 +22,38 @@ public class MainCharacter : Character
     protected override void SetUpStateFactory()
     {
         StateFactory = new MainCharacterStateFactory(this);
-        StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));
     }
 
     protected override void SetUpBarSystem()
     {
-        HealthSystem = new MainCharacterHealthSystem(100);
-        ManaSystem = new MainCharacterManaSystem(100);
-        StaminaSystem = new MainCharacterStaminaSystem(100);
+        HealthSystem = new MainCharacterHealthSystem(this);
+        ManaSystem = new MainCharacterManaSystem(this);
+        StaminaSystem = new MainCharacterStaminaSystem(this);
         FocusSystem = new MainCharacterFocusSystem();
-        HealingPotion = new MainCharacterHealingPotion(3, 30, this);
+        HealingPotion = new MainCharacterHealingPotion(this);
     }
 
-    public override void SetUpProperty()
+    protected override void InitProperty()
     {
         BaseMovementSpeed = 5f;
         Direction = Vector2.right;
         IsBlocking = false;
         DodgeForce = 5f;
-        SetUpBarSystem();
+
+        BaseAttackDamage = 10;
+    }
+
+    protected override void InitBarSystem()
+    {
+        HealthSystem.Init(100);
+        ManaSystem.Init(60);
+        StaminaSystem.Init(100);
+        HealingPotion.Init(3, 30);
+    }
+
+    public override void DisableEntity()
+    {
+        
     }
 
     public override void CustomUpdate(float deltaTime)
@@ -48,11 +61,5 @@ public class MainCharacter : Character
         base.CustomUpdate(deltaTime);
         StaminaSystem.CustomUpdate(deltaTime);
         ManaSystem.CustomUpdate(deltaTime);
-    }
-
-    [Button("Change State")]
-    public void ChangeState(CharacterStateType stateType)
-    {
-        StateMachine.ChangeState(StateFactory.GetState(stateType));
     }
 }

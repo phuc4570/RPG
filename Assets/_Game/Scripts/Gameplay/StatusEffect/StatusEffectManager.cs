@@ -8,6 +8,7 @@ public class StatusEffectManager
 
     public void AddStatusEffect(StatusEffectType type, float duration, float value = 0f)
     {
+        if (type == StatusEffectType.None) return;
         var existingEffect = activeStatusEffects.Find(e => e.Type == type);
         if (existingEffect != null)
         {

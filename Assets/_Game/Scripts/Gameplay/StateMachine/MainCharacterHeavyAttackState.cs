@@ -3,12 +3,12 @@ using UnityEngine;
 public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 {
     private const float stateDuration = 0.5f;
+    private const float activeFrameStart = 0.275f;
+    private const float activeFrameEnd = 0.425f;
     private int chargeLevel = 0;
     private float timer;
-    private bool isAttackPerformed = false;
-    private bool isBlockPerformed = false;
-    private bool isDodgePerformed = false;
-    private bool isHeavyAttackCharged = false;
+    private bool hasDealtDamage = false;
+    private CharacterStateType nextState = CharacterStateType.Idle;
 
     private MainCharacterInputReader mainCharacterInputReader;
     public MainCharacterHeavyAttackState(MainCharacter mainCharacter) : base(mainCharacter)
@@ -21,11 +21,9 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         entity.MainCharacterMovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementSpeed);
 
-        timer = stateDuration;
-        isAttackPerformed = false;
-        isBlockPerformed = false;
-        isDodgePerformed = false;
-        isHeavyAttackCharged = false;
+        timer = 0f;
+        nextState = CharacterStateType.Idle;
+        hasDealtDamage = false;
 
         GameEvent.RaiseVisualAttackFillAnim(stateDuration);
 
@@ -38,28 +36,39 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 
     public override void Update(float deltaTime)
     {
-        timer -= deltaTime;
-        if (timer <= 0f)
+        timer += deltaTime;
+
+        if (timer >= activeFrameStart && timer <= activeFrameEnd && !hasDealtDamage)
         {
-            if (isDodgePerformed)
+            CheckMeleeHit();
+            hasDealtDamage = true;
+        }
+        if (timer >= stateDuration)
+        {
+            IState nextStateInterface;
+            switch (nextState)
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Dodge));
+                case CharacterStateType.Dodge:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Dodge);
+                    break;
+                case CharacterStateType.BlockIdle:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.BlockIdle);
+                    break;
+                case CharacterStateType.LightAttack:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.LightAttack);
+                    break;
+                case CharacterStateType.HeavyAttackCharge:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge);
+                    break;
+                default:
+                    nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                    break;
             }
-            else if (isBlockPerformed)
+
+            if (!entity.StateMachine.ChangeState(nextStateInterface))
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.BlockIdle));
-            }
-            else if (isAttackPerformed)
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
-            }
-            else if (isHeavyAttackCharged)
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttackCharge));
-            }
-            else
-            {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                nextStateInterface = entity.StateFactory.GetState(CharacterStateType.Idle);
+                entity.StateMachine.ChangeState(nextStateInterface);
             }
         }
     }
@@ -85,26 +94,45 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 
     private void HandleBlockPerformed(bool isBlocking)
     {
-        isBlockPerformed = isBlocking;
+        nextState = isBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
     }
 
     private void HandleDodgePerformed()
     {
-        isDodgePerformed = true;
+        nextState = CharacterStateType.Dodge;
     }
 
     private void HandleLightAttackPerformed()
     {
-        isAttackPerformed = true;
+        nextState = CharacterStateType.LightAttack;
     }
-
     private void HandleHeavyAttackCharged()
     {
-        isHeavyAttackCharged = true;
+        nextState = CharacterStateType.HeavyAttackCharge;
     }
 
     private void HandleHeavyAttackPerformed()
     {
-        isHeavyAttackCharged = false;
+        nextState = CharacterStateType.Idle;
+    }
+
+    private void CheckMeleeHit()
+    {
+        Vector2 dir = entity.Direction;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        Vector2 boxSize = new Vector2(1.5f, 0.8f);
+        Vector2 attackCenter = (Vector2)entity.transform.position + dir * 0.75f + Vector2.up * 0.25f;
+
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.AttackLayerMask);
+
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            if (hitEnemies[i].CompareTag("Hitbox"))
+            {
+                IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
+                damageable?.TakeDamage(entity.AttackDamage * (chargeLevel + 1));
+            }
+        }
     }
 }

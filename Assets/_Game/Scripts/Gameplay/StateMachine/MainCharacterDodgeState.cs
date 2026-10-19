@@ -37,7 +37,9 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         //{
         //    TriggerPerfectDodge();
         //}
-        nextState = CharacterStateType.Idle;
+        nextState = mainCharacterInputReader.IsBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
+
+        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.AttackLayerMaskInLog2, true);
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
@@ -74,6 +76,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public override void Exit()
     {
+        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.AttackLayerMaskInLog2, false);
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }
 

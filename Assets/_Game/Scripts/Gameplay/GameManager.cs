@@ -5,6 +5,7 @@ public class GameManager : SingletonObject<GameManager>
 {
     [SerializeField] private GameObject map;
     [SerializeField] private MainCharacterController mainCharacterController;
+    [SerializeField] private EnemyController enemyController;
 
     protected override void Awake()
     {
@@ -16,5 +17,6 @@ public class GameManager : SingletonObject<GameManager>
     {
         map.SetActive(true);
         mainCharacterController.ActiveMainCharacter(true);
+        enemyController.ActiveEnemy(true);
     }
 }

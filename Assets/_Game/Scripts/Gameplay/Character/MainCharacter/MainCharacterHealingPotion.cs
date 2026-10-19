@@ -46,12 +46,18 @@ public class MainCharacterHealingPotion
 
     private MainCharacter mainCharacter;
 
-    public MainCharacterHealingPotion(int maxValue, int healingValue, MainCharacter mainCharacter)
+    public MainCharacterHealingPotion(MainCharacter mainCharacter)
+    {
+        this.mainCharacter = mainCharacter;
+        maxValue = 1;
+        value = 1;
+    }
+
+    public virtual void Init(int maxValue, int healingValue)
     {
         MaxValue = maxValue;
         Value = MaxValue;
         HealingValue = healingValue;
-        this.mainCharacter = mainCharacter;
     }
 
     public void UpdateMaxValue(int value)

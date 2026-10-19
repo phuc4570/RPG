@@ -9,17 +9,17 @@ public class MainCharacterStateFactory : CharacterStateFactory<MainCharacter>
 
     protected override void RegisterStates()
     {
-        RegisterState(CharacterStateType.Idle, new MainCharacterIdleState(entity));
-        RegisterState(CharacterStateType.Moving, new MainCharacterMovingState(entity));
-        RegisterState(CharacterStateType.Block, new MainCharacterBlockState(entity));
-        RegisterState(CharacterStateType.BlockIdle, new MainCharacterBlockIdleState(entity));
-        RegisterState(CharacterStateType.Dodge, new MainCharacterDodgeState(entity));
-        RegisterState(CharacterStateType.LightAttack, new MainCharacterLightAttackState(entity));
-        RegisterState(CharacterStateType.HeavyAttackCharge, new MainCharacterHeavyAttackChargeState(entity));
-        RegisterState(CharacterStateType.HeavyAttack, new MainCharacterHeavyAttackState(entity));
-        RegisterState(CharacterStateType.Hurt, new MainCharacterHurtState(entity));
-        RegisterState(CharacterStateType.Dead, new MainCharacterDeadState(entity));
-        RegisterState(CharacterStateType.Healing, new MainCharacterHealingState(entity));
+        RegisterState(CharacterStateType.Idle, new MainCharacterIdleState(Entity));
+        RegisterState(CharacterStateType.Moving, new MainCharacterMovingState(Entity));
+        RegisterState(CharacterStateType.Block, new MainCharacterBlockState(Entity));
+        RegisterState(CharacterStateType.BlockIdle, new MainCharacterBlockIdleState(Entity));
+        RegisterState(CharacterStateType.Dodge, new MainCharacterDodgeState(Entity));
+        RegisterState(CharacterStateType.LightAttack, new MainCharacterLightAttackState(Entity));
+        RegisterState(CharacterStateType.HeavyAttackCharge, new MainCharacterHeavyAttackChargeState(Entity));
+        RegisterState(CharacterStateType.HeavyAttack, new MainCharacterHeavyAttackState(Entity));
+        RegisterState(CharacterStateType.Hurt, new MainCharacterHurtState(Entity));
+        RegisterState(CharacterStateType.Dead, new MainCharacterDeadState(Entity));
+        RegisterState(CharacterStateType.Healing, new MainCharacterHealingState(Entity));
         IsStagesRegistered = true;
     }
 }

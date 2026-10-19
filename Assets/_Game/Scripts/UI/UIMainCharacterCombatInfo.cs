@@ -34,6 +34,7 @@ public class UIMainCharacterCombatInfo : MonoBehaviour
 
     private void VisualAttackFillAnim(float duration)
     {
+        attackFillImage.DOKill();
         attackFillImage.fillAmount = 1f;
         attackFillImage.DOFillAmount(0f, duration);
     }

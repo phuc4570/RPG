@@ -15,20 +15,10 @@ public enum CharacterStateType
     Healing                = 10,
 }
 
-public class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> where T : Character
+public abstract class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> where T : Character
 {
     public CharacterStateFactory(T entity) : base(entity)
     {
 
-    }
-
-    protected override void RegisterStates()
-    {
-        RegisterState(CharacterStateType.Idle, new CharacterIdleState<T>(entity));
-        RegisterState(CharacterStateType.Moving, new CharacterMovingState<T>(entity));
-        RegisterState(CharacterStateType.Hurt, new CharacterHurtState<T>(entity));
-        RegisterState(CharacterStateType.Dead, new CharacterDeadState<T>(entity));
-        RegisterState(CharacterStateType.Healing, new CharacterHealingState<T>(entity));
-        IsStagesRegistered = true;
     }
 }

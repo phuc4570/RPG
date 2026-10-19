@@ -5,10 +5,13 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
     private const float comboResetTime = 0.5f;
     private const float stateDuration = 0.4f;
     private const int staminaCost = 1;
+    private const float activeFrameStart = 0.1f;
+    private const float activeFrameEnd = 0.25f;
 
     private int comboIdx = 0;
     private float lastAttackTime;
     private float timer;
+    private bool hasDealtDamage = false;
     private CharacterStateType nextState = CharacterStateType.Idle;
 
     private MainCharacterInputReader mainCharacterInputReader;
@@ -53,8 +56,9 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
                 break;
         }
 
-        timer = stateDuration;
+        timer = 0f;
         nextState = CharacterStateType.Idle;
+        hasDealtDamage = false;
 
         GameEvent.RaiseVisualAttackFillAnim(stateDuration);
 
@@ -67,8 +71,15 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
 
     public override void Update(float deltaTime)
     {
-        timer -= deltaTime;
-        if (timer <= 0f)
+        timer += deltaTime;
+
+        if (timer >= activeFrameStart && timer <= activeFrameEnd && !hasDealtDamage)
+        {
+            CheckMeleeHit();
+            hasDealtDamage = true;
+        }
+
+        if (timer >= stateDuration)
         {
             lastAttackTime = Time.time;
             comboIdx = (comboIdx + 1) % 3;
@@ -137,5 +148,25 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
     private void HandleHeavyAttackPerformed()
     {
         nextState = CharacterStateType.Idle;
+    }
+
+    private void CheckMeleeHit()
+    {
+        Vector2 dir = entity.Direction;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        Vector2 boxSize = new Vector2(1.5f, 0.8f);
+        Vector2 attackCenter = (Vector2)entity.transform.position + dir * 0.75f + Vector2.up * 0.25f;
+
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.AttackLayerMask);
+
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            if (hitEnemies[i].CompareTag("Hitbox"))
+            {
+                IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
+                damageable?.TakeDamage(entity.AttackDamage);
+            }
+        }
     }
 }

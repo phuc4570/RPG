@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MainCharacterHealingState : CharacterHealingState<MainCharacter>
 {
-    private const float healingDuration = 1f;
-    private float healingTimer = 0f;
+    protected override float StateDuration => 1f;
     public MainCharacterHealingState(MainCharacter mainCharacter) : base(mainCharacter)
     {
 
@@ -22,18 +21,12 @@ public class MainCharacterHealingState : CharacterHealingState<MainCharacter>
     public override void Enter()
     {
         base.Enter();
-        healingTimer = 0f;
         entity.MainCharacterMovementController.StopMovement();
     }
 
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
-        healingTimer += deltaTime;
-        if (healingTimer >= healingDuration)
-        {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
-        }
     }
 
     public override void FixedUpdate(float fixedDeltaTime)

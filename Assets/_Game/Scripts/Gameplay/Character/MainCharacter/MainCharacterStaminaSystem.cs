@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainCharacterStaminaSystem : BarStatSystem
+public class MainCharacterStaminaSystem : BarStatSystem<MainCharacter>
 {
     private const float staminaGainInterval = 0.1f;
     private const int staminaGain = 1;
@@ -10,7 +10,7 @@ public class MainCharacterStaminaSystem : BarStatSystem
     private float staminaNotUsingTimer = 0f;
     private bool isStaminaNotUsing = false;
 
-    public MainCharacterStaminaSystem(int maxValue, int value = -1) : base(maxValue, value)
+    public MainCharacterStaminaSystem(MainCharacter mainCharacter) : base(mainCharacter)
     {
 
     }
@@ -40,24 +40,9 @@ public class MainCharacterStaminaSystem : BarStatSystem
         }
     }
 
-    protected override void OnUpdateMaxValue()
-    {
-
-    }
-
     protected override void OnUpdateValue()
     {
         GameEvent.RaiseUpdateMainCharacterStaminaBar(PercentageValue);
-    }
-
-    protected override void OnValueIsOver()
-    {
-
-    }
-
-    protected override void OnAddMaxValue(int value)
-    {
-        
     }
 
     protected override void OnAddValue(int value)

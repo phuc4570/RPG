@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Hitbox
   layers:
   - Default
   - TransparentFX
@@ -38,20 +39,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Ground
     uniqueID: 1373775485
     locked: 0
-  - name: Main Character
-    uniqueID: 3915298503
-    locked: 0
-  - name: Enemy
-    uniqueID: 3198419583
-    locked: 0
-  - name: Wall
-    uniqueID: 2255387881
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: View
     uniqueID: 3036444241

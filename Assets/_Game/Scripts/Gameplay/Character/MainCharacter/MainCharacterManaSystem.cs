@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainCharacterManaSystem : BarStatSystem
+public class MainCharacterManaSystem : BarStatSystem<MainCharacter>
 {
     private const float manaGainInterval = 0.5f;
     private const int manaGain = 1;
@@ -10,7 +10,7 @@ public class MainCharacterManaSystem : BarStatSystem
     private float manaNotUsingTimer = 0f;
     private bool isManaNotUsing = false;
 
-    public MainCharacterManaSystem(int maxValue, int value = -1) : base(maxValue, value)
+    public MainCharacterManaSystem(MainCharacter mainCharacter) : base(mainCharacter)
     {
 
     }
@@ -40,23 +40,9 @@ public class MainCharacterManaSystem : BarStatSystem
         }
     }
 
-    protected override void OnUpdateMaxValue()
-    {
-
-    }
-
     protected override void OnUpdateValue()
     {
         GameEvent.RaiseUpdateMainCharacterManaBar(PercentageValue);
-    }
-
-    protected override void OnValueIsOver()
-    {
-
-    }
-    protected override void OnAddMaxValue(int value)
-    {
-
     }
 
     protected override void OnAddValue(int value)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour, ITickable
+public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 {
     #region References
     [SerializeField] private GameObject rendererObject;
@@ -42,16 +42,24 @@ public abstract class Entity : MonoBehaviour, ITickable
     public float MovementSpeed => BaseMovementSpeed;
     #endregion
 
-    protected virtual void Awake()
+    public virtual void SetUp()
     {
-        StateMachine = new StateMachine();
-        StatusEffectManager = new StatusEffectManager();
         SetUpStateFactory();
+        SetUpStateMachine();
+        SetUpProperty();
+        SetUpBarSystem();
+        SetUpStatusEffect();
+
+        Init();
     }
 
-    protected virtual void OnDestroy()
+    protected virtual void Init()
     {
-
+        InitStateFactory();
+        InitStateMachine();
+        InitProperty();
+        InitBarSystem();
+        InitStatusEffect();
     }
 
     protected virtual void OnEnable()
@@ -64,11 +72,53 @@ public abstract class Entity : MonoBehaviour, ITickable
         StateManager.Ins?.Unregister(this);
     }
 
-    protected abstract void SetUpStateFactory();
-    protected abstract void SetUpBarSystem();
-    public abstract void SetUpProperty();
-    public abstract void SetUpStatusEffect();
-    public abstract void SetUpAnimation();
+    protected virtual void SetUpStateFactory()
+    {
+
+    }
+    protected virtual void SetUpStateMachine()
+    {
+        StateMachine = new StateMachine();
+    }
+    protected virtual void SetUpProperty()
+    {
+
+    }
+    protected virtual void SetUpBarSystem()
+    {
+        HealthSystem = new BarStatSystem<Entity>(this);
+    }
+    protected virtual void SetUpStatusEffect()
+    {
+        StatusEffectManager = new StatusEffectManager();
+    }
+
+    protected virtual void InitStateFactory()
+    {
+
+    }
+    protected virtual void InitStateMachine()
+    {
+
+    }
+    protected virtual void InitProperty()
+    {
+        BaseMovementSpeed = 0f;
+        Direction = Vector2.left;
+    }
+    protected virtual void InitBarSystem()
+    {
+        HealthSystem.Init(100);
+    }
+    protected virtual void InitStatusEffect()
+    {
+        StatusEffectManager.ClearStatusEffects();
+    }
+
+    public virtual void DisableEntity()
+    {
+
+    }
 
     public virtual void CustomUpdate(float deltaTime)
     {
@@ -79,5 +129,16 @@ public abstract class Entity : MonoBehaviour, ITickable
     public virtual void CustomFixedUpdate(float fixedDeltaTime)
     {
         StateMachine.CurrentState.FixedUpdate(fixedDeltaTime);
+    }
+
+    public virtual void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0f, float value = 0f)
+    {
+        HealthSystem.AddValue(-damage);
+        StatusEffectManager.AddStatusEffect(type, duration, value);
+    }
+
+    public virtual void OnHealthValueUpdated()
+    {
+
     }
 }

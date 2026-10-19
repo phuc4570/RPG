@@ -5,31 +5,33 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
-    protected override void SetUpStateFactory()
+    [SerializeField] private LayerMask attackLayerMask;
+
+    public LayerMask AttackLayerMask => attackLayerMask;
+    private int attackLayerMaskInLog2 = -1;
+    public int AttackLayerMaskInLog2
     {
-        StateFactory = new CharacterStateFactory<Character>(this);
+        get
+        {
+            if(attackLayerMaskInLog2 == -1)
+            {
+                attackLayerMaskInLog2 = Mathf.RoundToInt(Mathf.Log(attackLayerMask.value, 2));
+            }
+            return attackLayerMaskInLog2;
+        }
+    }
+
+    public int BaseAttackDamage { get; protected set; }
+    public int AttackDamage => BaseAttackDamage;
+
+    protected override void InitStateMachine()
+    {
         StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));
     }
 
-    protected override void SetUpBarSystem()
+    public override void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0, float value = 0)
     {
-        HealthSystem = new MainCharacterHealthSystem(100);
-    }
-
-    public override void SetUpProperty()
-    {
-        BaseMovementSpeed = 2f;
-        Direction = Vector2.left;
-        SetUpBarSystem();
-    }
-
-    public override void SetUpStatusEffect()
-    {
-        StatusEffectManager.ClearStatusEffects();
-    }   
-
-    public override void SetUpAnimation()
-    {
-        AnimationController.Initialize(CharacterAnimationState.Idle, MovementSpeed);
+        base.TakeDamage(damage, type, duration, value);
+        StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 }

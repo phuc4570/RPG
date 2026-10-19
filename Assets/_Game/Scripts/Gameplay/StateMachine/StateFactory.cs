@@ -3,24 +3,23 @@ using System.Collections.Generic;
 
 public abstract class StateFactory
 {
+    protected abstract void RegisterStates();
     public abstract IState GetState<TStateEnum>(TStateEnum stateType) where TStateEnum : Enum;
-    protected abstract IState GetState(int stateType);
 }
 
 public abstract class StateFactory<TEntity, TEnum>: StateFactory where TEnum: Enum where TEntity: Entity
 {
-    protected readonly TEntity entity;
+    protected TEntity Entity { get; set; }
     protected readonly Dictionary<int, IState> stateCache;
 
     protected bool IsStagesRegistered { get; set; }
 
     protected StateFactory(TEntity entity)
     {
-        this.entity = entity;
+        Entity = entity;
         stateCache = new Dictionary<int, IState>();
+        if (!IsStagesRegistered) RegisterStates();
     }
-
-    protected abstract void RegisterStates();
 
     protected void RegisterState(TEnum stateType, IState state)
     {
@@ -34,7 +33,7 @@ public abstract class StateFactory<TEntity, TEnum>: StateFactory where TEnum: En
         return GetState(Convert.ToInt32(stateType));
     }
 
-    protected override IState GetState(int stateType)
+    protected IState GetState(int stateType)
     {
         if (stateCache.TryGetValue(stateType, out var state))
         {

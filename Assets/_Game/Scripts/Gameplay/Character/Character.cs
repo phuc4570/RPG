@@ -29,9 +29,16 @@ public abstract class Character : Entity
         StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));
     }
 
-    public override void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0, float value = 0)
+    protected override void OnTakeDamage()
     {
-        base.TakeDamage(damage, type, duration, value);
+        base.OnTakeDamage();
+
+        if (HealthSystem.Value <= 0)
+        {
+            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Dead));
+            return;
+        }
+
         StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 }

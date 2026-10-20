@@ -132,6 +132,8 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
                 damageable?.TakeDamage(entity.AttackDamage * (chargeLevel + 1));
+
+                entity.FocusSystem.IncreaseFocusFill(0.5f);
             }
         }
     }

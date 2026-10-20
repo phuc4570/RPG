@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a01705f7901534a83e2a885978a3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dummy
-  rendererObject: {fileID: 815567811}
+  rendererObject: {fileID: 815567812}
   animationController: {fileID: 1028450694}
   attackLayerMask:
     serializedVersion: 2
@@ -2189,7 +2189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3278d0ba75fd08248b0bfaa09da86b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCharacter
-  rendererObject: {fileID: 305787509}
+  rendererObject: {fileID: 305787511}
   animationController: {fileID: 1257640360}
   attackLayerMask:
     serializedVersion: 2
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d6f8a9d6c9879428d900febfaefce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SuperDummy
-  rendererObject: {fileID: 868446175}
+  rendererObject: {fileID: 868446177}
   animationController: {fileID: 1351063252}
   attackLayerMask:
     serializedVersion: 2

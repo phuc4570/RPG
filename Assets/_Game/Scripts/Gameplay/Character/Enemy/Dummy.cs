@@ -9,6 +9,6 @@ public class Dummy : Enemy
 
     protected override void InitBarSystem()
     {
-        HealthSystem.Init(1000);
+        HealthSystem.Init(100);
     }
 }

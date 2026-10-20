@@ -3,11 +3,12 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 {
     #region References
-    [SerializeField] private GameObject rendererObject;
+    [SerializeField] private SpriteRenderer rendererObject;
     [SerializeField] private EntityAnimationController animationController;
     #endregion
 
     #region Public Properties
+    public SpriteRenderer RendererObject => rendererObject;
     public EntityAnimationController AnimationController => animationController;
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
@@ -131,10 +132,19 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         StateMachine.CurrentState.FixedUpdate(fixedDeltaTime);
     }
 
-    public virtual void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0f, float value = 0f)
+    public void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0f, float value = 0f)
     {
+        if (StatusEffectManager.HasStatusEffect(StatusEffectType.Invincible)) return;
+
         HealthSystem.AddValue(-damage);
         StatusEffectManager.AddStatusEffect(type, duration, value);
+
+        OnTakeDamage();
+    }
+
+    protected virtual void OnTakeDamage()
+    {
+
     }
 
     public virtual void OnHealthValueUpdated()

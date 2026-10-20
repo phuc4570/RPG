@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class CharacterDeadState<T> : EntityState<T> where T : Character

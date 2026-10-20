@@ -131,4 +131,9 @@ public class BarStatSystem<T> : BarStatSystem where T : Entity
         base.OnUpdateValue();
         Entity.OnHealthValueUpdated();
     }
+
+    protected override void OnValueIsOver()
+    {
+        base.OnValueIsOver();
+    }
 }

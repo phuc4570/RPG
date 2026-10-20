@@ -42,7 +42,6 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         }
 
         entity.MainCharacterMovementController.StopMovement();
-        entity.FocusSystem.IncreaseFocusFill(0.2f);
         switch (comboIdx)
         {
             case 0:
@@ -166,6 +165,8 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
                 damageable?.TakeDamage(entity.AttackDamage);
+
+                entity.FocusSystem.IncreaseFocusFill(0.2f);
             }
         }
     }

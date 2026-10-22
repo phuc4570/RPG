@@ -27,6 +27,11 @@ public abstract class StateFactory<TEntity, TEnum>: StateFactory where TEnum: En
         stateCache[key] = state;
     }
 
+    protected override void RegisterStates()
+    {
+        IsStagesRegistered = true;
+    }
+
     public override IState GetState<TStateEnum>(TStateEnum stateType)
     {
         if (!IsStagesRegistered) RegisterStates();

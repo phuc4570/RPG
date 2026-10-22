@@ -2603,7 +2603,7 @@ MonoBehaviour:
   targetIsSelf: 1
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
-  delay: 0.25
+  delay: 0
   duration: 0.5
   easeType: 4
   easeCurve:
@@ -2961,7 +2961,7 @@ MonoBehaviour:
   showAction: 0
   hideAction: 0
   destroyWhenHide: 0
-  uIBossInfoObject: {fileID: 0}
+  uIBossInfoObject: {fileID: 7851766460503373188}
 --- !u!114 &5881439037061636854
 MonoBehaviour:
   m_ObjectHideFlags: 0

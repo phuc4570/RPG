@@ -57,67 +57,77 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_Heal();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
+            case CharacterAnimationState.Disappear:
+                PlayAnimation_Disappear();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+
         }
     }
 
     protected virtual void PlayAnimation_Idle()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.IdleHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.IdleHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Moving()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.MovingHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.MovingHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Block()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.BlockHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.BlockHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_BlockIdle()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.BlockIdleHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.BlockIdleHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Dodge()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DodgeHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DodgeHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Attack1()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack1Hash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack1Hash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Attack2()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack2Hash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack2Hash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Attack3()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack3Hash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.LightAttack3Hash, 0.05f);
     }
 
     protected virtual void PlayAnimation_HeavyAttack()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HeavyAttackHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HeavyAttackHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Hurt()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HurtHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HurtHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Dead()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DeadHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DeadHash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Heal()
     {
-        animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HealingHash, 0.05f);
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.HealingHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Disappear()
+    {
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DisappearHash, 0.05f);
     }
 
     #endregion

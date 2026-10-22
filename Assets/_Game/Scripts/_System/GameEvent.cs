@@ -8,6 +8,7 @@ public static class GameEvent
 
     public static event Action OnOneSecondPassed;
     public static event Action OnGameStart;
+    public static event Action<BossConfig> OnTriggerBossFight;
 
     #endregion
 
@@ -28,6 +29,7 @@ public static class GameEvent
 
     public static void RaiseOneSecondPassed() => OnOneSecondPassed?.Invoke();
     public static void RaiseGameStart() => OnGameStart?.Invoke();
+    public static void RaiseTriggerBossFight(BossConfig bossConfig) => OnTriggerBossFight?.Invoke(bossConfig);
 
     #endregion
 

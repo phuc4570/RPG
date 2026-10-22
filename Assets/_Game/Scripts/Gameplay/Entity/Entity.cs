@@ -1,15 +1,22 @@
+using Sirenix.OdinInspector;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 {
     #region References
-    [SerializeField] private SpriteRenderer rendererObject;
-    [SerializeField] private EntityAnimationController animationController;
+    [SerializeField, Required] private SpriteRenderer rendererObject;
+    [SerializeField, Required] private Animator animator;
+    [SerializeField, Required] private Collider2D mainCollider;
+    [SerializeField, Required] private Collider2D hitBox;
+    [SerializeField, Required] private Rigidbody2D rb;
     #endregion
 
     #region Public Properties
     public SpriteRenderer RendererObject => rendererObject;
-    public EntityAnimationController AnimationController => animationController;
+    public EntityAnimationController AnimationController { get; protected set; }
+    public EntityPhysicsController PhysicsController { get; protected set; }
+    public EntityMovementController MovementController { get; protected set; }
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
     public StatusEffectManager StatusEffectManager { get; protected set; }
@@ -45,6 +52,9 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public virtual void SetUp()
     {
+        SetUpAnimationController();
+        SetUpPhysicsController();
+        SetUpMovementController();
         SetUpStateFactory();
         SetUpStateMachine();
         SetUpProperty();
@@ -56,11 +66,16 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     protected virtual void Init()
     {
+        InitAnimationController();
+        InitPhysicsController();
+        InitMovementController();
         InitStateFactory();
         InitStateMachine();
         InitProperty();
         InitBarSystem();
         InitStatusEffect();
+
+        InitPhysics();
     }
 
     protected virtual void OnEnable()
@@ -80,6 +95,18 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     protected virtual void SetUpStateMachine()
     {
         StateMachine = new StateMachine();
+    }
+    protected virtual void SetUpAnimationController()
+    {
+
+    }
+    protected virtual void SetUpPhysicsController()
+    {
+
+    }
+    protected virtual void SetUpMovementController()
+    {
+
     }
     protected virtual void SetUpProperty()
     {
@@ -102,6 +129,18 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
 
     }
+    protected virtual void InitAnimationController()
+    {
+        AnimationController.Init(animator);
+    }
+    protected virtual void InitPhysicsController()
+    {
+        PhysicsController.Init(mainCollider, hitBox);
+    }
+    protected virtual void InitMovementController()
+    {
+        MovementController.Init(rb);
+    }
     protected virtual void InitProperty()
     {
         BaseMovementSpeed = 0f;
@@ -116,6 +155,16 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         StatusEffectManager.ClearStatusEffects();
     }
 
+    protected virtual void InitPhysics()
+    {
+        PhysicsController.ActiveAllColliders(true);
+    }
+
+    public virtual void PreDisableEntity()
+    {
+        PhysicsController.ActiveAllColliders(false);
+    }
+
     public virtual void DisableEntity()
     {
 
@@ -123,7 +172,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public virtual void CustomUpdate(float deltaTime)
     {
-        StateMachine.CurrentState?.Update(deltaTime);
+        StateMachine.CurrentState.Update(deltaTime);
         StatusEffectManager.Update(deltaTime);
     }
 

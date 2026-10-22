@@ -41,7 +41,7 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
             comboIdx = 0;
         }
 
-        entity.MainCharacterMovementController.StopMovement();
+        entity.MovementController.StopMovement();
         switch (comboIdx)
         {
             case 0:

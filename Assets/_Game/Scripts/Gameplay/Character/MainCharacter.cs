@@ -5,12 +5,11 @@ public class MainCharacter : Character
 {
     #region References
     [SerializeField] private MainCharacterInputReader mainCharacterInputReader;
-    [SerializeField] private MainCharacterMovementController mainCharacterMovementController;
     #endregion
 
     #region Public Properties
     public MainCharacterInputReader MainCharacterInputReader => mainCharacterInputReader;
-    public MainCharacterMovementController MainCharacterMovementController => mainCharacterMovementController;
+    public MainCharacterMovementController MainCharacterMovementController => MovementController as MainCharacterMovementController;
     public bool IsBlocking { get; set; }
     public float DodgeForce { get; set; }
     public MainCharacterManaSystem ManaSystem { get; private set; }
@@ -33,6 +32,11 @@ public class MainCharacter : Character
         HealingPotion = new MainCharacterHealingPotion(this);
     }
 
+    protected override void SetUpMovementController()
+    {
+        MovementController = new MainCharacterMovementController(this);
+    }
+
     protected override void InitProperty()
     {
         BaseMovementSpeed = 5f;
@@ -53,7 +57,7 @@ public class MainCharacter : Character
 
     public override void DisableEntity()
     {
-        
+        base.DisableEntity();
     }
 
     public override void CustomUpdate(float deltaTime)

@@ -18,7 +18,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 
     public override void Enter()
     {
-        entity.MainCharacterMovementController.StopMovement();
+        entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementSpeed);
 
         timer = 0f;

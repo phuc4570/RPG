@@ -40,7 +40,11 @@ public abstract class BarStatSystem
         value = 1;
     }
 
-    public abstract void Init(int maxValue, int value = -1);
+    public virtual void Init(int maxValue, int value = -1)
+    {
+        MaxValue = maxValue;
+        Value = value != -1 ? value : MaxValue;
+    }
 
     public virtual void UpdateMaxValue(int value)
     {
@@ -120,20 +124,9 @@ public class BarStatSystem<T> : BarStatSystem where T : Entity
         Entity = entity;
     }
 
-    public override void Init(int maxValue, int value = -1)
-    {
-        MaxValue = maxValue;
-        Value = value != -1 ? value : MaxValue;
-    }
-
     protected override void OnUpdateValue()
     {
         base.OnUpdateValue();
         Entity.OnHealthValueUpdated();
-    }
-
-    protected override void OnValueIsOver()
-    {
-        base.OnValueIsOver();
     }
 }

@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class BossController : MonoBehaviour
+public class BossController : SingletonObject<BossController>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] Boss boss;
+
+    public void ActiveBoss(bool flag)
     {
-        
+        boss.gameObject.SetActive(flag);
+        SetUpBoss();
+        GameEvent.RaiseTriggerBossFight(null);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetUpBoss()
     {
-        
+        boss.SetUp();
+        boss.MovementController.Target = MainCharacterController.Ins.MainCharacter.gameObject;
     }
 }

@@ -32,7 +32,7 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
         entity.Direction = input.normalized;
         if (input.sqrMagnitude <= 0.001f)
         {
-            entity.MainCharacterMovementController.StopMovement();
+            entity.MovementController.StopMovement();
             if(entity.AnimationController.GetCurrentAnimation<CharacterAnimationState>() != CharacterAnimationState.Idle)
             {
                 entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementSpeed);
@@ -40,7 +40,7 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
         }
         else
         {
-            entity.MainCharacterMovementController.ApplyMovement(input, entity.MovementSpeed);
+            entity.MovementController.ApplyMovement(input, entity.MovementSpeed);
             if (entity.AnimationController.GetCurrentAnimation<CharacterAnimationState>() != CharacterAnimationState.Moving)
             {
                 entity.AnimationController.PlayAnimation(CharacterAnimationState.Moving, entity.MovementSpeed);

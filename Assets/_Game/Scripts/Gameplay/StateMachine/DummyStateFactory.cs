@@ -9,10 +9,10 @@ public class DummyStateFactory : CharacterStateFactory<Dummy>
 
     protected override void RegisterStates()
     {
+        base.RegisterStates();
         RegisterState(CharacterStateType.Idle, new DummyIdleState(Entity));
         RegisterState(CharacterStateType.Hurt, new DummyHurtState(Entity));
         RegisterState(CharacterStateType.Dead, new DummyDeadState(Entity));
-        RegisterState(CharacterStateType.Healing, new DummyHealingState(Entity));
-        IsStagesRegistered = true;
+        RegisterState(CharacterStateType.Disappear, new DummyDisappearState(Entity));
     }
 }

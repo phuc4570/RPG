@@ -4,18 +4,14 @@ public class EnemyController : SingletonObject<EnemyController>
 {
     [SerializeField] Enemy enemy;
 
-    private void Start()
+    public void ActiveEnemy(bool flag)
     {
+        enemy.gameObject.SetActive(flag);
         SetUpEnemy();
     }
 
     private void SetUpEnemy()
     {
         enemy.SetUp();
-    }
-
-    public void ActiveEnemy(bool flag)
-    {
-        enemy.gameObject.SetActive(flag);
     }
 }

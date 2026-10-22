@@ -3,15 +3,15 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public abstract class EntityAnimationController : MonoBehaviour
+public abstract class EntityAnimationController
 {
-    [SerializeField, Required] protected Animator animator;
+    protected Animator Animator { get; private set; }
 
     protected virtual float BaseMoveSpeed { get; set; }
 
-    public virtual void Initialize<TAnimState>(TAnimState animationState, float animationSpeed) where TAnimState : Enum
+    public virtual void Init(Animator animator)
     {
-        PlayAnimation(animationState, animationSpeed);
+        Animator = animator;
     }
     public abstract void PlayAnimation<TAnimState>(TAnimState animationState, float animationSpeed) where TAnimState: Enum;
     public abstract TAnimState GetCurrentAnimation<TAnimState>() where TAnimState : Enum;

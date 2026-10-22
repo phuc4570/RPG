@@ -6,7 +6,7 @@ public class GameView : UIView
 	public static GameView Show(params object[] @params) => ViewController.Ins.Show(ViewDefine.Game, @params) as GameView;
 	#endregion
 
-	[SerializeField] GameObject uIBossInfoObject;
+	[SerializeField] UIBossInfo uIBossInfoObject;
 
 	protected override void OnShow()
     {
@@ -18,5 +18,19 @@ public class GameView : UIView
         base.OnHide();
 	}
 
+    private void OnEnable()
+    {
+        GameEvent.OnTriggerBossFight += OnTriggerBossFight;
+    }
 
+    private void OnDisable()
+    {
+        GameEvent.OnTriggerBossFight -= OnTriggerBossFight;
+    }
+
+    private void OnTriggerBossFight(BossConfig bossConfig)
+    {
+        uIBossInfoObject.gameObject.SetActive(true);
+        uIBossInfoObject.SetUp(bossConfig);
+    }
 }

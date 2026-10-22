@@ -23,9 +23,9 @@ public class UIBossInfo : MonoBehaviour
         GameEvent.OnUpdateBossPoiseBar -= UpdatePoiseBar;
     }
 
-    public void SetUp(string bossName)
+    public void SetUp(BossConfig bossConfig)
     {
-        bossNameText.SetText(bossName);
+        bossNameText.SetText("bossName");
         healthBarFillRect.sizeDelta = new Vector2(originHealthBarFillRectWidth, healthBarFillRect.sizeDelta.y);
         poiseBarFillRect.sizeDelta = new Vector2(originPoiseBarFillRectWidth, poiseBarFillRect.sizeDelta.y);
         canvasGroup.alpha = 0f;

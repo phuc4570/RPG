@@ -1,12 +1,13 @@
-using System;
 using UnityEngine;
 
 public class MainCharacterController : SingletonObject<MainCharacterController>
 {
     [SerializeField] private MainCharacter mainCharacter;
+    public MainCharacter MainCharacter => mainCharacter;
 
-    private void Start()
+    public void ActiveMainCharacter(bool flag)
     {
+        mainCharacter.gameObject.SetActive(flag);
         SetUpMainCharacter();
     }
 
@@ -15,8 +16,4 @@ public class MainCharacterController : SingletonObject<MainCharacterController>
         mainCharacter.SetUp();
     }
 
-    public void ActiveMainCharacter(bool flag)
-    {
-        mainCharacter.gameObject.SetActive(flag);
-    }
 }

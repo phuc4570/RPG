@@ -24,6 +24,21 @@ public abstract class Character : Entity
     public int BaseAttackDamage { get; protected set; }
     public int AttackDamage => BaseAttackDamage;
 
+    protected override void SetUpAnimationController()
+    {
+        AnimationController = new CharacterAnimationController();
+    }
+
+    protected override void SetUpPhysicsController()
+    {
+        PhysicsController = new CharacterPhysicsController(this);
+    }
+
+    protected override void SetUpMovementController()
+    {
+        MovementController = new CharacterMovementController<Character>(this);
+    }
+
     protected override void InitStateMachine()
     {
         StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));

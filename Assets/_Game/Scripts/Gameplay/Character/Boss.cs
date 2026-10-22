@@ -4,7 +4,7 @@ public class Boss : Character
 {
     public override void DisableEntity()
     {
-
+        base.DisableEntity();
     }
 
     protected override void OnTakeDamage()
@@ -15,6 +15,6 @@ public class Boss : Character
     public override void OnHealthValueUpdated()
     {
         base.OnHealthValueUpdated();
-        //uIEnemyHealth.UpdateHealthBar(HealthSystem.PercentageValue);
+        GameEvent.RaiseUpdateBossHealthBar(HealthSystem.PercentageValue);
     }
 }

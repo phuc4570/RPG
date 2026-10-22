@@ -12,4 +12,5 @@ public enum CharacterAnimationState
     LightAttack3 = 1000,
     HeavyAttack = 1100,
     Healing = 1200,
+    Disappear = 1300,
 }

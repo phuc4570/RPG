@@ -1,14 +1,15 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MainCharacter : Character
 {
     #region References
-    [SerializeField] private MainCharacterInputReader mainCharacterInputReader;
+    [SerializeField] private InputActionAsset inputActionAsset;
     #endregion
 
     #region Public Properties
-    public MainCharacterInputReader MainCharacterInputReader => mainCharacterInputReader;
+    public MainCharacterInputReader MainCharacterInputReader { get; private set; }
     public MainCharacterMovementController MainCharacterMovementController => MovementController as MainCharacterMovementController;
     public bool IsBlocking { get; set; }
     public float DodgeForce { get; set; }
@@ -17,6 +18,17 @@ public class MainCharacter : Character
     public MainCharacterFocusSystem FocusSystem { get; private set; }
     public MainCharacterHealingPotion HealingPotion { get; private set; }
     #endregion
+
+    public override void SetUp()
+    {
+        SetUpInputReader();
+        base.SetUp();
+    }
+
+    private void SetUpInputReader()
+    {
+        MainCharacterInputReader = new MainCharacterInputReader();
+    }
 
     protected override void SetUpStateFactory()
     {
@@ -35,6 +47,17 @@ public class MainCharacter : Character
     protected override void SetUpMovementController()
     {
         MovementController = new MainCharacterMovementController(this);
+    }
+
+    protected override void Init()
+    {
+        InitInputReader();
+        base.Init();
+    }
+
+    private void InitInputReader()
+    {
+        MainCharacterInputReader.Init(inputActionAsset);
     }
 
     protected override void InitProperty()

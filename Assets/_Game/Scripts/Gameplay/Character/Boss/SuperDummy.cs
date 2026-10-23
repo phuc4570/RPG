@@ -6,9 +6,4 @@ public class SuperDummy : Boss
     {
         StateFactory = new SuperDummyStateFactory(this);
     }
-
-    protected override void InitBarSystem()
-    {
-        HealthSystem.Init(100);
-    }
 }

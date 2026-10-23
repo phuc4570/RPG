@@ -44,9 +44,9 @@ public abstract class Character : Entity
         StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));
     }
 
-    protected override void OnTakeDamage()
+    protected override void OnTakeDamage(ref int damage)
     {
-        base.OnTakeDamage();
+        base.OnTakeDamage(ref damage);
 
         if (HealthSystem.Value <= 0)
         {
@@ -56,4 +56,5 @@ public abstract class Character : Entity
 
         StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
+
 }

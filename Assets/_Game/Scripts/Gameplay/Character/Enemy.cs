@@ -22,6 +22,11 @@ public class Enemy : Character
         EnemyPhysicsController.InitRadar(radar);
     }
 
+    protected override void InitBarSystem()
+    {
+        HealthSystem.Init(100);
+    }
+
     public override void PreDisableEntity()
     {
         base.PreDisableEntity();
@@ -34,9 +39,9 @@ public class Enemy : Character
         uIEnemyHealth.gameObject.SetActive(false);
     }
 
-    protected override void OnTakeDamage()
+    protected override void OnTakeDamage(ref int damage)
     {
-        base.OnTakeDamage();
+        base.OnTakeDamage(ref damage);
     }
 
     public override void OnHealthValueUpdated()

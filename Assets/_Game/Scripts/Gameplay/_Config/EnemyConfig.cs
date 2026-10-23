@@ -1,16 +1,14 @@
+using System;
 using UnityEngine;
 
-public class EnemyConfig : MonoBehaviour
+[Serializable]
+public class EnemyConfig : CharacterConfig<EnemyConfigData, EnemyTypeEnum>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
+
+[Serializable]
+public class EnemyConfigData : CharacterConfigData<EnemyTypeEnum>
+{
+
 }

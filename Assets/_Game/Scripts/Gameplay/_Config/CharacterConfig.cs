@@ -1,16 +1,27 @@
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterConfig : MonoBehaviour
+[Serializable]
+public class CharacterConfig<TData, TEnum> : SingletonScriptableObject<CharacterConfig<TData, TEnum>> where TData : CharacterConfigData<TEnum> where TEnum : Enum
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [TableList]
+    [SerializeField] private List<CharacterConfigData<TEnum>> data = new List<CharacterConfigData<TEnum>>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public IReadOnlyList<CharacterConfigData<TEnum>> Data => data;
+}
+
+[Serializable]
+public class CharacterConfigData<TEnum> where TEnum : Enum
+{
+    [SerializeField] private TEnum type;
+    [SerializeField] private int health;
+    [SerializeField] private float baseMovementSpeed;
+    [SerializeField] private int baseAttackDamage;
+
+    public TEnum Type => type;
+    public int Health => health;
+    public float BaseMovementSpeed => baseMovementSpeed;
+    public int BaseAttackDamage => baseAttackDamage;
 }

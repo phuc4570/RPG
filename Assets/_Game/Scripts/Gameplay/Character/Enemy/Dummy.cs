@@ -6,9 +6,4 @@ public class Dummy : Enemy
     {
         StateFactory = new DummyStateFactory(this);
     }
-
-    protected override void InitBarSystem()
-    {
-        HealthSystem.Init(100);
-    }
 }

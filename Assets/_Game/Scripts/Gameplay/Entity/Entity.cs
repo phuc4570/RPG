@@ -185,13 +185,13 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
         if (StatusEffectManager.HasStatusEffect(StatusEffectType.Invincible)) return;
 
+        OnTakeDamage(ref damage);
+
         HealthSystem.AddValue(-damage);
         StatusEffectManager.AddStatusEffect(type, duration, value);
-
-        OnTakeDamage();
     }
 
-    protected virtual void OnTakeDamage()
+    protected virtual void OnTakeDamage(ref int damage)
     {
 
     }

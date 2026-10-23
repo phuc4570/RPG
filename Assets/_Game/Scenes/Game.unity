@@ -2220,7 +2220,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1257640355}
   - component: {fileID: 1257640357}
-  - component: {fileID: 1257640358}
   - component: {fileID: 1257640354}
   - component: {fileID: 1257640356}
   - component: {fileID: 1257640361}
@@ -2316,19 +2315,6 @@ MonoBehaviour:
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  mainCharacterInputReader: {fileID: 1257640358}
---- !u!114 &1257640358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257640353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76550ee92b336d40a3d61dd70ddd257, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainCharacterInputReader
   inputActionAsset: {fileID: -944628639613478452, guid: 950c2b4b6335d6e47b3db54578d106b4, type: 3}
 --- !u!210 &1257640361
 SortingGroup:

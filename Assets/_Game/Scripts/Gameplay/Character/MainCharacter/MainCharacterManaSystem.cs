@@ -17,6 +17,7 @@ public class MainCharacterManaSystem : BarStatSystem<MainCharacter>
 
     public override void CustomUpdate(float deltaTime)
     {
+        base.CustomUpdate(deltaTime);
         if (isManaNotUsing)
         {
             if (PercentageValue < 1f)

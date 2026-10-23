@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-public class MainCharacterInputReader : MonoBehaviour
+public class MainCharacterInputReader
 {
-    [SerializeField] private InputActionAsset inputActionAsset;
     public Vector2 MoveInput { get; private set; }
     public Action<bool> OnBlockPerformed;
     public Action OnDodgePerformed;
@@ -16,14 +15,17 @@ public class MainCharacterInputReader : MonoBehaviour
 
     public bool IsBlocking { get; private set; }
 
+    private InputActionAsset inputActionAsset;
     private InputAction moveAction;
     private InputAction blockAction;
     private InputAction dodgeAction;
     private InputAction attackAction;
     private InputAction healAction;
 
-    private void Awake()
+    public void Init(InputActionAsset inputActionAsset)
     {
+        this.inputActionAsset = inputActionAsset;
+
         InputActionMap inputActionMap = inputActionAsset.actionMaps[0];
         if (inputActionMap == null) return;
         moveAction = inputActionMap.FindAction(InputActionPropertyConfig.Move);

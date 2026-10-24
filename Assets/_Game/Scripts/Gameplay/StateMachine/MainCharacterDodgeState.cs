@@ -12,7 +12,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public MainCharacterDodgeState(MainCharacter mainCharacter) : base(mainCharacter)
     {
-        this.mainCharacterInputReader = mainCharacter.MainCharacterInputReader;
+        mainCharacterInputReader = mainCharacter.MainCharacterInputReader;
     }
 
     public override bool ValidateCondition()

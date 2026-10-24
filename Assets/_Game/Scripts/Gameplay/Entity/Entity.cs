@@ -152,6 +152,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     }
     protected virtual void InitStatusEffect()
     {
+        StatusEffectManager.Init(this);
         StatusEffectManager.ClearStatusEffects();
     }
 
@@ -197,6 +198,18 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     }
 
     public virtual void OnHealthValueUpdated()
+    {
+
+    }
+
+    public void HandleStatusEffect(StatusEffectType type, bool isAdded)
+    {
+        //Handle Icon Visual Effect
+
+        OnHandleStatusEffect(type, isAdded);
+    }
+
+    protected virtual void OnHandleStatusEffect(StatusEffectType type, bool isAdded)
     {
 
     }

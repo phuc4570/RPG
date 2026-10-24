@@ -14,7 +14,7 @@ public class StateMachine
 
     public bool ChangeState(IState state)
     {
-        if (state == null) return false;
+        if (state == null && state != CurrentState) return false;
 
         if (state.ValidateCondition())
         {

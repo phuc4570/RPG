@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d254c8278577674698d2a2289bd09ac, type: 3}
   m_Name: BossConfig
   m_EditorClassIdentifier: Assembly-CSharp::BossConfig
+  data:
+  - type: 0
+    health: 200
+    baseMovementSpeed: 0
+    baseAttackDamage: 0
+    bossName: Super Dummy

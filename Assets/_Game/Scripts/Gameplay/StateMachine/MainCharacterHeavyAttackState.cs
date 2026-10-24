@@ -118,7 +118,11 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
 
     private void CheckMeleeHit()
     {
-        Vector2 dir = entity.Direction;
+        Vector2 dir = Vector2.right;
+        if (entity.Direction.x < 0)
+        {
+            dir = Vector2.left;
+        }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         Vector2 boxSize = new Vector2(1.5f, 0.8f);

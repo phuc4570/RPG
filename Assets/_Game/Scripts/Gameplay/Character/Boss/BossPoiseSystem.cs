@@ -6,7 +6,7 @@ public class BossPoiseSystem : BarStatSystem<Boss>
 
     public float poiseGainInterval = 0.5f;
     private float poiseGainTimer = 0f;
-    private bool isGainingPoise = false;
+    public bool IsGainingPoise { get; set; }
 
     public BossPoiseSystem(Boss boss) : base(boss)
     {
@@ -21,7 +21,7 @@ public class BossPoiseSystem : BarStatSystem<Boss>
     public override void CustomUpdate(float deltaTime)
     {
         base.CustomUpdate(deltaTime);
-        if (isGainingPoise && PercentageValue < 1f)
+        if (IsGainingPoise && PercentageValue < 1f)
         {
             poiseGainTimer += deltaTime;
             if (poiseGainTimer >= poiseGainInterval)

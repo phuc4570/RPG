@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138140f2d6cf5d5468a0bb9fc1d24212, type: 3}
   m_Name: EnemyConfig
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConfig
+  data:
+  - type: 0
+    health: 100
+    baseMovementSpeed: 0
+    baseAttackDamage: 0

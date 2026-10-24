@@ -13,6 +13,7 @@ public class DummyStateFactory : CharacterStateFactory<Dummy>
         RegisterState(CharacterStateType.Idle, new DummyIdleState(Entity));
         RegisterState(CharacterStateType.Hurt, new DummyHurtState(Entity));
         RegisterState(CharacterStateType.Dead, new DummyDeadState(Entity));
+        RegisterState(CharacterStateType.Healing, new DummyHealingState(Entity));
         RegisterState(CharacterStateType.Disappear, new DummyDisappearState(Entity));
     }
 }

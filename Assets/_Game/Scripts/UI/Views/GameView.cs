@@ -28,9 +28,9 @@ public class GameView : UIView
         GameEvent.OnTriggerBossFight -= OnTriggerBossFight;
     }
 
-    private void OnTriggerBossFight(BossConfig bossConfig)
+    private void OnTriggerBossFight(BossConfigData data)
     {
         uIBossInfoObject.gameObject.SetActive(true);
-        uIBossInfoObject.SetUp(bossConfig);
+        uIBossInfoObject.SetUp(data);
     }
 }

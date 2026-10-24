@@ -61,7 +61,10 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_Disappear();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
-
+            case CharacterAnimationState.Stunned:
+                PlayAnimation_Stunned();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
         }
     }
 
@@ -128,6 +131,11 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
     protected virtual void PlayAnimation_Disappear()
     {
         Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.DisappearHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Stunned()
+    {
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.StunnedHash, 0.05f);
     }
 
     #endregion

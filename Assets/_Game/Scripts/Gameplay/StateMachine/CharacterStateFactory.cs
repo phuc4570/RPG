@@ -13,7 +13,9 @@ public enum CharacterStateType
     Hurt                = 8,
     Dead                = 9,
     Healing             = 10,
-    Disappear           = 11
+    Disappear           = 11,
+    Stunned             = 12,
+    Freezed             = 13
 }
 
 public abstract class CharacterStateFactory<T> : StateFactory<T, CharacterStateType> where T : Character

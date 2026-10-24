@@ -13,7 +13,6 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
         base.Enter();
         entity.MovementController.StopMovement();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, StateDuration);
-        //GameEvent.RaiseMainCharacterHurt();
     }
 
     public override void Update(float deltaTime)

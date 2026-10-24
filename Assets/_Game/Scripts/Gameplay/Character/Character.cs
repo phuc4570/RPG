@@ -57,4 +57,27 @@ public abstract class Character : Entity
         StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 
+    protected override void OnHandleStatusEffect(StatusEffectType type, bool isAdded)
+    {
+        base.OnHandleStatusEffect(type, isAdded);
+        if (StatusEffectManager.HasStatusEffect(StatusEffectType.Freezed))
+        {
+            //Handle Character Visual Effect
+        }
+        if (StatusEffectManager.HasStatusEffect(StatusEffectType.Stunned))
+        {
+            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Stunned));
+            return;
+        }
+        switch (type)
+        {
+            case StatusEffectType.Stunned:
+            case StatusEffectType.Freezed:
+                if(isAdded == false)
+                {
+                    StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Idle));
+                }
+                break;
+        }
+    }
 }

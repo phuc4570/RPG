@@ -8,7 +8,7 @@ public class BossController : SingletonObject<BossController>
     {
         boss.gameObject.SetActive(flag);
         SetUpBoss();
-        GameEvent.RaiseTriggerBossFight(null);
+        GameEvent.RaiseTriggerBossFight(boss.Data);
     }
 
     private void SetUpBoss()

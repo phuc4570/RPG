@@ -19,7 +19,7 @@ public class GameManager : SingletonObject<GameManager>
     {
         map.SetActive(true);
         mainCharacterController.ActiveMainCharacter(true);
-        //enemyController.ActiveEnemy(true);
+        enemyController.ActiveEnemy(true);
         DOVirtual.DelayedCall(1.5f, () =>
         {
             bossController.ActiveBoss(true);

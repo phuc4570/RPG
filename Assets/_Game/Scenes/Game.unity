@@ -1625,7 +1625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1028450692
 Animator:
   serializedVersion: 7
@@ -1726,6 +1726,7 @@ MonoBehaviour:
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  type: 0
   radar: {fileID: 1220889292}
   uIEnemyHealth: {fileID: 1605772496}
 --- !u!1 &1059022382
@@ -2229,7 +2230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &1257640354
 Rigidbody2D:
   serializedVersion: 5
@@ -2494,6 +2495,7 @@ MonoBehaviour:
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  type: 0
 --- !u!1 &1416574955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,7 +2602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1486244725
 Transform:
   m_ObjectHideFlags: 0

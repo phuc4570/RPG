@@ -45,8 +45,9 @@ public class StatusEffectManager
             effect.Duration -= deltaTime;
             if (effect.Duration <= 0)
             {
-                HandleStatusEffect(activeStatusEffects[i].Type, false);
+                StatusEffectType type = activeStatusEffects[i].Type;
                 activeStatusEffects.RemoveAt(i);
+                HandleStatusEffect(type, false);
             }
         }
     }

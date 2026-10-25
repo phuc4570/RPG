@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 {
@@ -46,6 +47,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
             }
         }
     }
+    public bool IsAlive { get; protected set; }
     public float BaseMovementSpeed { get; protected set; }
     public float MovementSpeed => BaseMovementSpeed;
     #endregion
@@ -143,7 +145,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     }
     protected virtual void InitProperty()
     {
-        BaseMovementSpeed = 0f;
+        IsAlive = true;
         Direction = Vector2.left;
     }
     protected virtual void InitBarSystem()
@@ -159,6 +161,14 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     protected virtual void InitPhysics()
     {
         PhysicsController.ActiveAllColliders(true);
+    }
+
+    public virtual void RespawnEntity()
+    {
+        IsAlive = true;
+        StatusEffectManager.ClearStatusEffects();
+        PhysicsController.ActiveAllColliders(true);
+        HealthSystem.AddValue(HealthSystem.MaxValue);
     }
 
     public virtual void PreDisableEntity()
@@ -186,15 +196,22 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
         if (StatusEffectManager.HasStatusEffect(StatusEffectType.Invincible)) return;
 
-        OnTakeDamage(ref damage);
+        BeforeTakeDamage(ref damage);
 
         HealthSystem.AddValue(-damage);
         StatusEffectManager.AddStatusEffect(type, duration, value);
+
+        AfterTakeDamage();
     }
 
-    protected virtual void OnTakeDamage(ref int damage)
+    protected virtual void BeforeTakeDamage(ref int damage)
     {
 
+    }
+
+    protected virtual void AfterTakeDamage()
+    {
+        IsAlive = HealthSystem.Value > 0;
     }
 
     public virtual void OnHealthValueUpdated()
@@ -204,9 +221,12 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public void HandleStatusEffect(StatusEffectType type, bool isAdded)
     {
-        //Handle Icon Visual Effect
+        if (IsAlive)
+        {
+            //Handle Icon Visual Effect
 
-        OnHandleStatusEffect(type, isAdded);
+            OnHandleStatusEffect(type, isAdded);
+        }
     }
 
     protected virtual void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

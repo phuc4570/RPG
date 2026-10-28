@@ -17,7 +17,7 @@ public class MainCharacterBlockState : EntityState<MainCharacter>
         nextState = CharacterStateType.Idle;
         entity.MovementController.StopMovement();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, blockDuration);
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Block, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Block, entity.MovementController.MovementSpeed);
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
     }

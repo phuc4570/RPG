@@ -9,7 +9,7 @@ public class CharacterStunnedState<T> : EntityState<T> where T : Character
 
     public override void Enter()
     {
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Stunned, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Stunned, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

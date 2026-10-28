@@ -1,11 +1,10 @@
 using Sirenix.OdinInspector;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 {
     #region References
+    [SerializeField] private bool defaultSpriteDirectionIsRight = true;
     [SerializeField, Required] private SpriteRenderer rendererObject;
     [SerializeField, Required] private Animator animator;
     [SerializeField, Required] private Collider2D mainCollider;
@@ -18,12 +17,14 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     public EntityAnimationController AnimationController { get; protected set; }
     public EntityPhysicsController PhysicsController { get; protected set; }
     public EntityMovementController MovementController { get; protected set; }
+    public EntityCombatController CombatController { get; protected set; }
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
     public StatusEffectManager StatusEffectManager { get; protected set; }
     public BarStatSystem HealthSystem { get; protected set; }
-    private Vector3 leftLocalScale = new Vector3(-1, 1, 1);
-    private Vector3 rightLocalScale = new Vector3(1, 1, 1);
+    private bool isSetUp = false;
+    private static Vector3 leftLocalScale = new Vector3(-1, 1, 1);
+    private static Vector3 rightLocalScale = new Vector3(1, 1, 1);
     private Vector2 direction;
     public Vector2 Direction {
         get
@@ -39,24 +40,34 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
             direction = value;
             if (direction.x > 0)
             {
-                rendererObject.transform.localScale = rightLocalScale;
+                rendererObject.transform.localScale = defaultSpriteDirectionIsRight ? rightLocalScale : leftLocalScale;
             }
             else if (direction.x < 0)
             {
-                rendererObject.transform.localScale = leftLocalScale;
+                rendererObject.transform.localScale = defaultSpriteDirectionIsRight ? leftLocalScale : rightLocalScale;
             }
         }
     }
     public bool IsAlive { get; protected set; }
-    public float BaseMovementSpeed { get; protected set; }
-    public float MovementSpeed => BaseMovementSpeed;
     #endregion
 
-    public virtual void SetUp()
+    public virtual void EnableEntity()
     {
+        if (!isSetUp) SetUp();
+        IsAlive = true;
+        StatusEffectManager.ClearStatusEffects();
+        PhysicsController.ActiveAllColliders(true);
+        HealthSystem.AddValue(HealthSystem.MaxValue);
+        StateManager.Ins?.Register(this);
+    }
+
+    protected virtual void SetUp()
+    {
+        if (isSetUp) return;
         SetUpAnimationController();
         SetUpPhysicsController();
         SetUpMovementController();
+        SetUpCombatController();
         SetUpStateFactory();
         SetUpStateMachine();
         SetUpProperty();
@@ -64,6 +75,8 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         SetUpStatusEffect();
 
         Init();
+        gameObject.SetActive(true);
+        isSetUp = true;
     }
 
     protected virtual void Init()
@@ -71,6 +84,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         InitAnimationController();
         InitPhysicsController();
         InitMovementController();
+        InitCombatController();
         InitStateFactory();
         InitStateMachine();
         InitProperty();
@@ -78,16 +92,6 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         InitStatusEffect();
 
         InitPhysics();
-    }
-
-    protected virtual void OnEnable()
-    {
-        StateManager.Ins?.Register(this);
-    }
-
-    protected virtual void OnDisable()
-    {
-        StateManager.Ins?.Unregister(this);
     }
 
     protected virtual void SetUpStateFactory()
@@ -107,6 +111,10 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     }
     protected virtual void SetUpMovementController()
+    {
+
+    }
+    protected virtual void SetUpCombatController()
     {
 
     }
@@ -141,7 +149,11 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     }
     protected virtual void InitMovementController()
     {
-        MovementController.Init(rb);
+        MovementController.InitRigidbody(rb);
+    }
+    protected virtual void InitCombatController()
+    {
+
     }
     protected virtual void InitProperty()
     {
@@ -163,14 +175,6 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         PhysicsController.ActiveAllColliders(true);
     }
 
-    public virtual void RespawnEntity()
-    {
-        IsAlive = true;
-        StatusEffectManager.ClearStatusEffects();
-        PhysicsController.ActiveAllColliders(true);
-        HealthSystem.AddValue(HealthSystem.MaxValue);
-    }
-
     public virtual void PreDisableEntity()
     {
         PhysicsController.ActiveAllColliders(false);
@@ -178,7 +182,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public virtual void DisableEntity()
     {
-
+        StateManager.Ins?.Unregister(this);
     }
 
     public virtual void CustomUpdate(float deltaTime)

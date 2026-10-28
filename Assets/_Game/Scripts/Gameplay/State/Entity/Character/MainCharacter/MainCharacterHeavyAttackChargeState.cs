@@ -35,15 +35,15 @@ public class MainCharacterHeavyAttackChargeState : EntityState<MainCharacter>
             entity.MovementController.StopMovement();
             if(entity.AnimationController.GetCurrentAnimation<CharacterAnimationState>() != CharacterAnimationState.Idle)
             {
-                entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementSpeed);
+                entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementController.MovementSpeed);
             }
         }
         else
         {
-            entity.MovementController.ApplyMovement(input, entity.MovementSpeed);
+            entity.MovementController.ApplyMovement(input, entity.MovementController.MovementSpeed);
             if (entity.AnimationController.GetCurrentAnimation<CharacterAnimationState>() != CharacterAnimationState.Moving)
             {
-                entity.AnimationController.PlayAnimation(CharacterAnimationState.Moving, entity.MovementSpeed);
+                entity.AnimationController.PlayAnimation(CharacterAnimationState.Moving, entity.MovementController.MovementSpeed);
             }
         }
 

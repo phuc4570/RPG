@@ -17,6 +17,6 @@ public class SuperDummyHealingState : CharacterHealingState<SuperDummy>
     public override void Exit()
     {
         base.Exit();
-        entity.RespawnEntity();
+        entity.EnableEntity();
     }
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class EntityPhysicsController
 {
-    protected Collider2D MainCollider { get; private set; }
-    protected Collider2D HitBox { get; private set; }
+    public Collider2D MainCollider { get; private set; }
+    public Collider2D HitBox { get; private set; }
 
     public virtual void Init(Collider2D mainCollider, Collider2D hitBox)
     {

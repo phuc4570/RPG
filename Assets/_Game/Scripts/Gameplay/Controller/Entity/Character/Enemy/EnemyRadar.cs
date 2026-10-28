@@ -1,26 +1,16 @@
 using UnityEngine;
 
-public class EnemyRadar : MonoBehaviour
+public class EnemyRadar : EntityAreaTrigger<Enemy>
 {
-    [SerializeField] Enemy enemy;
-
-#if UNITY_EDITOR
-    private void OnValidate()
+    protected override void TriggerEnter(Collider2D collision)
     {
-        if(enemy == null)
-        {
-            enemy = GetComponentInParent<Enemy>();
-        }
-    }
-#endif
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        enemy.MovementController.Target = collision.GetComponentInParent<MainCharacter>().gameObject;
+        base.TriggerEnter(collision);
+        Entity.MovementController.Target = collision.GetComponentInParent<MainCharacter>().gameObject;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void TriggerExit(Collider2D collision)
     {
-        enemy.MovementController.Target = null;
+        base.TriggerExit(collision);
+        Entity.MovementController.Target = null;
     }
 }

@@ -21,7 +21,6 @@ public class MainCharacterHealingState : CharacterHealingState<MainCharacter>
     public override void Enter()
     {
         base.Enter();
-        entity.MovementController.StopMovement();
     }
 
     public override void Update(float deltaTime)

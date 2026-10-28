@@ -13,7 +13,7 @@ public class BossController : SingletonObject<BossController>
 
     private void SetUpBoss()
     {
-        boss.SetUp();
+        boss.EnableEntity();
         boss.MovementController.Target = MainCharacterController.Ins.MainCharacter.gameObject;
     }
 }

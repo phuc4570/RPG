@@ -16,7 +16,8 @@ public class CharacterDeadState<T> : EntityState<T> where T : Character
     {
         stateTimer = 0f;
         entity.PreDisableEntity();
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Dead, entity.MovementSpeed);
+        entity.MovementController.StopMovement();
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Dead, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

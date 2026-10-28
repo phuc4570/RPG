@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class EnemyPhysicsController : EntityPhysicsController
+public class EnemyPhysicsController : CharacterPhysicsController
 {
-    protected Collider2D Radar { get; private set; }
+    public Collider2D Radar { get; private set; }
+
+    public EnemyPhysicsController(Character entity) : base(entity)
+    {
+
+    }
 
     public virtual void InitRadar(Collider2D radar)
     {

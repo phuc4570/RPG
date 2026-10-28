@@ -11,7 +11,6 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
     public override void Enter()
     {
         base.Enter();
-        entity.MovementController.StopMovement();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, StateDuration);
     }
 

@@ -9,7 +9,8 @@ public class CharacterIdleState<T> : EntityState<T> where T: Character
 
     public override void Enter()
     {
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementSpeed);
+        entity.MovementController.StopMovement();
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Idle, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

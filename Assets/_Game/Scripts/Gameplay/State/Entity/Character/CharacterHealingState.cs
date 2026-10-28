@@ -13,7 +13,8 @@ public class CharacterHealingState<T> : EntityState<T> where T : Character
     public override void Enter()
     {
         stateTimer = 0f;
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Healing, entity.MovementSpeed);
+        entity.MovementController.StopMovement();
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Healing, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

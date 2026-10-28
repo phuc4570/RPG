@@ -19,7 +19,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
     public override void Enter()
     {
         entity.MovementController.StopMovement();
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);
 
         timer = 0f;
         nextState = CharacterStateType.Idle;
@@ -125,17 +125,17 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Vector2 boxSize = new Vector2(1.5f, 0.8f);
-        Vector2 attackCenter = (Vector2)entity.transform.position + dir * 0.75f + Vector2.up * 0.25f;
+        Vector2 boxSize = entity.CharacterPhysicsController.HitRange.bounds.size;
+        Vector2 attackCenter = (Vector2)entity.CharacterPhysicsController.HitRange.bounds.center;
 
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.AttackLayerMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.CharacterCombatController.AttackLayerMask);
 
         for (int i = 0; i < hitEnemies.Length; i++)
         {
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.AttackDamage * (chargeLevel + 1));
+                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage * (chargeLevel + 1));
 
                 entity.FocusSystem.IncreaseFocusFill(0.5f);
             }

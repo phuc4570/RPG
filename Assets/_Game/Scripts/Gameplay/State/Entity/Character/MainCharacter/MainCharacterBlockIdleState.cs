@@ -10,9 +10,9 @@ public class MainCharacterBlockIdleState : EntityState<MainCharacter>
 
     public override void Enter()
     {
-        entity.IsBlocking = true;
+        entity.MainChracterCombatController.IsBlocking = true;
         entity.MovementController.StopMovement();
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.BlockIdle, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.BlockIdle, entity.MovementController.MovementSpeed);
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
     }
@@ -29,7 +29,7 @@ public class MainCharacterBlockIdleState : EntityState<MainCharacter>
 
     public override void Exit()
     {
-        entity.IsBlocking = false;
+        entity.MainChracterCombatController.IsBlocking = false;
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed -= HandleDodgePerformed;
     }

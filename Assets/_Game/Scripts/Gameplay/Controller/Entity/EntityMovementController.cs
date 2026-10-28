@@ -17,9 +17,17 @@ public abstract class EntityMovementController
         }
     }
 
-    public virtual void Init(Rigidbody2D rb)
+    public float BaseMovementSpeed { get; protected set; }
+    public float MovementSpeed => BaseMovementSpeed;
+
+    public virtual void InitRigidbody(Rigidbody2D rb)
     {
         Rb = rb;
+    }
+
+    public virtual void InitBaseMovementSpeed(float baseMovementSpeed)
+    {
+        BaseMovementSpeed = baseMovementSpeed;
     }
 
     public virtual void ApplyMovement(Vector2 moveInput, float moveSpeed)

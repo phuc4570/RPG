@@ -14,4 +14,5 @@ public enum CharacterAnimationState
     Healing = 1200,
     Disappear = 1300,
     Stunned = 1400,
+    Transform = 1500,
 }

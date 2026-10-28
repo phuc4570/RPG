@@ -13,4 +13,10 @@ public class DummyHealingState : CharacterHealingState<Dummy>
         base.Enter();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, StateDuration);
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+        entity.EnableEntity();
+    }
 }

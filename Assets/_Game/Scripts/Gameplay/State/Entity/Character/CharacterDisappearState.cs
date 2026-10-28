@@ -13,7 +13,7 @@ public class CharacterDisappearState<T> : EntityState<T> where T : Character
     public override void Enter()
     {
         stateTimer = 0f;
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Disappear, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Disappear, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

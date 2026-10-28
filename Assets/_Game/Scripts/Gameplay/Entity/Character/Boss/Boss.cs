@@ -9,6 +9,12 @@ public class Boss : Character
     public BossPoiseSystem PoiseSystem { get; private set; }
     public BossConfigData Data { get; protected set; }
 
+    public override void EnableEntity()
+    {
+        base.EnableEntity();
+        PoiseSystem.AddValue(PoiseSystem.MaxValue);
+    }
+
     protected override void SetUpBarSystem()
     {
         HealthSystem = new BarStatSystem<Boss>(this);
@@ -19,6 +25,24 @@ public class Boss : Character
     {
         Data = BossConfig.Ins.GetData(type);
         base.Init();
+    }
+
+    protected override void InitMovementController()
+    {
+        base.InitMovementController();
+        if (Data != null)
+        {
+            MovementController.InitBaseMovementSpeed(Data.BaseMovementSpeed);
+        }
+    }
+
+    protected override void InitCombatController()
+    {
+        base.InitCombatController();
+        if (Data != null)
+        {
+            CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
+        }
     }
 
     protected override void InitBarSystem()
@@ -32,22 +56,6 @@ public class Boss : Character
         {
             base.InitBarSystem();
         }
-    }
-
-    protected override void InitProperty()
-    {
-        base.InitProperty();
-        if (Data != null)
-        {
-            BaseMovementSpeed = Data.BaseMovementSpeed;
-            BaseAttackDamage = Data.BaseAttackDamage;
-        }
-    }
-
-    public override void RespawnEntity()
-    {
-        base.RespawnEntity();
-        PoiseSystem.AddValue(PoiseSystem.MaxValue);
     }
 
     public override void DisableEntity()

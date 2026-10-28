@@ -12,6 +12,6 @@ public class EnemyController : SingletonObject<EnemyController>
 
     private void SetUpEnemy()
     {
-        enemy.SetUp();
+        enemy.EnableEntity();
     }
 }

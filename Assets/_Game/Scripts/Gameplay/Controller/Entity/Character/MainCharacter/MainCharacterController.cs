@@ -13,7 +13,7 @@ public class MainCharacterController : SingletonObject<MainCharacterController>
 
     private void SetUpMainCharacter()
     {
-        mainCharacter.SetUp();
+        mainCharacter.EnableEntity();
     }
 
 }

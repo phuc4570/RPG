@@ -3,23 +3,9 @@ using UnityEngine;
 public abstract class Character : Entity
 {
     [SerializeField] private LayerMask attackLayerMask;
-
-    public LayerMask AttackLayerMask => attackLayerMask;
-    private int attackLayerMaskInLog2 = -1;
-    public int AttackLayerMaskInLog2
-    {
-        get
-        {
-            if(attackLayerMaskInLog2 == -1)
-            {
-                attackLayerMaskInLog2 = Mathf.RoundToInt(Mathf.Log(attackLayerMask.value, 2));
-            }
-            return attackLayerMaskInLog2;
-        }
-    }
-
-    public int BaseAttackDamage { get; protected set; }
-    public int AttackDamage => BaseAttackDamage;
+    [SerializeField] private Collider2D hitRangeCollider;
+    public CharacterCombatController CharacterCombatController => CombatController as CharacterCombatController;
+    public CharacterPhysicsController CharacterPhysicsController => PhysicsController as CharacterPhysicsController;
 
     protected override void SetUpAnimationController()
     {
@@ -34,6 +20,17 @@ public abstract class Character : Entity
     protected override void SetUpMovementController()
     {
         MovementController = new CharacterMovementController<Character>(this);
+    }
+
+    protected override void InitCombatController()
+    {
+        CharacterCombatController.InitAttackLayerMask(attackLayerMask);
+    }
+
+    protected override void InitPhysicsController()
+    {
+        base.InitPhysicsController();
+        CharacterPhysicsController.InitHitRange(hitRangeCollider);
     }
 
     protected override void InitStateMachine()

@@ -30,8 +30,8 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, dodgeDuration);
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementSpeed);
-        entity.MainCharacterMovementController.ApplyDodgeImpulse(entity.Direction, entity.DodgeForce);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementController.MovementSpeed);
+        entity.MainCharacterMovementController.ApplyDodgeImpulse(entity.Direction, entity.MainChracterCombatController.DodgeForce);
         dodgeTimer = 0f;
         //if (entity.CombatDetector.IsBossAttackingInDodgeWindow())
         //{
@@ -39,7 +39,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
         //}
         nextState = mainCharacterInputReader.IsBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
 
-        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.AttackLayerMaskInLog2, true);
+        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, true);
 
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
@@ -76,7 +76,7 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public override void Exit()
     {
-        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.AttackLayerMaskInLog2, false);
+        Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, false);
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }
 

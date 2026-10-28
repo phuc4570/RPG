@@ -8,7 +8,7 @@ public class CharacterMovingState<T> : EntityState<T> where T : Character
 
     public override void Enter()
     {
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.Moving, entity.MovementSpeed);
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.Moving, entity.MovementController.MovementSpeed);
     }
 
     public override void Update(float deltaTime)

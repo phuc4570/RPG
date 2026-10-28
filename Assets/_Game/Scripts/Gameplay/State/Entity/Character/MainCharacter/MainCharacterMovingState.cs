@@ -27,7 +27,7 @@ public class MainCharacterMovingState : CharacterMovingState<MainCharacter>
             entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
             return;
         }
-        entity.MovementController.ApplyMovement(input, entity.MovementSpeed);
+        entity.MovementController.ApplyMovement(input, entity.MovementController.MovementSpeed);
     }
 
     public override void Exit()

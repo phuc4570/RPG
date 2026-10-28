@@ -150,12 +150,12 @@ TextureImporter:
       name: Mushroom-Run_0
       rect:
         serializedVersion: 2
-        x: 23
+        x: 0
         y: 0
-        width: 32
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,12 +172,12 @@ TextureImporter:
       name: Mushroom-Run_1
       rect:
         serializedVersion: 2
-        x: 103
+        x: 80
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,12 +194,12 @@ TextureImporter:
       name: Mushroom-Run_2
       rect:
         serializedVersion: 2
-        x: 183
+        x: 160
         y: 0
-        width: 32
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,12 +216,12 @@ TextureImporter:
       name: Mushroom-Run_3
       rect:
         serializedVersion: 2
-        x: 263
-        y: 2
-        width: 32
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 240
+        y: 0
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -238,12 +238,12 @@ TextureImporter:
       name: Mushroom-Run_4
       rect:
         serializedVersion: 2
-        x: 343
+        x: 320
         y: 0
-        width: 32
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -260,12 +260,12 @@ TextureImporter:
       name: Mushroom-Run_5
       rect:
         serializedVersion: 2
-        x: 423
+        x: 400
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -282,12 +282,12 @@ TextureImporter:
       name: Mushroom-Run_6
       rect:
         serializedVersion: 2
-        x: 503
+        x: 480
         y: 0
-        width: 32
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -304,12 +304,12 @@ TextureImporter:
       name: Mushroom-Run_7
       rect:
         serializedVersion: 2
-        x: 583
-        y: 2
-        width: 32
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 560
+        y: 0
+        width: 80
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -326,7 +326,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6ea83925521cbbb4f86363072c90bed0
     internalID: 0
     vertices: []
     indices: 
@@ -334,7 +334,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":1.0},"gridSpriteSize":{"x":80.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Mushroom-Run_0: 3384204939538765328
       Mushroom-Run_1: -4325078450221725429

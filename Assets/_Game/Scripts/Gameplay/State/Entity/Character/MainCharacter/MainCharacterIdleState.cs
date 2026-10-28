@@ -11,7 +11,6 @@ public class MainCharacterIdleState : CharacterIdleState<MainCharacter>
     public override void Enter()
     {
         base.Enter();
-        entity.MovementController.StopMovement();
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;

@@ -45,13 +45,13 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         switch (comboIdx)
         {
             case 0:
-                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementSpeed);
+                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementController.MovementSpeed);
                 break;
             case 1:
-                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack2, entity.MovementSpeed);
+                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack2, entity.MovementController.MovementSpeed);
                 break;
             case 2:
-                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack3, entity.MovementSpeed);
+                entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack3, entity.MovementController.MovementSpeed);
                 break;
         }
 
@@ -158,17 +158,17 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Vector2 boxSize = new Vector2(1.5f, 0.8f);
-        Vector2 attackCenter = (Vector2)entity.transform.position + dir * 0.75f + Vector2.up * 0.25f;
+        Vector2 boxSize = entity.CharacterPhysicsController.HitRange.bounds.size;
+        Vector2 attackCenter = (Vector2)entity.CharacterPhysicsController.HitRange.bounds.center;
 
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.AttackLayerMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.CharacterCombatController.AttackLayerMask);
 
         for (int i = 0; i < hitEnemies.Length; i++)
         {
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.AttackDamage);
+                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage);
 
                 entity.FocusSystem.IncreaseFocusFill(0.2f);
             }

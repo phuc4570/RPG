@@ -11,15 +11,14 @@ public class MainCharacter : Character
     #region Public Properties
     public MainCharacterInputReader MainCharacterInputReader { get; private set; }
     public MainCharacterMovementController MainCharacterMovementController => MovementController as MainCharacterMovementController;
-    public bool IsBlocking { get; set; }
-    public float DodgeForce { get; set; }
+    public MainChracterCombatController MainChracterCombatController => CombatController as MainChracterCombatController;
     public MainCharacterManaSystem ManaSystem { get; private set; }
     public MainCharacterStaminaSystem StaminaSystem { get; private set; }
     public MainCharacterFocusSystem FocusSystem { get; private set; }
     public MainCharacterHealingPotion HealingPotion { get; private set; }
     #endregion
 
-    public override void SetUp()
+    protected override void SetUp()
     {
         SetUpInputReader();
         base.SetUp();
@@ -49,6 +48,11 @@ public class MainCharacter : Character
         MovementController = new MainCharacterMovementController(this);
     }
 
+    protected override void SetUpCombatController()
+    {
+        CombatController = new MainChracterCombatController(this);
+    }
+
     protected override void Init()
     {
         InitInputReader();
@@ -60,15 +64,23 @@ public class MainCharacter : Character
         MainCharacterInputReader.Init(inputActionAsset);
     }
 
+    protected override void InitMovementController()
+    {
+        base.InitMovementController();
+        MovementController.InitBaseMovementSpeed(5f);
+    }
+
+    protected override void InitCombatController()
+    {
+        base.InitCombatController();
+        MainChracterCombatController.InitDodgeForce(5f);
+        CharacterCombatController.InitBaseAttackDamage(10);
+    }
+
     protected override void InitProperty()
     {
         base.InitProperty();
-        BaseMovementSpeed = 5f;
         Direction = Vector2.right;
-        IsBlocking = false;
-        DodgeForce = 5f;
-
-        BaseAttackDamage = 10;
     }
 
     protected override void InitBarSystem()

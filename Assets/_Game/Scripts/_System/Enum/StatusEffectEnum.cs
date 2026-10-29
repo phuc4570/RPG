@@ -9,4 +9,5 @@ public enum StatusEffectType
     Burned,
     Freezed,
     Rooted,
+    Unstoppable,
 }

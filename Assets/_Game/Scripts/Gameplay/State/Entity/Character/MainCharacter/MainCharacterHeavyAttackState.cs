@@ -20,6 +20,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
     {
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, stateDuration);
 
         timer = 0f;
         nextState = CharacterStateType.Idle;

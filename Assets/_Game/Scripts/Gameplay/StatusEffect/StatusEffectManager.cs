@@ -1,22 +1,41 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StatusEffectManager
 {
+    private static List<StatusEffectType> StatusEffectCache = new List<StatusEffectType>();
+
     private List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
 
-    public bool CanMove => !isRooted && !isStunned && !isFreezed;
+    public bool CanMove => !dictStatusEffects[StatusEffectType.Rooted] && !dictStatusEffects[StatusEffectType.Stunned] && !dictStatusEffects[StatusEffectType.Freezed];
+    public bool CanBeInterupt => !dictStatusEffects[StatusEffectType.Unstoppable];
 
-    private bool isRooted = false;
-    private bool isStunned = false;
-    private bool isFreezed = false;
+    private Dictionary<StatusEffectType, bool> dictStatusEffects = new Dictionary<StatusEffectType, bool>();
 
     private Entity entity;
 
     public void Init(Entity entity)
     {
         this.entity = entity;
+
+        if(StatusEffectCache.Count == 0)
+        {
+            var stringEnums = Enum.GetNames(typeof(StatusEffectType));
+            foreach(var stringEnum in stringEnums)
+            {
+                if (Enum.TryParse<StatusEffectType>(stringEnum, out var result))
+                {
+                    StatusEffectCache.Add(result);
+                }
+            }
+        }
+
+        foreach (var statusEffect in StatusEffectCache)
+        {
+            dictStatusEffects[statusEffect] = false;
+        }
     }
 
     public void AddStatusEffect(StatusEffectType type, float duration, float value = 0f)
@@ -54,14 +73,7 @@ public class StatusEffectManager
 
     public bool HasStatusEffect(StatusEffectType type)
     {
-        for(int i = 0; i < activeStatusEffects.Count; i++)
-        {
-            if (activeStatusEffects[i].Type == type)
-            {
-                return true;
-            }
-        }
-        return false;
+        return dictStatusEffects[type];
     }
 
     public float GetStatusEffectValue(StatusEffectType type)
@@ -84,22 +96,15 @@ public class StatusEffectManager
     public void ClearStatusEffects()
     {
         activeStatusEffects.Clear();
+        foreach (var statusEffect in StatusEffectCache)
+        {
+            dictStatusEffects[statusEffect] = false;
+        }
     }
 
     private void HandleStatusEffect(StatusEffectType type, bool isAdded)
     {
-        switch (type)
-        {
-            case StatusEffectType.Stunned:
-                isStunned = isAdded;
-                break;
-            case StatusEffectType.Freezed:
-                isFreezed = isAdded;
-                break;
-            case StatusEffectType.Rooted:
-                isRooted = isAdded;
-                break;
-        }
+        dictStatusEffects[type] = isAdded;
         entity.HandleStatusEffect(type, isAdded);
     }
 }

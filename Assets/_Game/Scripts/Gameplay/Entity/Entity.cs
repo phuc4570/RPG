@@ -22,9 +22,6 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     public StateMachine StateMachine { get; protected set; }
     public StatusEffectManager StatusEffectManager { get; protected set; }
     public BarStatSystem HealthSystem { get; protected set; }
-    private bool isSetUp = false;
-    private static Vector3 leftLocalScale = new Vector3(-1, 1, 1);
-    private static Vector3 rightLocalScale = new Vector3(1, 1, 1);
     private Vector2 direction;
     public Vector2 Direction {
         get
@@ -51,12 +48,22 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     public bool IsAlive { get; protected set; }
     #endregion
 
+    #region Private Properties
+
+    private bool isSetUp = false;
+    private static Vector3 leftLocalScale = new Vector3(-1, 1, 1);
+    private static Vector3 rightLocalScale = new Vector3(1, 1, 1);
+
+    #endregion
+
     public virtual void EnableEntity()
     {
         if (!isSetUp) SetUp();
         IsAlive = true;
+        MovementController.Reset();
         StatusEffectManager.ClearStatusEffects();
         PhysicsController.ActiveAllColliders(true);
+        CombatController.Reset();
         HealthSystem.AddValue(HealthSystem.MaxValue);
         StateManager.Ins?.Register(this);
     }
@@ -189,6 +196,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
         StateMachine.CurrentState.Update(deltaTime);
         StatusEffectManager.Update(deltaTime);
+        CombatController.Update(deltaTime);
     }
 
     public virtual void CustomFixedUpdate(float fixedDeltaTime)

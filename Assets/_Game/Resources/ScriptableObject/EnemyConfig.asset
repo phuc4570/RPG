@@ -17,7 +17,9 @@ MonoBehaviour:
     health: 100
     baseMovementSpeed: 0
     baseAttackDamage: 0
+    baseAttackSpeed: 1
   - type: 1
     health: 50
     baseMovementSpeed: 2
     baseAttackDamage: 15
+    baseAttackSpeed: 0.5

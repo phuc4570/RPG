@@ -13,6 +13,14 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
                 PlayAnimation_Idle();
                 UpdateAnimationSpeed(BaseMoveSpeed);
                 break;
+            case CharacterAnimationState.Idle1:
+                PlayAnimation_Idle1();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
+            case CharacterAnimationState.Idle2:
+                PlayAnimation_Idle2();
+                UpdateAnimationSpeed(BaseMoveSpeed);
+                break;
             case CharacterAnimationState.Moving:
                 PlayAnimation_Moving();
                 UpdateAnimationSpeed(animationSpeed);
@@ -75,6 +83,16 @@ public class CharacterAnimationController : EntityAnimationController<CharacterA
     protected virtual void PlayAnimation_Idle()
     {
         Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.IdleHash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Idle1()
+    {
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.Idle1Hash, 0.05f);
+    }
+
+    protected virtual void PlayAnimation_Idle2()
+    {
+        Animator.CrossFadeInFixedTime(CharacterAnimationPropertyConfig.Idle2Hash, 0.05f);
     }
 
     protected virtual void PlayAnimation_Moving()

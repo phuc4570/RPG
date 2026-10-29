@@ -3,6 +3,8 @@ using UnityEngine;
 public class CharacterAnimationPropertyConfig
 {
     public static readonly int IdleHash = Animator.StringToHash("Idle");
+    public static readonly int Idle1Hash = Animator.StringToHash("Idle1");
+    public static readonly int Idle2Hash = Animator.StringToHash("Idle2");
     public static readonly int MovingHash = Animator.StringToHash("Moving");
     public static readonly int BlockHash = Animator.StringToHash("Block");
     public static readonly int BlockIdleHash = Animator.StringToHash("BlockIdle");

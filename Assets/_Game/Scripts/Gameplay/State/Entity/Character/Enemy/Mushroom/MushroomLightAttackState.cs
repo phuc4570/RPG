@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class MushroomLightAttackState : EntityState<Mushroom>
 {
@@ -9,16 +7,31 @@ public class MushroomLightAttackState : EntityState<Mushroom>
     private const float activeFrameEnd = 0.85f;
     private float timer;
     private bool hasDealtDamage = false;
+
     public MushroomLightAttackState(Mushroom mushroom) : base(mushroom)
     {
+
+    }
+
+    public override bool ValidateCondition()
+    {
+        return entity.CharacterCombatController.CanAttack;
     }
 
     public override void Enter()
     {
-        entity.MovementController.StopMovement();
-        entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementController.MovementSpeed);
-        timer = 0f;
-        hasDealtDamage = false;
+        if(entity.EnemyCombatController.AttackCount >= 3)
+        {
+            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttack));
+        }
+        else
+        {
+            entity.CharacterCombatController.OnAttackOneHit();
+            entity.MovementController.StopMovement();
+            entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementController.MovementSpeed);
+            timer = 0f;
+            hasDealtDamage = false;
+        }
     }
 
     public override void Update(float deltaTime)

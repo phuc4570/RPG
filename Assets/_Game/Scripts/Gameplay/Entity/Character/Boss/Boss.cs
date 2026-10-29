@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Boss : Character
 {
     [SerializeField] private BossTypeEnum type;
+    [SerializeField] private List<BossHitRange> hitRangeScripts;
+    public BossCombatController BossCombatController => CombatController as BossCombatController;
     private const float poiseDamageReduction = 0.1f;
     private const float poiseStunDuration = 3f;
     public BossPoiseSystem PoiseSystem { get; private set; }
@@ -13,6 +15,11 @@ public class Boss : Character
     {
         base.EnableEntity();
         PoiseSystem.AddValue(PoiseSystem.MaxValue);
+    }
+
+    protected override void SetUpCombatController()
+    {
+        CombatController = new EnemyCombatController(this);
     }
 
     protected override void SetUpBarSystem()
@@ -42,6 +49,11 @@ public class Boss : Character
         if (Data != null)
         {
             CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
+            CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
+        }
+        foreach(var hitRangeScript in hitRangeScripts)
+        {
+            hitRangeScript.Init(this);
         }
     }
 

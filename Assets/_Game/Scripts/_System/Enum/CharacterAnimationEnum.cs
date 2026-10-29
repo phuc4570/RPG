@@ -1,6 +1,8 @@
 public enum CharacterAnimationState
 {
     Idle = 100,
+    Idle1 = 101,
+    Idle2 = 102,
     Moving = 200,
     BlockIdle = 300,
     Block = 400,

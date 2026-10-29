@@ -39,6 +39,12 @@ public abstract class EntityMovementController
     {
         Rb.linearVelocity = Vector2.zero;
     }
+
+    public virtual void Reset()
+    {
+        Target = null;
+        StopMovement();
+    }
 }
 
 public abstract class EntityMovementController<T> : EntityMovementController where T : Entity

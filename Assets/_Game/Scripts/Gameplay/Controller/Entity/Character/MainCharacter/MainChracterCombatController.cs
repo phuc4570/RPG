@@ -12,4 +12,10 @@ public class MainChracterCombatController : CharacterCombatController
     {
         DodgeForce = dodgeForce;
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        IsBlocking = false;
+    }
 }

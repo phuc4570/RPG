@@ -12,7 +12,10 @@ public class MushroomMovingState : CharacterMovingState<Mushroom>
         base.Update(deltaTime);
         if (entity.EnemyCombatController.IsInHitRange)
         {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
+            if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
+            {
+                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+            }
         }
         else
         {

@@ -7,7 +7,7 @@ public class EnemyHitRange : EntityAreaTrigger<Enemy>
         base.TriggerEnter(collision);
         if (collision.CompareTag("Hitbox"))
         {
-            Entity.EnemyCombatController.IsInHitRange = true;
+            Entity.EnemyCombatController.InHitRange(true);
         }
     }
 
@@ -16,7 +16,7 @@ public class EnemyHitRange : EntityAreaTrigger<Enemy>
         base.TriggerExit(collision);
         if (collision.CompareTag("Hitbox"))
         {
-            Entity.EnemyCombatController.IsInHitRange = false;
+            Entity.EnemyCombatController.InHitRange(false);
         }
     }
 }

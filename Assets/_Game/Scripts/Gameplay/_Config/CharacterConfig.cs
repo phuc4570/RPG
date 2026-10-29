@@ -43,9 +43,11 @@ public class CharacterConfigData<TEnum> where TEnum : Enum
     [SerializeField] private int health;
     [SerializeField] private float baseMovementSpeed;
     [SerializeField] private int baseAttackDamage;
+    [SerializeField] private float baseAttackSpeed;
 
     public TEnum Type => type;
     public int Health => health;
     public float BaseMovementSpeed => baseMovementSpeed;
     public int BaseAttackDamage => baseAttackDamage;
+    public float BaseAttackSpeed => baseAttackSpeed;
 }

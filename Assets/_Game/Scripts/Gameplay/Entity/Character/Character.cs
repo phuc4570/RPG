@@ -7,6 +7,12 @@ public abstract class Character : Entity
     public CharacterCombatController CharacterCombatController => CombatController as CharacterCombatController;
     public CharacterPhysicsController CharacterPhysicsController => PhysicsController as CharacterPhysicsController;
 
+    public override void EnableEntity()
+    {
+        base.EnableEntity();
+        StateMachine.Initialize(StateFactory.GetState(CharacterStateType.Idle));
+    }
+
     protected override void SetUpAnimationController()
     {
         AnimationController = new CharacterAnimationController();
@@ -47,7 +53,10 @@ public abstract class Character : Entity
             return;
         }
 
-        StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
+        if (StatusEffectManager.CanBeInterupt)
+        {
+            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
+        }
     }
 
     protected override void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

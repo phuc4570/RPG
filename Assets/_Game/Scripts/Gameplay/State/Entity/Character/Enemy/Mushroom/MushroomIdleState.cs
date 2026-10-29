@@ -1,3 +1,4 @@
+using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 
 public class MushroomIdleState : CharacterIdleState<Mushroom>
@@ -12,7 +13,10 @@ public class MushroomIdleState : CharacterIdleState<Mushroom>
         base.Update(deltaTime);
         if (entity.EnemyCombatController.IsInHitRange)
         {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack));
+            if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
+            {
+                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+            }
         }
         else
         {

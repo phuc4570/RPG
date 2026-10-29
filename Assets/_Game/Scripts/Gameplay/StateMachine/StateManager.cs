@@ -18,9 +18,8 @@ public class StateManager : SingletonObject<StateManager>
     private void Update()
     {
         float deltaTime = Time.deltaTime;
-        int count = tickables.Count;
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < tickables.Count; i++)
         {
             tickables[i].CustomUpdate(deltaTime);
         }
@@ -29,9 +28,8 @@ public class StateManager : SingletonObject<StateManager>
     private void FixedUpdate()
     {
         float fixedDeltaTime = Time.fixedDeltaTime;
-        int count = tickables.Count;
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < tickables.Count; i++)
         {
             tickables[i].CustomFixedUpdate(fixedDeltaTime);
         }

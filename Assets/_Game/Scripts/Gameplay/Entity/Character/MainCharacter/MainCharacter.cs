@@ -75,6 +75,7 @@ public class MainCharacter : Character
         base.InitCombatController();
         MainChracterCombatController.InitDodgeForce(5f);
         CharacterCombatController.InitBaseAttackDamage(10);
+        CharacterCombatController.InitBaseAttackSpeed(1);
     }
 
     protected override void InitProperty()

@@ -54,6 +54,7 @@ public class Enemy : Character
         if (Data != null)
         {
             CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
+            CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
         }
         radarScript.Init(this);
         hitRangeScript.Init(this);

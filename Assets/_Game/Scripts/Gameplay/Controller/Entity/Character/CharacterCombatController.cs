@@ -17,6 +17,9 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     }
     public int BaseAttackDamage { get; protected set; }
     public int AttackDamage => BaseAttackDamage;
+    public float BaseAttackSpeed { get; protected set; }
+    public bool CanAttack { get; protected set; } = true;
+    private float attackTimer = 0f;
 
     protected CharacterCombatController(Character character) : base(character)
     {
@@ -31,5 +34,34 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     public virtual void InitBaseAttackDamage(int baseAttackDamage)
     {
         BaseAttackDamage = baseAttackDamage;
+    }
+
+    public virtual void InitBaseAttackSpeed(float baseAttackSpeed)
+    {
+        BaseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 0.01f, 10);
+    }
+
+    public virtual void OnAttackOneHit()
+    {
+        CanAttack = false;
+    }
+
+    public override void Update(float deltaTime)
+    {
+        if (!CanAttack)
+        {
+            attackTimer += deltaTime;
+            if(attackTimer >= (1.0f / BaseAttackSpeed))
+            {
+                CanAttack = true;
+                attackTimer = 0f;
+            }
+        }
+    }
+
+    public override void Reset()
+    {
+        CanAttack = false;
+        attackTimer = 0f;
     }
 }

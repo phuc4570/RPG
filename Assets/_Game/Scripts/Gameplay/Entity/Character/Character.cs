@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character : Entity
 {
     [SerializeField] private LayerMask attackLayerMask;
-    [SerializeField] private Collider2D hitRangeCollider;
+    [SerializeField] private List<CharacterHitRange> hitRangeScripts;
     public CharacterCombatController CharacterCombatController => CombatController as CharacterCombatController;
     public CharacterPhysicsController CharacterPhysicsController => PhysicsController as CharacterPhysicsController;
 
@@ -31,12 +32,16 @@ public abstract class Character : Entity
     protected override void InitCombatController()
     {
         CharacterCombatController.InitAttackLayerMask(attackLayerMask);
+        foreach (var hitRangeScript in hitRangeScripts)
+        {
+            hitRangeScript.Init(this);
+        }
     }
 
     protected override void InitPhysicsController()
     {
         base.InitPhysicsController();
-        CharacterPhysicsController.InitHitRange(hitRangeCollider);
+        CharacterPhysicsController.InitHitRanges(hitRangeScripts);
     }
 
     protected override void InitStateMachine()

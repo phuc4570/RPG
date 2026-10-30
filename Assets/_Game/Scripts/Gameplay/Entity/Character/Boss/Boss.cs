@@ -4,10 +4,9 @@ using UnityEngine;
 public class Boss : Character
 {
     [SerializeField] private BossTypeEnum type;
-    [SerializeField] private List<BossHitRange> hitRangeScripts;
     public BossCombatController BossCombatController => CombatController as BossCombatController;
-    private const float poiseDamageReduction = 0.1f;
-    private const float poiseStunDuration = 3f;
+    protected const float poiseDamageReduction = 0.1f;
+    protected const float poiseStunDuration = 3f;
     public BossPoiseSystem PoiseSystem { get; private set; }
     public BossConfigData Data { get; protected set; }
 
@@ -15,11 +14,12 @@ public class Boss : Character
     {
         base.EnableEntity();
         PoiseSystem.AddValue(PoiseSystem.MaxValue);
+        StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, 999999999);
     }
 
     protected override void SetUpCombatController()
     {
-        CombatController = new EnemyCombatController(this);
+        CombatController = new BossCombatController(this);
     }
 
     protected override void SetUpBarSystem()
@@ -50,10 +50,6 @@ public class Boss : Character
         {
             CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
             CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
-        }
-        foreach(var hitRangeScript in hitRangeScripts)
-        {
-            hitRangeScript.Init(this);
         }
     }
 

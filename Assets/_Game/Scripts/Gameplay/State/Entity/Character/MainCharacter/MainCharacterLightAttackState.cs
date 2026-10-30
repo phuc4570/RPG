@@ -158,8 +158,9 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Vector2 boxSize = entity.CharacterPhysicsController.HitRange.bounds.size;
-        Vector2 attackCenter = (Vector2)entity.CharacterPhysicsController.HitRange.bounds.center;
+        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(CharacterAttackTypeEnum.LightAttack);
+        Vector2 boxSize = hitRange.bounds.size;
+        Vector2 attackCenter = hitRange.bounds.center;
 
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.CharacterCombatController.AttackLayerMask);
 

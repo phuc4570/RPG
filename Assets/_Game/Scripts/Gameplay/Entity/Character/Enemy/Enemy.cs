@@ -3,13 +3,18 @@ using UnityEngine;
 public class Enemy : Character
 {
     [SerializeField] private EnemyTypeEnum type;
-    [SerializeField] private Collider2D radarCollider;
     [SerializeField] private EnemyRadar radarScript;
-    [SerializeField] private EnemyHitRange hitRangeScript;
     [SerializeField] private UIEnemyHealth uIEnemyHealth;
     public EnemyPhysicsController EnemyPhysicsController => PhysicsController as EnemyPhysicsController;
     public EnemyCombatController EnemyCombatController => CombatController as EnemyCombatController;
     public EnemyConfigData Data { get; protected set; }
+    public bool IsAlpha { get; protected set; }
+
+    public void EnableEntity(bool isAlpha)
+    {
+        IsAlpha = isAlpha;
+        EnableEntity();
+    }
 
     public override void EnableEntity()
     {
@@ -36,7 +41,7 @@ public class Enemy : Character
     protected override void InitPhysicsController()
     {
         base.InitPhysicsController();
-        EnemyPhysicsController.InitRadar(radarCollider);
+        EnemyPhysicsController.InitRadar(radarScript.Area);
     }
 
     protected override void InitMovementController()
@@ -53,11 +58,9 @@ public class Enemy : Character
         base.InitCombatController();
         if (Data != null)
         {
-            CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
             CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
         }
         radarScript.Init(this);
-        hitRangeScript.Init(this);
     }
 
     protected override void InitBarSystem()
@@ -69,6 +72,15 @@ public class Enemy : Character
         else
         {
             base.InitBarSystem();
+        }
+    }
+
+    protected override void InitStatusEffect()
+    {
+        base.InitStatusEffect();
+        if (IsAlpha)
+        {
+            StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, 999999999);
         }
     }
 

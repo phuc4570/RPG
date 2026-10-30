@@ -3,8 +3,8 @@ using UnityEngine;
 public class MimicLightAttackState : EntityState<Mimic>
 {
     private const float stateDuration = 1f;
-    private const float activeFrameStart = 0.55f;
-    private const float activeFrameEnd = 0.85f;
+    private const float activeFrameStart = 0.83f;
+    private const float activeFrameEnd = 1f;
     private float timer;
     private bool hasDealtDamage = false;
 
@@ -20,18 +20,11 @@ public class MimicLightAttackState : EntityState<Mimic>
 
     public override void Enter()
     {
-        if (entity.EnemyCombatController.AttackCount >= 3)
-        {
-            entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttack));
-        }
-        else
-        {
-            entity.CharacterCombatController.OnAttackOneHit();
-            entity.MovementController.StopMovement();
-            entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementController.MovementSpeed);
-            timer = 0f;
-            hasDealtDamage = false;
-        }
+        entity.CharacterCombatController.OnAttackOneHit();
+        entity.MovementController.StopMovement();
+        entity.AnimationController.PlayAnimation(CharacterAnimationState.LightAttack1, entity.MovementController.MovementSpeed);
+        timer = 0f;
+        hasDealtDamage = false;
     }
 
     public override void Update(float deltaTime)
@@ -69,8 +62,9 @@ public class MimicLightAttackState : EntityState<Mimic>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Vector2 boxSize = entity.CharacterPhysicsController.HitRange.bounds.size;
-        Vector2 attackCenter = (Vector2)entity.CharacterPhysicsController.HitRange.bounds.center;
+        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(CharacterAttackTypeEnum.LightAttack);
+        Vector2 boxSize = hitRange.bounds.size;
+        Vector2 attackCenter = hitRange.bounds.center;
 
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.CharacterCombatController.AttackLayerMask);
 

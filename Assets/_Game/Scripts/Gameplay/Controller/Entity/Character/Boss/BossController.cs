@@ -16,4 +16,9 @@ public class BossController : SingletonObject<BossController>
         boss.EnableEntity();
         boss.MovementController.Target = MainCharacterController.Ins.MainCharacter.gameObject;
     }
+
+    public void ResetBoss()
+    {
+        boss.MovementController.Target = null;
+    }
 }

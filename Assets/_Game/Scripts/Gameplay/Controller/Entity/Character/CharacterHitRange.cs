@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class EnemyHitRange : EntityAreaTrigger<Enemy>
+public class CharacterHitRange : EntityAreaTrigger<Character>
 {
+    [SerializeField] private CharacterAttackTypeEnum type;
+    public CharacterAttackTypeEnum Type => type;
     protected override void TriggerEnter(Collider2D collision)
     {
         base.TriggerEnter(collision);
         if (collision.CompareTag("Hitbox"))
         {
-            Entity.EnemyCombatController.InHitRange(true);
+            Entity.CharacterCombatController.InHitRange(type, true);
         }
     }
 
@@ -16,7 +18,7 @@ public class EnemyHitRange : EntityAreaTrigger<Enemy>
         base.TriggerExit(collision);
         if (collision.CompareTag("Hitbox"))
         {
-            Entity.EnemyCombatController.InHitRange(false);
+            Entity.CharacterCombatController.InHitRange(type, false);
         }
     }
 }

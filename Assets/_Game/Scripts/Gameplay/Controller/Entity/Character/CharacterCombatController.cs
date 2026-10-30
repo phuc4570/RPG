@@ -1,7 +1,12 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CharacterCombatController : EntityCombatController<Character>
 {
+    private static List<CharacterAttackTypeEnum> AttackTypeCache = new List<CharacterAttackTypeEnum>();
+    private Dictionary<CharacterAttackTypeEnum, bool> inHitAttackTypeDict = new Dictionary<CharacterAttackTypeEnum, bool>();
+
     public LayerMask AttackLayerMask { get; private set; }
     private int attackLayerMaskInLog2 = -1;
     public int AttackLayerMaskInLog2
@@ -23,7 +28,22 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
 
     protected CharacterCombatController(Character character) : base(character)
     {
+        if(AttackTypeCache.Count == 0)
+        {
+            var stringEnums = Enum.GetNames(typeof(CharacterAttackTypeEnum));
+            foreach (var stringEnum in stringEnums)
+            {
+                if (Enum.TryParse<CharacterAttackTypeEnum>(stringEnum, out var result))
+                {
+                    AttackTypeCache.Add(result);
+                }
+            }
+        }
 
+        foreach (var attackType in AttackTypeCache)
+        {
+            inHitAttackTypeDict[attackType] = false;
+        }
     }
 
     public virtual void InitAttackLayerMask(LayerMask layerMask)
@@ -40,6 +60,13 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     {
         BaseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 0.01f, 10);
     }
+
+    public virtual void InHitRange(CharacterAttackTypeEnum type, bool flag)
+    {
+        inHitAttackTypeDict[type] = flag;
+    }
+
+    public bool IsInHitRange(CharacterAttackTypeEnum type) => inHitAttackTypeDict[type];
 
     public virtual void OnAttackOneHit()
     {
@@ -63,5 +90,9 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     {
         CanAttack = false;
         attackTimer = 0f;
+        foreach (var attackType in AttackTypeCache)
+        {
+            inHitAttackTypeDict[attackType] = false;
+        }
     }
 }

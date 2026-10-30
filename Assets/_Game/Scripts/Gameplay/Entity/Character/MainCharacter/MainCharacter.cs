@@ -95,6 +95,7 @@ public class MainCharacter : Character
     public override void DisableEntity()
     {
         base.DisableEntity();
+        BossController.Ins.ResetBoss();
     }
 
     public override void CustomUpdate(float deltaTime)

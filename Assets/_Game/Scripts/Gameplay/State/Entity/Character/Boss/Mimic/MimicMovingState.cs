@@ -10,23 +10,33 @@ public class MimicMovingState : CharacterMovingState<Mimic>
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
-        if (entity.EnemyCombatController.IsInHitRange)
+        if (entity.State == Mimic.MimicState.Transformed)
         {
-            if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
+            if (entity.BossCombatController.AttackCount < 3 && entity.BossCombatController.IsInHitRange(CharacterAttackTypeEnum.LightAttack))
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
+                {
+                    entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                }
             }
-        }
-        else
-        {
-            Vector2 movementDirection = entity.MovementController.Target != null ? (entity.MovementController.Target.transform.position - entity.transform.position).normalized : Vector2.zero;
-            entity.Direction = movementDirection;
-            if (movementDirection.sqrMagnitude <= 0.001f)
+            else if (entity.BossCombatController.AttackCount >= 3 && entity.BossCombatController.IsInHitRange(CharacterAttackTypeEnum.HeavyAttack))
             {
-                entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
-                return;
+                if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttack)))
+                {
+                    entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                }
             }
-            entity.MovementController.ApplyMovement(movementDirection, entity.MovementController.MovementSpeed);
+            else
+            {
+                Vector2 movementDirection = entity.MovementController.Target != null ? (entity.MovementController.Target.transform.position - entity.transform.position).normalized : Vector2.zero;
+                entity.Direction = movementDirection;
+                if (movementDirection.sqrMagnitude <= 0.001f)
+                {
+                    entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
+                    return;
+                }
+                entity.MovementController.ApplyMovement(movementDirection, entity.MovementController.MovementSpeed);
+            }
         }
     }
 }

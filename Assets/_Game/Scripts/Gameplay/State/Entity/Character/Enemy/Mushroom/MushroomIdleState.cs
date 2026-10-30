@@ -11,7 +11,7 @@ public class MushroomIdleState : CharacterIdleState<Mushroom>
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
-        if (entity.EnemyCombatController.IsInHitRange)
+        if (entity.EnemyCombatController.IsInHitRange(CharacterAttackTypeEnum.LightAttack))
         {
             if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
             {

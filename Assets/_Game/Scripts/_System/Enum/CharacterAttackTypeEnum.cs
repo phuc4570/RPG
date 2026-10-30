@@ -1,4 +1,4 @@
-public enum BossAttackType
+public enum CharacterAttackTypeEnum
 {
     LightAttack,
     HeavyAttack,

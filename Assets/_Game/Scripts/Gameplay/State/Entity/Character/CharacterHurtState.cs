@@ -10,6 +10,11 @@ public class CharacterHurtState<T> : EntityState<T> where T : Character
 
     }
 
+    public override bool ValidateCondition()
+    {
+        return entity.StatusEffectManager.CanBeInterupt;
+    }
+
     public override void Enter()
     {
         stateTimer = 0f;

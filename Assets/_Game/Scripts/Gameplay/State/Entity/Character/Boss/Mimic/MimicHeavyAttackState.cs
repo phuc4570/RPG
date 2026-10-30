@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MimicHeavyAttackState : EntityState<Mimic>
 {
-    private const float stateDuration = 2.16f;
-    private const float activeFrameStart = 0.5f;
-    private const float activeFrameEnd = 0.9f;
+    private const float stateDuration = 1f;
+    private const float activeFrameStart = 0.66f;
+    private const float activeFrameEnd = 0.83f;
     private float timer;
     private bool hasDealtDamage = false;
 
@@ -20,7 +20,7 @@ public class MimicHeavyAttackState : EntityState<Mimic>
 
     public override void Enter()
     {
-        entity.EnemyCombatController.ResetAttackCount();
+        entity.BossCombatController.ResetAttackCount();
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, stateDuration);
@@ -63,8 +63,9 @@ public class MimicHeavyAttackState : EntityState<Mimic>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Vector2 boxSize = entity.CharacterPhysicsController.HitRange.bounds.size;
-        Vector2 attackCenter = (Vector2)entity.CharacterPhysicsController.HitRange.bounds.center;
+        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(CharacterAttackTypeEnum.HeavyAttack);
+        Vector2 boxSize = hitRange.bounds.size;
+        Vector2 attackCenter = hitRange.bounds.center;
 
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackCenter, boxSize, angle, entity.CharacterCombatController.AttackLayerMask);
 

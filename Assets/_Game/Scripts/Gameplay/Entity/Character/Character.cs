@@ -57,11 +57,7 @@ public abstract class Character : Entity
             StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Dead));
             return;
         }
-
-        if (StatusEffectManager.CanBeInterupt)
-        {
-            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
-        }
+        StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 
     protected override void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

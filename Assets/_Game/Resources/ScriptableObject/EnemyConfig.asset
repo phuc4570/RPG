@@ -18,8 +18,10 @@ MonoBehaviour:
     baseMovementSpeed: 0
     baseAttackDamage: 0
     baseAttackSpeed: 1
+    attackForce: 0
   - type: 1
     health: 50
     baseMovementSpeed: 4
     baseAttackDamage: 15
     baseAttackSpeed: 0.75
+    attackForce: 1

@@ -15,6 +15,7 @@ public class MainCharacterBlockState : EntityState<MainCharacter>
     {
         blockTimer = 0f;
         nextState = CharacterStateType.Idle;
+        entity.MainCharacterCombatController.IsPerfectBlock = false;
         entity.MovementController.StopMovement();
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, blockDuration);
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Block, entity.MovementController.MovementSpeed);

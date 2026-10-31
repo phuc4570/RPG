@@ -112,7 +112,7 @@
                     "name": "",
                     "id": "93ce2e87-6767-4c1d-82b6-86f67621141c",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "Hold(duration=0.1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Block",

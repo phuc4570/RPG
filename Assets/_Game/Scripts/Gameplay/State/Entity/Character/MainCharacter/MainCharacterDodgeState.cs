@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MainCharacterDodgeState : EntityState<MainCharacter>
 {
+    private const float perfectDodgeWindow = 0.2f;
     private const float dodgeDuration = 0.5f;
-    private const int staminaCost = 10;
     private float dodgeTimer = 0f;
 
     private CharacterStateType nextState = CharacterStateType.Idle;
@@ -17,9 +17,9 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public override bool ValidateCondition()
     {
-        if (entity.StaminaSystem.Value >= staminaCost)
+        if (entity.StaminaSystem.Value >= entity.MainCharacterCombatController.DodgeStaminaCost)
         {
-            entity.StaminaSystem.AddValue(-staminaCost);
+            entity.StaminaSystem.AddValue(-entity.MainCharacterCombatController.DodgeStaminaCost);
             return true;
         }
         return false;
@@ -29,14 +29,11 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     {
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
+        entity.MainCharacterCombatController.IsPerfectDodge = true;
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, dodgeDuration);
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementController.MovementSpeed);
-        entity.MainCharacterMovementController.ApplyDodgeImpulse(entity.Direction, entity.MainChracterCombatController.DodgeForce);
+        entity.MainCharacterMovementController.ApplyForceReset(entity.Direction, entity.MainCharacterCombatController.DodgeForce);
         dodgeTimer = 0f;
-        //if (entity.CombatDetector.IsBossAttackingInDodgeWindow())
-        //{
-        //    TriggerPerfectDodge();
-        //}
         nextState = mainCharacterInputReader.IsBlocking ? CharacterStateType.BlockIdle : CharacterStateType.Idle;
 
         Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, true);
@@ -47,6 +44,11 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     public override void Update(float deltaTime)
     {
         dodgeTimer += deltaTime;
+
+        if (dodgeTimer >= perfectDodgeWindow)
+        {
+            entity.MainCharacterCombatController.IsPerfectDodge = false;
+        }
 
         if (dodgeTimer >= dodgeDuration)
         {
@@ -76,20 +78,10 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public override void Exit()
     {
+        entity.MainCharacterCombatController.IsPerfectDodge = false;
         Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, false);
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }
-
-    //private void TriggerPerfectDodge()
-    //{
-    //    // Kích hoạt Slow-motion thế giới (0.2x speed) trong 1.5s thực tế
-    //    // (Dùng TimeManager đã dựng ở câu trước)
-    //    TimeManager.Instance.TriggerSelectiveSlowMo(worldSlowFactor: 0.2f, duration: 1.5f);
-
-    //    // Phát VFX / SFX thông báo Perfect Dodge thành công
-    //    entity.VFXController.PlayPerfectDodgeVFX();
-    //    entity.AudioController.PlayPerfectDodgeSFX();
-    //}
 
     private void HandleBlockPerformed(bool isBlocking)
     {

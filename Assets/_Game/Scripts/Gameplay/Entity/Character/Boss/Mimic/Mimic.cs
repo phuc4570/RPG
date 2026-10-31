@@ -21,28 +21,25 @@ public class Mimic : Boss
         State = MimicState.Close;
     }
 
-    protected override void BeforeTakeDamage(ref int damage)
+    protected override void BeforeTakeDamage(DamageData damageData)
     {
         if (State == MimicState.Close)
         {
-            damage = Mathf.RoundToInt(damage * poiseDamageReduction);
-            if (damage < 1) damage = 1;
+            damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * BossCombatController.PoiseDamageReduction * 0.5f), 1, int.MaxValue));
         }
         else if (State == MimicState.Open)
         {
-            damage = Mathf.RoundToInt(damage * poiseDamageReduction * 2);
-            if (damage < 1) damage = 1;
+            damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * BossCombatController.PoiseDamageReduction * 0.75f), 1, int.MaxValue));
         }
         else
         {
             if (PoiseSystem.Value > 0)
             {
                 PoiseSystem.AddValue(-5);
-                damage = Mathf.RoundToInt(damage * poiseDamageReduction);
-                if (damage < 1) damage = 1;
+                damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * BossCombatController.PoiseDamageReduction), 1, int.MaxValue));
                 if (PoiseSystem.PercentageValue == 0)
                 {
-                    StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, poiseStunDuration);
+                    StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, BossCombatController.PoiseStunDuration);
                 }
             }
         }

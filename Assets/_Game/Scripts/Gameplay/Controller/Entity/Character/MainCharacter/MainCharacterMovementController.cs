@@ -6,10 +6,4 @@ public class MainCharacterMovementController : CharacterMovementController<MainC
     {
 
     }
-
-    public void ApplyDodgeImpulse(Vector2 dodgeDirection, float dodgeForce)
-    {
-        StopMovement();
-        Rb.AddForce(dodgeDirection * dodgeForce, ForceMode2D.Impulse);
-    }
 }

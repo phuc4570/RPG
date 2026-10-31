@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MainCharacterBlockIdleState : EntityState<MainCharacter>
 {
+    private const float parryWindow = 0.1f;
+    private float timer = 0f;
     private MainCharacterInputReader mainCharacterInputReader;
     public MainCharacterBlockIdleState(MainCharacter mainCharacter) : base(mainCharacter)
     {
@@ -10,16 +12,26 @@ public class MainCharacterBlockIdleState : EntityState<MainCharacter>
 
     public override void Enter()
     {
-        entity.MainChracterCombatController.IsBlocking = true;
+        entity.MainCharacterCombatController.IsBlocking = true;
+        entity.MainCharacterCombatController.IsPerfectBlock = true;
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.BlockIdle, entity.MovementController.MovementSpeed);
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed += HandleDodgePerformed;
+
+        timer = 0f;
     }
 
     public override void Update(float deltaTime)
     {
-
+        if (entity.MainCharacterCombatController.IsPerfectBlock)
+        {
+            timer += deltaTime;
+            if (timer >= parryWindow)
+            {
+                entity.MainCharacterCombatController.IsPerfectBlock = false;
+            }
+        }
     }
 
     public override void FixedUpdate(float fixedDeltaTime)
@@ -29,7 +41,8 @@ public class MainCharacterBlockIdleState : EntityState<MainCharacter>
 
     public override void Exit()
     {
-        entity.MainChracterCombatController.IsBlocking = false;
+        entity.MainCharacterCombatController.IsBlocking = false;
+        entity.MainCharacterCombatController.IsPerfectBlock = false;
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
         mainCharacterInputReader.OnDodgePerformed -= HandleDodgePerformed;
     }

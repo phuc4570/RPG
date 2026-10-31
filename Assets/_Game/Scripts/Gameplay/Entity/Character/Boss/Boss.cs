@@ -5,8 +5,6 @@ public class Boss : Character
 {
     [SerializeField] private BossTypeEnum type;
     public BossCombatController BossCombatController => CombatController as BossCombatController;
-    protected const float poiseDamageReduction = 0.1f;
-    protected const float poiseStunDuration = 3f;
     public BossPoiseSystem PoiseSystem { get; private set; }
     public BossConfigData Data { get; protected set; }
 
@@ -14,7 +12,7 @@ public class Boss : Character
     {
         base.EnableEntity();
         PoiseSystem.AddValue(PoiseSystem.MaxValue);
-        StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, 999999999);
+        StatusEffectManager.AddStatusEffect(StatusEffectType.Hype, 999999999);
     }
 
     protected override void SetUpCombatController()
@@ -50,6 +48,11 @@ public class Boss : Character
         {
             CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
             CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
+            CharacterCombatController.InitAttackForce(Data.AttackForce);
+            BossCombatController.InitPoiseDamageReduction(0.1f);
+            BossCombatController.InitPoiseStunDuration(3f);
+            BossCombatController.InitPoiseAttackLost(5);
+            BossCombatController.InitPoiseParryLost(15);
         }
     }
 
@@ -71,18 +74,13 @@ public class Boss : Character
         base.DisableEntity();
     }
 
-    protected override void BeforeTakeDamage(ref int damage)
+    protected override void BeforeTakeDamage(DamageData damageData)
     {
-        base.BeforeTakeDamage(ref damage);
+        base.BeforeTakeDamage(damageData);
         if (PoiseSystem.Value > 0)
         {
             PoiseSystem.AddValue(-5);
-            damage = Mathf.RoundToInt(damage * poiseDamageReduction);
-            if (damage < 1) damage = 1;
-            if(PoiseSystem.PercentageValue == 0)
-            {
-                StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, poiseStunDuration);
-            }
+            damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * BossCombatController.PoiseDamageReduction), 1, int.MaxValue));
         }
     }
 
@@ -90,6 +88,14 @@ public class Boss : Character
     {
         base.OnHealthValueUpdated();
         GameEvent.RaiseUpdateBossHealthBar(HealthSystem.PercentageValue);
+    }
+
+    public virtual void OnPoiseValueUpdated()
+    {
+        if (PoiseSystem.PercentageValue == 0)
+        {
+            StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, BossCombatController.PoiseStunDuration);
+        }
     }
 
     protected override void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

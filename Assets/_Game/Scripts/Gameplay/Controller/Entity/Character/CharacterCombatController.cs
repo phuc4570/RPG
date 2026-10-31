@@ -23,6 +23,7 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     public int BaseAttackDamage { get; protected set; }
     public int AttackDamage => BaseAttackDamage;
     public float BaseAttackSpeed { get; protected set; }
+    public float AttackForce { get; protected set; }
     public bool CanAttack { get; protected set; } = true;
     private float attackTimer = 0f;
 
@@ -59,6 +60,11 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     public virtual void InitBaseAttackSpeed(float baseAttackSpeed)
     {
         BaseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 0.01f, 10);
+    }
+
+    public virtual void InitAttackForce(float attackForce)
+    {
+        AttackForce = attackForce;
     }
 
     public virtual void InHitRange(CharacterAttackTypeEnum type, bool flag)

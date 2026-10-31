@@ -23,7 +23,7 @@ public class MimicHeavyAttackState : EntityState<Mimic>
         entity.BossCombatController.ResetAttackCount();
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);
-        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, stateDuration);
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Hype, stateDuration);
         timer = 0f;
         hasDealtDamage = false;
     }
@@ -74,7 +74,7 @@ public class MimicHeavyAttackState : EntityState<Mimic>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage * 2);
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * 2, entity.CharacterCombatController.AttackForce * 2));
             }
         }
     }

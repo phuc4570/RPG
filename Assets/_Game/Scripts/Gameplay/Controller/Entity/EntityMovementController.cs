@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class EntityMovementController
 {
-    protected Rigidbody2D Rb { get; private set; }
+    public Rigidbody2D Rb { get; private set; }
 
     private GameObject target;
     public GameObject Target 
@@ -30,9 +30,25 @@ public abstract class EntityMovementController
         BaseMovementSpeed = baseMovementSpeed;
     }
 
-    public virtual void ApplyMovement(Vector2 moveInput, float moveSpeed)
+    public virtual void ApplyMovement(Vector2 direction, float speed)
     {
-        Rb.linearVelocity = moveInput * moveSpeed;
+        Rb.linearVelocity = direction * speed;
+    }
+
+    public virtual void ApplyForceContinue(Vector2 direction, float force)
+    {
+        ApplyForce(direction, force);
+    }
+
+    public virtual void ApplyForceReset(Vector2 direction, float force)
+    {
+        StopMovement();
+        ApplyForce(direction, force);
+    }
+
+    private void ApplyForce(Vector2 direction, float force)
+    {
+        Rb.linearVelocity = direction * force;
     }
 
     public virtual void StopMovement()

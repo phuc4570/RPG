@@ -10,7 +10,7 @@ public class StatusEffectManager
     private List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
 
     public bool CanMove => !dictStatusEffects[StatusEffectType.Rooted] && !dictStatusEffects[StatusEffectType.Stunned] && !dictStatusEffects[StatusEffectType.Freezed];
-    public bool CanBeInterupt => !dictStatusEffects[StatusEffectType.Unstoppable];
+    public bool CanBeInterupt => !(HasStatusEffect(StatusEffectType.Unstoppable) || HasStatusEffect(StatusEffectType.Stunned) || HasStatusEffect(StatusEffectType.Freezed) || HasStatusEffect(StatusEffectType.Hype));
 
     private Dictionary<StatusEffectType, bool> dictStatusEffects = new Dictionary<StatusEffectType, bool>();
 
@@ -37,10 +37,23 @@ public class StatusEffectManager
             dictStatusEffects[statusEffect] = false;
         }
     }
+    public bool BeforeAddStatusEffect(StatusEffectType type)
+    {
+        switch (type)
+        {
+            case StatusEffectType.Stunned:
+            case StatusEffectType.Freezed:
+            case StatusEffectType.Rooted:
+                return !HasStatusEffect(StatusEffectType.Unstoppable);
+            default:
+                return true;
+        }
+    }
 
     public void AddStatusEffect(StatusEffectType type, float duration, float value = 0f)
     {
         if (type == StatusEffectType.None) return;
+        if (!BeforeAddStatusEffect(type)) return;
         var existingEffect = activeStatusEffects.Find(e => e.Type == type);
         if (existingEffect != null)
         {
@@ -53,8 +66,22 @@ public class StatusEffectManager
         {
             activeStatusEffects.Add(new StatusEffect(type, duration, value));
             HandleStatusEffect(type, true);
+            AfterAddStatusEffect(type);
         }
     }
+
+    public void AfterAddStatusEffect(StatusEffectType type)
+    {
+        switch (type)
+        {
+            case StatusEffectType.Unstoppable:
+                RemoveStatusEffect(StatusEffectType.Stunned);
+                RemoveStatusEffect(StatusEffectType.Freezed);
+                RemoveStatusEffect(StatusEffectType.Rooted);
+                break;
+        }
+    }
+
 
     public void Update(float deltaTime)
     {

@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MainCharacter : Character
 {
@@ -11,7 +12,7 @@ public class MainCharacter : Character
     #region Public Properties
     public MainCharacterInputReader MainCharacterInputReader { get; private set; }
     public MainCharacterMovementController MainCharacterMovementController => MovementController as MainCharacterMovementController;
-    public MainChracterCombatController MainChracterCombatController => CombatController as MainChracterCombatController;
+    public MainCharacterCombatController MainCharacterCombatController => CombatController as MainCharacterCombatController;
     public MainCharacterManaSystem ManaSystem { get; private set; }
     public MainCharacterStaminaSystem StaminaSystem { get; private set; }
     public MainCharacterFocusSystem FocusSystem { get; private set; }
@@ -50,7 +51,7 @@ public class MainCharacter : Character
 
     protected override void SetUpCombatController()
     {
-        CombatController = new MainChracterCombatController(this);
+        CombatController = new MainCharacterCombatController(this);
     }
 
     protected override void Init()
@@ -73,9 +74,13 @@ public class MainCharacter : Character
     protected override void InitCombatController()
     {
         base.InitCombatController();
-        MainChracterCombatController.InitDodgeForce(5f);
+        MainCharacterCombatController.InitDodgeForce(15f);
+        MainCharacterCombatController.InitDodgeStaminaCost(10);
+        MainCharacterCombatController.InitBlockDamageReduction(0.1f);
+        MainCharacterCombatController.InitBlockStaminaCost(5);
         CharacterCombatController.InitBaseAttackDamage(10);
         CharacterCombatController.InitBaseAttackSpeed(1);
+        CharacterCombatController.InitAttackForce(2);
     }
 
     protected override void InitProperty()
@@ -86,10 +91,59 @@ public class MainCharacter : Character
 
     protected override void InitBarSystem()
     {
-        HealthSystem.Init(100);
+        HealthSystem.Init(200);
         ManaSystem.Init(60);
         StaminaSystem.Init(100);
         HealingPotion.Init(3, 30);
+    }
+
+    protected override void BeforeTakeDamage(DamageData damageData)
+    {
+        Debug.Log("Before Take Damage");
+        base.BeforeTakeDamage(damageData);
+        if (MainCharacterCombatController.IsBlocking)
+        {
+            if (MainCharacterCombatController.IsPerfectBlock)
+            {
+                damageData.SetDamage(0);
+                if(damageData.Source is Enemy)
+                {
+                    var enemy = (damageData.Source as Enemy);
+                    enemy.StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, enemy.EnemyCombatController.ParryStunDuration);
+                }
+                if (damageData.Source is Boss)
+                {
+                    var boss = (damageData.Source as Boss);
+                    boss.PoiseSystem.AddValue(-boss.BossCombatController.PoiseParryLost);
+                }
+            }
+            else
+            {
+                damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * MainCharacterCombatController.BlockDamageReduction), 1, int.MaxValue));
+                StaminaSystem.AddValue(-MainCharacterCombatController.BlockStaminaCost);
+            }
+        }
+
+        if (MainCharacterCombatController.IsPerfectDodge)
+        {
+            StaminaSystem.AddMaxValue(MainCharacterCombatController.DodgeStaminaCost);
+            FocusSystem.IncreaseFocusFill(1f);
+        }
+    }
+
+    protected override void AfterTakeDamage()
+    {
+        if (!IsAlive)
+        {
+            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Dead));
+            return;
+        }
+        if (MainCharacterCombatController.IsPerfectBlock)
+        {
+            StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Block));
+            return;
+        }
+        StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 
     public override void DisableEntity()

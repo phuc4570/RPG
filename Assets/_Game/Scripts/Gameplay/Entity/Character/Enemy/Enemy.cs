@@ -58,7 +58,10 @@ public class Enemy : Character
         base.InitCombatController();
         if (Data != null)
         {
+            CharacterCombatController.InitBaseAttackDamage(Data.BaseAttackDamage);
             CharacterCombatController.InitBaseAttackSpeed(Data.BaseAttackSpeed);
+            CharacterCombatController.InitAttackForce(Data.AttackForce);
+            EnemyCombatController.InitParryStunDuration(2);
         }
         radarScript.Init(this);
     }
@@ -80,7 +83,7 @@ public class Enemy : Character
         base.InitStatusEffect();
         if (IsAlpha)
         {
-            StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, 999999999);
+            StatusEffectManager.AddStatusEffect(StatusEffectType.Hype, 999999999);
         }
     }
 

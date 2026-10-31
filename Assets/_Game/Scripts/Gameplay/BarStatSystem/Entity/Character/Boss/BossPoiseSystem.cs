@@ -11,5 +11,6 @@ public class BossPoiseSystem : BarStatSystem<Boss>
     protected override void OnUpdateValue()
     {
         GameEvent.RaiseUpdateBossPoiseBar(PercentageValue);
+        Entity.OnPoiseValueUpdated();
     }
 }

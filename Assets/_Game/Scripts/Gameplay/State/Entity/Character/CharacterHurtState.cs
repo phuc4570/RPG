@@ -18,7 +18,6 @@ public class CharacterHurtState<T> : EntityState<T> where T : Character
     public override void Enter()
     {
         stateTimer = 0f;
-        entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Hurt, entity.MovementController.MovementSpeed);
     }
 

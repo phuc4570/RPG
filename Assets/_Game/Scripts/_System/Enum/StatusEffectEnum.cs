@@ -10,4 +10,5 @@ public enum StatusEffectType
     Freezed,
     Rooted,
     Unstoppable,
+    Hype,
 }

@@ -8,6 +8,10 @@ public class MainCharacterHurtState : CharacterHurtState<MainCharacter>
 
     }
 
+    public override bool ValidateCondition()
+    {
+        return entity.StatusEffectManager.CanBeInterupt && !entity.MainCharacterCombatController.IsBlocking && !entity.MainCharacterCombatController.IsPerfectBlock;
+    }
     public override void Enter()
     {
         base.Enter();

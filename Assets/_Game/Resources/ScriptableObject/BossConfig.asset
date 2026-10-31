@@ -18,10 +18,12 @@ MonoBehaviour:
     baseMovementSpeed: 0
     baseAttackDamage: 0
     baseAttackSpeed: 1
+    attackForce: 0
     bossName: Super Dummy
   - type: 1
     health: 100
     baseMovementSpeed: 2
     baseAttackDamage: 30
     baseAttackSpeed: 0.5
+    attackForce: 3
     bossName: Mimic

@@ -74,7 +74,7 @@ public class MushroomHeavyAttackState : EntityState<Mushroom>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage * 2);
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * 2, entity.CharacterCombatController.AttackForce * 2));
             }
         }
     }

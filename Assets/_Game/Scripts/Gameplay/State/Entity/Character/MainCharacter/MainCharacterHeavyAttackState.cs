@@ -20,7 +20,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
     {
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);
-        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Unstoppable, stateDuration);
+        entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Hype, stateDuration);
 
         timer = 0f;
         nextState = CharacterStateType.Idle;
@@ -137,7 +137,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage * (chargeLevel + 1));
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * (chargeLevel + 1), entity.CharacterCombatController.AttackForce * 2));
 
                 entity.FocusSystem.IncreaseFocusFill(0.5f);
             }

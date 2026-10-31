@@ -80,7 +80,7 @@ public class MushroomLightAttackState : EntityState<Mushroom>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(entity.CharacterCombatController.AttackDamage);
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage, entity.CharacterCombatController.AttackForce));
             }
         }
     }

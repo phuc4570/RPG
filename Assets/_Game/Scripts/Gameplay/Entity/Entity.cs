@@ -6,6 +6,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     #region References
     [SerializeField] private bool defaultSpriteDirectionIsRight = true;
     [SerializeField, Required] private SpriteRenderer rendererObject;
+    [SerializeField, Required] private UIStatusEffectList uIStatusEffectList;
     [SerializeField, Required] private Animator animator;
     [SerializeField, Required] private Collider2D mainCollider;
     [SerializeField, Required] private Collider2D hitBox;
@@ -184,6 +185,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public virtual void PreDisableEntity()
     {
+        StatusEffectManager.ClearStatusEffects();
         PhysicsController.ActiveAllColliders(false);
     }
 
@@ -204,19 +206,25 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         StateMachine.CurrentState.FixedUpdate(fixedDeltaTime);
     }
 
-    public void TakeDamage(int damage, StatusEffectType type = StatusEffectType.None, float duration = 0f, float value = 0f)
+    public void TakeDamage(DamageData damageData)
     {
         if (StatusEffectManager.HasStatusEffect(StatusEffectType.Invincible)) return;
 
-        BeforeTakeDamage(ref damage);
+        if (StatusEffectManager.CanBeInterupt)
+        {
+            Vector2 direction = (transform.position - damageData.Source.transform.position).normalized;
+            MovementController.ApplyForceReset(direction, damageData.AttackForce);
+        }
 
-        HealthSystem.AddValue(-damage);
-        StatusEffectManager.AddStatusEffect(type, duration, value);
+        BeforeTakeDamage(damageData);
+
+        HealthSystem.AddValue(-damageData.Damage);
+        StatusEffectManager.AddStatusEffect(damageData.Type, damageData.Duration, damageData.Value);
 
         AfterTakeDamage();
     }
 
-    protected virtual void BeforeTakeDamage(ref int damage)
+    protected virtual void BeforeTakeDamage(DamageData damageData)
     {
 
     }
@@ -235,7 +243,14 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
         if (IsAlive)
         {
-            //Handle Icon Visual Effect
+            if (isAdded)
+            {
+                uIStatusEffectList.AddStatusEffect(type);
+            }
+            else
+            {
+                uIStatusEffectList.RemoveStatusEffect(type);
+            }
 
             OnHandleStatusEffect(type, isAdded);
         }

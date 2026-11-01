@@ -91,9 +91,7 @@ public class StatusEffectManager
             effect.Duration -= deltaTime;
             if (effect.Duration <= 0)
             {
-                StatusEffectType type = activeStatusEffects[i].Type;
-                activeStatusEffects.RemoveAt(i);
-                HandleStatusEffect(type, false);
+                RemoveStatusEffect(activeStatusEffects[i].Type);
             }
         }
     }
@@ -103,21 +101,10 @@ public class StatusEffectManager
         return dictStatusEffects[type];
     }
 
-    public float GetStatusEffectValue(StatusEffectType type)
-    {
-        for(int i = 0; i < activeStatusEffects.Count; i++)
-        {
-            if (activeStatusEffects[i].Type == type)
-            {
-                return activeStatusEffects[i].Value;
-            }
-        }
-        return 0f;
-    }
-
     public void RemoveStatusEffect(StatusEffectType type)
     {
         activeStatusEffects.RemoveAll(e => e.Type == type);
+        HandleStatusEffect(type, false);
     }
 
     public void ClearStatusEffects()
@@ -125,7 +112,7 @@ public class StatusEffectManager
         activeStatusEffects.Clear();
         foreach (var statusEffect in StatusEffectCache)
         {
-            dictStatusEffects[statusEffect] = false;
+            HandleStatusEffect(statusEffect, false);
         }
     }
 

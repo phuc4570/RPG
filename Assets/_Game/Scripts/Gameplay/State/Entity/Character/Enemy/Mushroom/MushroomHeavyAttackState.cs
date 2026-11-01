@@ -20,6 +20,7 @@ public class MushroomHeavyAttackState : EntityState<Mushroom>
 
     public override void Enter()
     {
+        entity.EnemyCombatController.OnAttackOneHit();
         entity.EnemyCombatController.ResetAttackCount();
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);

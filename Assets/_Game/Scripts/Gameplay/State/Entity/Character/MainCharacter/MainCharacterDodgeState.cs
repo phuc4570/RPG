@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MainCharacterDodgeState : EntityState<MainCharacter>
 {
-    private const float perfectDodgeWindow = 0.2f;
     private const float dodgeDuration = 0.5f;
     private float dodgeTimer = 0f;
 
@@ -29,7 +28,6 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
     {
         Vector2 input = mainCharacterInputReader.MoveInput;
         entity.Direction = input.normalized;
-        entity.MainCharacterCombatController.IsPerfectDodge = true;
         entity.StatusEffectManager.AddStatusEffect(StatusEffectType.Invincible, dodgeDuration);
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Dodge, entity.MovementController.MovementSpeed);
         entity.MainCharacterMovementController.ApplyForceReset(entity.Direction, entity.MainCharacterCombatController.DodgeForce);
@@ -38,17 +36,15 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
         Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, true);
 
+        MainCharacterShadow shadow = PoolSystem.Ins.RequiredObject(entity.MainCharacterCombatController.MainCharacterShadow) as MainCharacterShadow;
+        shadow.Init(entity);
+
         mainCharacterInputReader.OnBlockPerformed += HandleBlockPerformed;
     }
 
     public override void Update(float deltaTime)
     {
         dodgeTimer += deltaTime;
-
-        if (dodgeTimer >= perfectDodgeWindow)
-        {
-            entity.MainCharacterCombatController.IsPerfectDodge = false;
-        }
 
         if (dodgeTimer >= dodgeDuration)
         {
@@ -78,7 +74,6 @@ public class MainCharacterDodgeState : EntityState<MainCharacter>
 
     public override void Exit()
     {
-        entity.MainCharacterCombatController.IsPerfectDodge = false;
         Physics2D.IgnoreLayerCollision(entity.gameObject.layer, entity.CharacterCombatController.AttackLayerMaskInLog2, false);
         mainCharacterInputReader.OnBlockPerformed -= HandleBlockPerformed;
     }

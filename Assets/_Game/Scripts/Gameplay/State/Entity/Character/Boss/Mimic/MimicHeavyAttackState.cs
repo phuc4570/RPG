@@ -20,6 +20,7 @@ public class MimicHeavyAttackState : EntityState<Mimic>
 
     public override void Enter()
     {
+        entity.BossCombatController.OnAttackOneHit();
         entity.BossCombatController.ResetAttackCount();
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.HeavyAttack, entity.MovementController.MovementSpeed);

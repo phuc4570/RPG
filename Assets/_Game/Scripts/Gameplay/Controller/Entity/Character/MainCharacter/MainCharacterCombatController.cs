@@ -4,9 +4,9 @@ public class MainCharacterCombatController : CharacterCombatController
     public bool IsPerfectBlock { get; set; } = false;
     public float DodgeForce { get; private set; }
     public int DodgeStaminaCost { get; private set; }
-    public bool IsPerfectDodge { get; set; } = false;
     public float BlockDamageReduction { get; private set; }
     public int BlockStaminaCost { get; private set; }
+    public MainCharacterShadow MainCharacterShadow { get; private set; }
 
     public MainCharacterCombatController(Character character) : base(character)
     {
@@ -31,6 +31,11 @@ public class MainCharacterCombatController : CharacterCombatController
     public void InitBlockStaminaCost(int blockStaminaCost)
     {
         BlockStaminaCost = blockStaminaCost;
+    }
+
+    public void InitMainCharacterShadow(MainCharacterShadow mainCharacterShadow)
+    {
+        MainCharacterShadow = mainCharacterShadow;
     }
 
     public override void Reset()

@@ -1,12 +1,11 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class MainCharacter : Character
 {
     #region References
     [SerializeField] private InputActionAsset inputActionAsset;
+    [SerializeField] private MainCharacterShadow mainCharacterShadow;
     #endregion
 
     #region Public Properties
@@ -78,6 +77,7 @@ public class MainCharacter : Character
         MainCharacterCombatController.InitDodgeStaminaCost(10);
         MainCharacterCombatController.InitBlockDamageReduction(0.1f);
         MainCharacterCombatController.InitBlockStaminaCost(5);
+        MainCharacterCombatController.InitMainCharacterShadow(mainCharacterShadow);
         CharacterCombatController.InitBaseAttackDamage(10);
         CharacterCombatController.InitBaseAttackSpeed(1);
         CharacterCombatController.InitAttackForce(2);
@@ -94,19 +94,18 @@ public class MainCharacter : Character
         HealthSystem.Init(200);
         ManaSystem.Init(60);
         StaminaSystem.Init(100);
-        HealingPotion.Init(3, 30);
+        HealingPotion.Init(10, 30);
     }
 
     protected override void BeforeTakeDamage(DamageData damageData)
     {
-        Debug.Log("Before Take Damage");
         base.BeforeTakeDamage(damageData);
         if (MainCharacterCombatController.IsBlocking)
         {
             if (MainCharacterCombatController.IsPerfectBlock)
             {
                 damageData.SetDamage(0);
-                if(damageData.Source is Enemy)
+                if (damageData.Source is Enemy)
                 {
                     var enemy = (damageData.Source as Enemy);
                     enemy.StatusEffectManager.AddStatusEffect(StatusEffectType.Stunned, enemy.EnemyCombatController.ParryStunDuration);
@@ -122,12 +121,6 @@ public class MainCharacter : Character
                 damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * MainCharacterCombatController.BlockDamageReduction), 1, int.MaxValue));
                 StaminaSystem.AddValue(-MainCharacterCombatController.BlockStaminaCost);
             }
-        }
-
-        if (MainCharacterCombatController.IsPerfectDodge)
-        {
-            StaminaSystem.AddMaxValue(MainCharacterCombatController.DodgeStaminaCost);
-            FocusSystem.IncreaseFocusFill(1f);
         }
     }
 
@@ -157,5 +150,11 @@ public class MainCharacter : Character
         base.CustomUpdate(deltaTime);
         StaminaSystem.CustomUpdate(deltaTime);
         ManaSystem.CustomUpdate(deltaTime);
+    }
+
+    public void OnPerfectDodge()
+    {
+        StaminaSystem.AddMaxValue(MainCharacterCombatController.DodgeStaminaCost);
+        FocusSystem.IncreaseFocusFill(1f);
     }
 }

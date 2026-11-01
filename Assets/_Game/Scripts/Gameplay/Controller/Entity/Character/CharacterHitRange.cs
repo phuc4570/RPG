@@ -13,6 +13,18 @@ public class CharacterHitRange : EntityAreaTrigger<Character>
         }
     }
 
+    protected override void TriggerStay(Collider2D collision)
+    {
+        base.TriggerStay(collision);
+        if (collision.CompareTag("Hitbox"))
+        {
+            if (!Entity.CharacterCombatController.IsInHitRange(type))
+            {
+                Entity.CharacterCombatController.InHitRange(type, true);
+            }
+        }
+    }
+
     protected override void TriggerExit(Collider2D collision)
     {
         base.TriggerExit(collision);

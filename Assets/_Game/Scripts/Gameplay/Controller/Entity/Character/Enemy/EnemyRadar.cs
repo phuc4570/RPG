@@ -4,13 +4,23 @@ public class EnemyRadar : EntityAreaTrigger<Enemy>
 {
     protected override void TriggerEnter(Collider2D collision)
     {
-        base.TriggerEnter(collision);
-        Entity.MovementController.Target = collision.GetComponentInParent<MainCharacter>().gameObject;
+        if (!collision.isTrigger)
+        {
+            base.TriggerEnter(collision);
+            MainCharacter mainCharacter = collision.GetComponentInParent<MainCharacter>();
+            if (mainCharacter != null)
+            {
+                Entity.MovementController.Target = mainCharacter.gameObject;
+            }
+        }
     }
 
     protected override void TriggerExit(Collider2D collision)
     {
-        base.TriggerExit(collision);
-        Entity.MovementController.Target = null;
+        if (!collision.isTrigger)
+        {
+            base.TriggerExit(collision);
+            Entity.MovementController.Target = null;
+        }
     }
 }

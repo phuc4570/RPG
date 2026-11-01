@@ -35,6 +35,19 @@ public abstract class EntityAreaTrigger<T> : MonoBehaviour where T : Entity
 
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Entity != null)
+        {
+            TriggerStay(collision);
+        }
+    }
+
+    protected virtual void TriggerStay(Collider2D collision)
+    {
+
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (Entity != null)

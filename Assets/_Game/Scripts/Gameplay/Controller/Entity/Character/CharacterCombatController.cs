@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class CharacterCombatController : EntityCombatController<Character>
 {
-    private static List<CharacterAttackTypeEnum> AttackTypeCache = new List<CharacterAttackTypeEnum>();
-    private Dictionary<CharacterAttackTypeEnum, bool> inHitAttackTypeDict = new Dictionary<CharacterAttackTypeEnum, bool>();
+    private static List<AttackTypeEnum> AttackTypeCache = new List<AttackTypeEnum>();
+    private Dictionary<AttackTypeEnum, bool> inHitAttackTypeDict = new Dictionary<AttackTypeEnum, bool>();
 
     public LayerMask AttackLayerMask { get; private set; }
     private int attackLayerMaskInLog2 = -1;
@@ -31,10 +31,10 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
     {
         if(AttackTypeCache.Count == 0)
         {
-            var stringEnums = Enum.GetNames(typeof(CharacterAttackTypeEnum));
+            var stringEnums = Enum.GetNames(typeof(AttackTypeEnum));
             foreach (var stringEnum in stringEnums)
             {
-                if (Enum.TryParse<CharacterAttackTypeEnum>(stringEnum, out var result))
+                if (Enum.TryParse<AttackTypeEnum>(stringEnum, out var result))
                 {
                     AttackTypeCache.Add(result);
                 }
@@ -67,12 +67,12 @@ public abstract class CharacterCombatController : EntityCombatController<Charact
         AttackForce = attackForce;
     }
 
-    public virtual void InHitRange(CharacterAttackTypeEnum type, bool flag)
+    public virtual void InHitRange(AttackTypeEnum type, bool flag)
     {
         inHitAttackTypeDict[type] = flag;
     }
 
-    public bool IsInHitRange(CharacterAttackTypeEnum type) => inHitAttackTypeDict[type];
+    public bool IsInHitRange(AttackTypeEnum type) => inHitAttackTypeDict[type];
 
     public virtual void OnAttackOneHit()
     {

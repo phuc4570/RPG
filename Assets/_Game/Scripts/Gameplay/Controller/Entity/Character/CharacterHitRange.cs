@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CharacterHitRange : EntityAreaTrigger<Character>
 {
-    [SerializeField] private CharacterAttackTypeEnum type;
-    public CharacterAttackTypeEnum Type => type;
+    [SerializeField] private AttackTypeEnum type;
+    public AttackTypeEnum Type => type;
     protected override void TriggerEnter(Collider2D collision)
     {
         base.TriggerEnter(collision);

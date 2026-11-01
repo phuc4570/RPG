@@ -12,14 +12,14 @@ public class MimicMovingState : CharacterMovingState<Mimic>
         base.Update(deltaTime);
         if (entity.State == Mimic.MimicState.Transformed)
         {
-            if (entity.BossCombatController.AttackCount < 3 && entity.BossCombatController.IsInHitRange(CharacterAttackTypeEnum.LightAttack))
+            if (entity.BossCombatController.AttackCount < 3 && entity.BossCombatController.IsInHitRange(AttackTypeEnum.LightAttack))
             {
                 if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.LightAttack)))
                 {
                     entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.Idle));
                 }
             }
-            else if (entity.BossCombatController.AttackCount >= 3 && entity.BossCombatController.IsInHitRange(CharacterAttackTypeEnum.HeavyAttack))
+            else if (entity.BossCombatController.AttackCount >= 3 && entity.BossCombatController.IsInHitRange(AttackTypeEnum.HeavyAttack))
             {
                 if (!entity.StateMachine.ChangeState(entity.StateFactory.GetState(CharacterStateType.HeavyAttack)))
                 {

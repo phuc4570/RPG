@@ -210,6 +210,18 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     {
         if (StatusEffectManager.HasStatusEffect(StatusEffectType.Invincible)) return;
 
+        switch(damageData.AttackType)
+        {
+            case AttackTypeEnum.LightAttack:
+                TimeManager.Ins.DoHitstop(0.04f);
+                MainCharacterCameraController.Ins.ShakeLightAttack();
+                break;
+            case AttackTypeEnum.HeavyAttack:
+                TimeManager.Ins.DoHitstop(0.1f);
+                MainCharacterCameraController.Ins.ShakeHeavyAttack();
+                break;
+        }
+
         if (StatusEffectManager.CanBeInterupt)
         {
             Vector2 direction = (transform.position - damageData.Source.transform.position).normalized;
@@ -241,19 +253,16 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public void HandleStatusEffect(StatusEffectType type, bool isAdded)
     {
-        if (IsAlive)
+        if (isAdded)
         {
-            if (isAdded)
-            {
-                uIStatusEffectList.AddStatusEffect(type);
-            }
-            else
-            {
-                uIStatusEffectList.RemoveStatusEffect(type);
-            }
-
-            OnHandleStatusEffect(type, isAdded);
+            uIStatusEffectList.AddStatusEffect(type);
         }
+        else
+        {
+            uIStatusEffectList.RemoveStatusEffect(type);
+        }
+
+        OnHandleStatusEffect(type, isAdded);
     }
 
     protected virtual void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

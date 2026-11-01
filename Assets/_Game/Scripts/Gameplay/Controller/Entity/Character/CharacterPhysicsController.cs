@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CharacterPhysicsController : EntityPhysicsController<Character>
 {
-    private static List<CharacterAttackTypeEnum> AttackTypeCache = new List<CharacterAttackTypeEnum>();
-    private Dictionary<CharacterAttackTypeEnum, Collider2D> hitRangeAttackTypeDict = new Dictionary<CharacterAttackTypeEnum, Collider2D>();
+    private static List<AttackTypeEnum> AttackTypeCache = new List<AttackTypeEnum>();
+    private Dictionary<AttackTypeEnum, Collider2D> hitRangeAttackTypeDict = new Dictionary<AttackTypeEnum, Collider2D>();
 
     private List<Collider2D> hitRanges = new List<Collider2D>();
     public IReadOnlyList<Collider2D> HitRanges => hitRanges;
@@ -15,10 +15,10 @@ public class CharacterPhysicsController : EntityPhysicsController<Character>
     {
         if (AttackTypeCache.Count == 0)
         {
-            var stringEnums = Enum.GetNames(typeof(CharacterAttackTypeEnum));
+            var stringEnums = Enum.GetNames(typeof(AttackTypeEnum));
             foreach (var stringEnum in stringEnums)
             {
-                if (Enum.TryParse<CharacterAttackTypeEnum>(stringEnum, out var result))
+                if (Enum.TryParse<AttackTypeEnum>(stringEnum, out var result))
                 {
                     AttackTypeCache.Add(result);
                 }
@@ -54,7 +54,7 @@ public class CharacterPhysicsController : EntityPhysicsController<Character>
         }
     }
 
-    public virtual Collider2D GetHitRange(CharacterAttackTypeEnum attackType)
+    public virtual Collider2D GetHitRange(AttackTypeEnum attackType)
     {
         return hitRangeAttackTypeDict[attackType];
     }

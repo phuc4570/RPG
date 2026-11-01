@@ -126,7 +126,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(CharacterAttackTypeEnum.HeavyAttack);
+        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(AttackTypeEnum.HeavyAttack);
         Vector2 boxSize = hitRange.bounds.size;
         Vector2 attackCenter = hitRange.bounds.center;
 
@@ -137,7 +137,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * (chargeLevel + 1), entity.CharacterCombatController.AttackForce * 2));
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * (chargeLevel + 1), AttackTypeEnum.HeavyAttack, entity.CharacterCombatController.AttackForce * 2));
 
                 entity.FocusSystem.IncreaseFocusFill(0.5f);
             }

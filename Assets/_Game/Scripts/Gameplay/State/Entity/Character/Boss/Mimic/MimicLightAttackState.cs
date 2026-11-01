@@ -62,7 +62,7 @@ public class MimicLightAttackState : EntityState<Mimic>
         }
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(CharacterAttackTypeEnum.LightAttack);
+        Collider2D hitRange = entity.CharacterPhysicsController.GetHitRange(AttackTypeEnum.LightAttack);
         Vector2 boxSize = hitRange.bounds.size;
         Vector2 attackCenter = hitRange.bounds.center;
 
@@ -73,7 +73,7 @@ public class MimicLightAttackState : EntityState<Mimic>
             if (hitEnemies[i].CompareTag("Hitbox"))
             {
                 IDamageable damageable = hitEnemies[i].GetComponentInParent<IDamageable>();
-                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage, entity.CharacterCombatController.AttackForce));
+                damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage, AttackTypeEnum.LightAttack, entity.CharacterCombatController.AttackForce));
             }
         }
     }

@@ -104,6 +104,9 @@ public class MainCharacter : Character
         {
             if (MainCharacterCombatController.IsPerfectBlock)
             {
+                TimeManager.Ins.DoHitstop(0.12f);
+                MainCharacterCameraController.Ins.ShakeParry();
+
                 damageData.SetDamage(0);
                 if (damageData.Source is Enemy)
                 {
@@ -154,6 +157,7 @@ public class MainCharacter : Character
 
     public void OnPerfectDodge()
     {
+        TimeManager.Ins.DoSlowMotion(0.2f, 1.0f);
         StaminaSystem.AddMaxValue(MainCharacterCombatController.DodgeStaminaCost);
         FocusSystem.IncreaseFocusFill(1f);
     }

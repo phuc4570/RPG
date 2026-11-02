@@ -6,4 +6,10 @@ public class Dummy : Enemy
     {
         StateFactory = new DummyStateFactory(this);
     }
+
+    public void AfterHealing()
+    {
+        PhysicsController.ActiveAllColliders(true);
+        HealthSystem.AddValue(HealthSystem.MaxValue);
+    }
 }

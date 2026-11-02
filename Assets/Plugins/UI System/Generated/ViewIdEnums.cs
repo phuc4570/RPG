@@ -10,6 +10,7 @@ public enum ViewDefine
     CreatePlayer,
     Menu,
     Game,
+    Result,
 }
 
 public enum DialogDefine

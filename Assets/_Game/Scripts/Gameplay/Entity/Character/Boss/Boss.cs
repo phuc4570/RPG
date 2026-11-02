@@ -72,6 +72,7 @@ public class Boss : Character
     public override void DisableEntity()
     {
         base.DisableEntity();
+        GameManager.Ins.OnWin();
     }
 
     protected override void BeforeTakeDamage(DamageData damageData)

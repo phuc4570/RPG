@@ -63,6 +63,18 @@ public class MainCharacterInputReader
         }
     }
 
+    public void EnableInput(bool flag)
+    {
+        if (flag)
+        {
+            inputActionAsset.Enable();
+        }
+        else
+        {
+            inputActionAsset.Disable();
+        }
+    }
+
     private void OnMove(CallbackContext ctx) => MoveInput = ctx.ReadValue<Vector2>();
     private void OnBlock(CallbackContext ctx)
     {

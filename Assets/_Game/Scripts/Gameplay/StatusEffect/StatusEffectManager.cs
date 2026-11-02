@@ -75,9 +75,18 @@ public class StatusEffectManager
         switch (type)
         {
             case StatusEffectType.Unstoppable:
-                RemoveStatusEffect(StatusEffectType.Stunned);
-                RemoveStatusEffect(StatusEffectType.Freezed);
-                RemoveStatusEffect(StatusEffectType.Rooted);
+                if(HasStatusEffect(StatusEffectType.Stunned))
+                {
+                    RemoveStatusEffect(StatusEffectType.Stunned);
+                }
+                if(HasStatusEffect(StatusEffectType.Freezed))
+                {
+                    RemoveStatusEffect(StatusEffectType.Freezed);
+                }
+                if(HasStatusEffect(StatusEffectType.Rooted))
+                {
+                    RemoveStatusEffect(StatusEffectType.Rooted);
+                }
                 break;
         }
     }

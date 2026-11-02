@@ -1,24 +1,46 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossController : SingletonObject<BossController>
 {
-    [SerializeField] Boss boss;
+    [SerializeField] List<BossSpawnPoint> spawnPoints;
 
-    public void ActiveBoss(bool flag)
+    private BossSpawnPoint currentBossSpawnPoint;
+
+    public void SpawnBosses()
     {
-        boss.gameObject.SetActive(flag);
-        SetUpBoss();
-        GameEvent.RaiseTriggerBossFight(boss.Data);
+        foreach (var spawnPoint in spawnPoints)
+        {
+            spawnPoint.SpawnBoss();
+        }
     }
 
-    private void SetUpBoss()
+    public void RespawnBosses()
     {
-        boss.EnableEntity();
-        boss.MovementController.Target = MainCharacterController.Ins.MainCharacter.gameObject;
+        if(currentBossSpawnPoint != null)
+        {
+            currentBossSpawnPoint.SpawnBoss();
+            currentBossSpawnPoint.Boss.MovementController.Target = null;
+            currentBossSpawnPoint = null;
+            GameEvent.RaiseResetBossFight();
+        }
     }
 
-    public void ResetBoss()
+    public void ResetTargetBoss()
     {
-        boss.MovementController.Target = null;
+        foreach (var spawnPoint in spawnPoints)
+        {
+            if (spawnPoint.Boss != null && spawnPoint.Boss.IsAlive)
+            {
+                spawnPoint.Boss.MovementController.Target = null;
+            }
+        }
+    }
+
+    public void TriggerBoss(BossSpawnPoint bossSpawnPoint)
+    {
+        currentBossSpawnPoint = bossSpawnPoint;
+        bossSpawnPoint.Boss.MovementController.Target = MainCharacterController.Ins.MainCharacter.gameObject;
+        GameEvent.RaiseTriggerBossFight(bossSpawnPoint.Boss.Data);
     }
 }

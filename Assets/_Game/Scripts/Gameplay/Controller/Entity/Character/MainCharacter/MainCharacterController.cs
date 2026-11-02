@@ -3,17 +3,41 @@ using UnityEngine;
 public class MainCharacterController : SingletonObject<MainCharacterController>
 {
     [SerializeField] private MainCharacter mainCharacter;
+    [SerializeField] private Transform defaultSpawnPoint;
     public MainCharacter MainCharacter => mainCharacter;
 
-    public void ActiveMainCharacter(bool flag)
+    private Transform lastestSpawnPoint;
+
+    protected override void Awake()
     {
-        mainCharacter.gameObject.SetActive(flag);
-        SetUpMainCharacter();
+        base.Awake();
+        lastestSpawnPoint = defaultSpawnPoint;
     }
 
-    private void SetUpMainCharacter()
+    public void RestartSetUp()
     {
+        lastestSpawnPoint = defaultSpawnPoint;
+        ActiveMainCharacter();
+    }
+
+    public void ActiveMainCharacter()
+    {
+        RespawnMainCharacter();
+    }
+
+    public void SetLatestSpawnPoint(Transform spawnPoint)
+    {
+        lastestSpawnPoint = spawnPoint;
+        mainCharacter.EnableEntity();
+        GameManager.Ins.RespawnEnemyAndBoss();
+    }
+
+    public void RespawnMainCharacter()
+    {
+        if (lastestSpawnPoint != null)
+        {
+            mainCharacter.transform.position = lastestSpawnPoint.position;
+        }
         mainCharacter.EnableEntity();
     }
-
 }

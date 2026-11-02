@@ -42,6 +42,12 @@ TagManager:
   - name: Ground
     uniqueID: 1373775485
     locked: 0
+  - name: Grass
+    uniqueID: 762524497
+    locked: 0
+  - name: WallShadow
+    uniqueID: 2524592507
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

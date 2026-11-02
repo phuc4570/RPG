@@ -1,17 +1,35 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : SingletonObject<EnemyController>
 {
-    [SerializeField] Enemy enemy;
+    [SerializeField] List<EnemySpawnPoint> spawnPoints;
 
-    public void ActiveEnemy(bool flag)
+    public void SpawnEnemies()
     {
-        enemy.gameObject.SetActive(flag);
-        SetUpEnemy();
+        foreach (var spawnPoint in spawnPoints)
+        {
+            spawnPoint.SpawnEnemy();
+        }
     }
 
-    private void SetUpEnemy()
+    public void RespawnEnemies()
     {
-        enemy.EnableEntity();
+        foreach (var spawnPoint in spawnPoints)
+        {
+            spawnPoint.SpawnEnemy();
+        }
+    }
+
+    public void ResetTargetEnemy()
+    {
+        foreach (var spawnPoint in spawnPoints)
+        {
+            if (spawnPoint.Enemy != null && spawnPoint.Enemy.IsAlive)
+            {
+                spawnPoint.Enemy.MovementController.Target = null;
+            }
+        }
     }
 }

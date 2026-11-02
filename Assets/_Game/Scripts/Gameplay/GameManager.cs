@@ -18,11 +18,33 @@ public class GameManager : SingletonObject<GameManager>
     private void OnGameStart()
     {
         map.SetActive(true);
-        mainCharacterController.ActiveMainCharacter(true);
-        enemyController.ActiveEnemy(true);
-        DOVirtual.DelayedCall(1.5f, () =>
-        {
-            bossController.ActiveBoss(true);
-        });
+        mainCharacterController.ActiveMainCharacter();
+        enemyController.SpawnEnemies();
+        bossController.SpawnBosses();
+    }
+
+    public void RespawnEnemyAndBoss()
+    {
+        enemyController.RespawnEnemies();
+        bossController.RespawnBosses();
+    }
+
+    public void ResetTargetEnemyAndBoss()
+    {
+        enemyController.ResetTargetEnemy();
+        bossController.ResetTargetBoss();
+    }
+
+    public void OnWin()
+    {
+        ResultView resultView = ResultView.Show();
+        resultView.SetUp(true);
+    }
+
+    public void OnLose()
+    {
+        ResetTargetEnemyAndBoss();
+        ResultView resultView = ResultView.Show();
+        resultView.SetUp(false);
     }
 }

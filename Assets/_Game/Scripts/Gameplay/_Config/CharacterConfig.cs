@@ -40,6 +40,7 @@ public class CharacterConfig<TData, TEnum> : SingletonScriptableObject<Character
 public class CharacterConfigData<TEnum> where TEnum : Enum
 {
     [SerializeField] private TEnum type;
+    [SerializeField] private GameObject prefab;
     [SerializeField] private int health;
     [SerializeField] private float baseMovementSpeed;
     [SerializeField] private int baseAttackDamage;
@@ -47,6 +48,7 @@ public class CharacterConfigData<TEnum> where TEnum : Enum
     [SerializeField] private float attackForce;
 
     public TEnum Type => type;
+    public GameObject Prefab => prefab;
     public int Health => health;
     public float BaseMovementSpeed => baseMovementSpeed;
     public int BaseAttackDamage => baseAttackDamage;

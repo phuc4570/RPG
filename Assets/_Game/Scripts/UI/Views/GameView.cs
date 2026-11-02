@@ -21,16 +21,23 @@ public class GameView : UIView
     private void OnEnable()
     {
         GameEvent.OnTriggerBossFight += OnTriggerBossFight;
+        GameEvent.OnResetBossFight += OnResetBossFight;
     }
 
     private void OnDisable()
     {
         GameEvent.OnTriggerBossFight -= OnTriggerBossFight;
+        GameEvent.OnResetBossFight -= OnResetBossFight;
     }
 
     private void OnTriggerBossFight(BossConfigData data)
     {
         uIBossInfoObject.gameObject.SetActive(true);
         uIBossInfoObject.SetUp(data);
+    }
+
+    private void OnResetBossFight()
+    {
+        uIBossInfoObject.gameObject.SetActive(false);
     }
 }

@@ -24,6 +24,12 @@ public class MainCharacterFocusSystem
         return false;
     }
 
+    public void ResetFocusFill()
+    {
+        focusFill = 0f;
+        UpdateFocusFill();
+    }
+
     private void UpdateFocusFill()
     {
         GameEvent.RaiseVisualFocusFillAnim(focusFill);

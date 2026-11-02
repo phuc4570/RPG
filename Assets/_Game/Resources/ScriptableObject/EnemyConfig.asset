@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConfig
   data:
   - type: 0
+    prefab: {fileID: 4182114031277714386, guid: 039ba8b40c259b64b9b9f0675db8b13b, type: 3}
     health: 100
     baseMovementSpeed: 0
     baseAttackDamage: 0
     baseAttackSpeed: 1
     attackForce: 0
   - type: 1
+    prefab: {fileID: 5710898452577020122, guid: d31243c5a50c8ee49b419cf7a0c63793, type: 3}
     health: 50
     baseMovementSpeed: 4
     baseAttackDamage: 15

@@ -67,6 +67,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         CombatController.Reset();
         HealthSystem.AddValue(HealthSystem.MaxValue);
         StateManager.Ins?.Register(this);
+        gameObject.SetActive(true);
     }
 
     protected virtual void SetUp()
@@ -253,16 +254,26 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
 
     public void HandleStatusEffect(StatusEffectType type, bool isAdded)
     {
-        if (isAdded)
+        if (IsAlive)
         {
-            uIStatusEffectList.AddStatusEffect(type);
+            if (isAdded)
+            {
+                uIStatusEffectList.AddStatusEffect(type);
+            }
+            else
+            {
+                uIStatusEffectList.RemoveStatusEffect(type);
+            }
+
+            OnHandleStatusEffect(type, isAdded);
         }
         else
         {
-            uIStatusEffectList.RemoveStatusEffect(type);
+            if(!isAdded)
+            {
+                uIStatusEffectList.RemoveStatusEffect(type);
+            }
         }
-
-        OnHandleStatusEffect(type, isAdded);
     }
 
     protected virtual void OnHandleStatusEffect(StatusEffectType type, bool isAdded)

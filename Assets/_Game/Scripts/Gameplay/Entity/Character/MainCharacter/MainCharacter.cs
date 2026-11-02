@@ -18,6 +18,16 @@ public class MainCharacter : Character
     public MainCharacterHealingPotion HealingPotion { get; private set; }
     #endregion
 
+    public override void EnableEntity()
+    {
+        base.EnableEntity();
+        MainCharacterInputReader.EnableInput(true);
+        FocusSystem.ResetFocusFill();
+        ManaSystem.AddValue(ManaSystem.MaxValue);
+        StaminaSystem.AddValue(StaminaSystem.MaxValue);
+        HealingPotion.AddValue(HealingPotion.MaxValue);
+    }
+
     protected override void SetUp()
     {
         SetUpInputReader();
@@ -91,10 +101,10 @@ public class MainCharacter : Character
 
     protected override void InitBarSystem()
     {
-        HealthSystem.Init(200);
+        HealthSystem.Init(120);
         ManaSystem.Init(60);
         StaminaSystem.Init(100);
-        HealingPotion.Init(10, 30);
+        HealingPotion.Init(4, 30);
     }
 
     protected override void BeforeTakeDamage(DamageData damageData)
@@ -129,6 +139,7 @@ public class MainCharacter : Character
 
     protected override void AfterTakeDamage()
     {
+        base.AfterTakeDamage();
         if (!IsAlive)
         {
             StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Dead));
@@ -142,10 +153,16 @@ public class MainCharacter : Character
         StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 
+    public override void PreDisableEntity()
+    {
+        base.PreDisableEntity();
+        MainCharacterInputReader.EnableInput(false);
+    }
+
     public override void DisableEntity()
     {
         base.DisableEntity();
-        BossController.Ins.ResetBoss();
+        GameManager.Ins.OnLose();
     }
 
     public override void CustomUpdate(float deltaTime)

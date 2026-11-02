@@ -17,6 +17,6 @@ public class DummyHealingState : CharacterHealingState<Dummy>
     public override void Exit()
     {
         base.Exit();
-        entity.EnableEntity();
+        entity.AfterHealing();
     }
 }

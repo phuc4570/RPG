@@ -13,8 +13,10 @@ public class CharacterHealingState<T> : EntityState<T> where T : Character
     public override void Enter()
     {
         stateTimer = 0f;
+        entity.VFXController.PlayVFX(VFXTypeEnum.Healing, Vector3.one);
         entity.MovementController.StopMovement();
         entity.AnimationController.PlayAnimation(CharacterAnimationState.Healing, entity.MovementController.MovementSpeed);
+        SoundManager.Ins.PlaySound(SoundTypeEnum.Healing);
     }
 
     public override void Update(float deltaTime)
@@ -33,6 +35,6 @@ public class CharacterHealingState<T> : EntityState<T> where T : Character
 
     public override void Exit()
     {
-
+        entity.VFXController.StopVFX(VFXTypeEnum.Healing);
     }
 }

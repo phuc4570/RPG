@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class MainCharacterLightAttackState : EntityState<MainCharacter>
@@ -66,6 +67,8 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
         mainCharacterInputReader.OnHeavyAttackPerformed += HandleHeavyAttackPerformed;
+
+        SoundManager.Ins.PlaySound(SoundTypeEnum.SwordSwing);
     }
 
     public override void Update(float deltaTime)
@@ -172,6 +175,7 @@ public class MainCharacterLightAttackState : EntityState<MainCharacter>
                 damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage, AttackTypeEnum.LightAttack, entity.CharacterCombatController.AttackForce));
 
                 entity.FocusSystem.IncreaseFocusFill(0.2f);
+                SoundManager.Ins.PlaySound(SoundTypeEnum.SwordHit);
             }
         }
     }

@@ -153,6 +153,47 @@ public class MainCharacter : Character
         StateMachine.ChangeState(StateFactory.GetState(CharacterStateType.Hurt));
     }
 
+    protected override void PlayVFXOnDamage(DamageData damageData)
+    {
+        if (MainCharacterCombatController.IsBlocking)
+        {
+            if (MainCharacterCombatController.IsPerfectBlock)
+            {
+                VFXController.PlayVFX(VFXTypeEnum.Parry, Vector3.one);
+                SoundManager.Ins.PlaySound(SoundTypeEnum.Parry);
+            }
+            else
+            {
+                VFXController.PlayVFX(VFXTypeEnum.Block, Vector3.one);
+                SoundManager.Ins.PlaySound(SoundTypeEnum.Block);
+            }
+        }
+        else
+        {
+            float scaleX = -1f;
+            if (damageData != null && damageData.Source != null)
+            {
+                if (damageData.Source.transform.position.x < transform.position.x)
+                {
+                    scaleX = 1f;
+                }
+            }
+
+            Vector3 localScale = new Vector3(scaleX, 1f, 1f);
+
+            switch (damageData.AttackType)
+            {
+                case AttackTypeEnum.LightAttack:
+                    VFXController.PlayVFX(VFXTypeEnum.LightAttack, localScale);
+                    break;
+                case AttackTypeEnum.HeavyAttack:
+                    VFXController.PlayVFX(VFXTypeEnum.HeavyAttack, localScale);
+                    break;
+            }
+            SoundManager.Ins.PlaySound(SoundTypeEnum.Punch);
+        }
+    }
+
     public override void PreDisableEntity()
     {
         base.PreDisableEntity();

@@ -65,6 +65,7 @@ public class MainCharacterShadow : MonoBehaviour, ITickable, IDamageable
                 {
                     isPerfectDodge = false;
                     PoolSystem.Ins.ReturnObject(this);
+                    SoundManager.Ins.PlaySound(SoundTypeEnum.DodgeNormal);
                 }
             }
         }
@@ -84,6 +85,7 @@ public class MainCharacterShadow : MonoBehaviour, ITickable, IDamageable
             hitbox.enabled = false;
             spriteRenderer.color = new Color(1f, 1f, 1f, 0.3f);
             mainCharacter.OnPerfectDodge();
+            SoundManager.Ins.PlaySound(SoundTypeEnum.DodgePerfect);
         }
     }
 }

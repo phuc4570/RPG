@@ -23,6 +23,7 @@ public class Mimic : Boss
 
     protected override void BeforeTakeDamage(DamageData damageData)
     {
+        base.BeforeTakeDamage(damageData);
         if (State == MimicState.Close)
         {
             damageData.SetDamage(Mathf.Clamp(Mathf.RoundToInt(damageData.Damage * BossCombatController.PoiseDamageReduction * 0.5f), 1, int.MaxValue));

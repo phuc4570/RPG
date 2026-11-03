@@ -1,6 +1,8 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class StatueCheckpoint : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class StatueCheckpoint : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Collider2D triggerCollider;
     [SerializeField] private StatueCheckpointUIAnim anim;
+    [SerializeField] private List<ParticleSystem> unActivatedVFX;
+    [SerializeField] private List<ParticleSystem> activatedVFX;
 
     private bool isPlayerInRange = false;
     private bool isActivated = false;
@@ -41,6 +45,8 @@ public class StatueCheckpoint : MonoBehaviour
             triggerCollider.enabled = true;
         }
         if (anim != null) anim.Hide();
+
+        HandleVfx();
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext context)
@@ -57,6 +63,17 @@ public class StatueCheckpoint : MonoBehaviour
         if (anim != null) anim.Hide();
 
         MainCharacterController.Ins.SetLatestSpawnPoint(spawnPoint);
+
+        foreach (var vfx in activatedVFX)
+        {
+            if (vfx != null)
+            {
+                vfx.Play();
+            }
+        }
+
+        HandleVfx();
+        SoundManager.Ins.PlaySound(SoundTypeEnum.Healing);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,5 +86,17 @@ public class StatueCheckpoint : MonoBehaviour
     {
         isPlayerInRange = false;
         if (anim != null) anim.Hide();
+    }
+
+    private void HandleVfx()
+    {
+        foreach (var vfx in unActivatedVFX)
+        {
+            if (vfx != null)
+            {
+                if(isActivated) vfx.Stop();
+                else vfx.Play();
+            }
+        }
     }
 }

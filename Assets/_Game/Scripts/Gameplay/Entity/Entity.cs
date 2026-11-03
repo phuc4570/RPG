@@ -11,6 +11,9 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     [SerializeField, Required] private Collider2D mainCollider;
     [SerializeField, Required] private Collider2D hitBox;
     [SerializeField, Required] private Rigidbody2D rb;
+    [SerializeField, Required] private Transform vfxStandingPoint;
+    [SerializeField, Required] private Transform vfxBodyPoint;
+    [SerializeField, Required] private Transform vfxBodyRevertPoint;
     #endregion
 
     #region Public Properties
@@ -19,6 +22,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     public EntityPhysicsController PhysicsController { get; protected set; }
     public EntityMovementController MovementController { get; protected set; }
     public EntityCombatController CombatController { get; protected set; }
+    public EntityVFXController VFXController { get; protected set; }
     public StateFactory StateFactory { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
     public StatusEffectManager StatusEffectManager { get; protected set; }
@@ -77,6 +81,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         SetUpPhysicsController();
         SetUpMovementController();
         SetUpCombatController();
+        SetUpVFXController();
         SetUpStateFactory();
         SetUpStateMachine();
         SetUpProperty();
@@ -94,6 +99,7 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
         InitPhysicsController();
         InitMovementController();
         InitCombatController();
+        InitVFXController();
         InitStateFactory();
         InitStateMachine();
         InitProperty();
@@ -126,6 +132,10 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     protected virtual void SetUpCombatController()
     {
 
+    }
+    protected virtual void SetUpVFXController()
+    {
+        VFXController = new EntityVFXController();
     }
     protected virtual void SetUpProperty()
     {
@@ -163,6 +173,10 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     protected virtual void InitCombatController()
     {
 
+    }
+    protected virtual void InitVFXController()
+    {
+        VFXController.Init(vfxStandingPoint, vfxBodyPoint, vfxBodyRevertPoint);
     }
     protected virtual void InitProperty()
     {
@@ -229,6 +243,8 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
             MovementController.ApplyForceReset(direction, damageData.AttackForce);
         }
 
+        PlayVFXOnDamage(damageData);
+
         BeforeTakeDamage(damageData);
 
         HealthSystem.AddValue(-damageData.Damage);
@@ -245,6 +261,31 @@ public abstract class Entity : MonoBehaviour, ITickable, IDamageable
     protected virtual void AfterTakeDamage()
     {
         IsAlive = HealthSystem.Value > 0;
+    }
+
+    protected virtual void PlayVFXOnDamage(DamageData damageData)
+    {
+        float scaleX = -1f;
+        if (damageData != null && damageData.Source != null)
+        {
+            if (damageData.Source.transform.position.x < transform.position.x)
+            {
+                scaleX = 1f;
+            }
+        }
+
+        Vector3 localScale = new Vector3(scaleX, 1f, 1f);
+
+        switch (damageData.AttackType)
+        {
+            case AttackTypeEnum.LightAttack:
+                VFXController.PlayVFX(VFXTypeEnum.LightAttack, localScale);
+                break;
+            case AttackTypeEnum.HeavyAttack:
+                VFXController.PlayVFX(VFXTypeEnum.HeavyAttack, localScale);
+                break;
+        }
+        SoundManager.Ins.PlaySound(SoundTypeEnum.SwordHit);
     }
 
     public virtual void OnHealthValueUpdated()

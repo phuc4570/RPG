@@ -13,6 +13,8 @@ public class GameManager : SingletonObject<GameManager>
     {
         base.Awake();
         GameEvent.OnGameStart += OnGameStart;
+        GameEvent.OnTriggerBossFight += OnTriggerBossFight;
+        GameEvent.OnResetBossFight += OnResetBossFight;
     }
 
     private void OnGameStart()
@@ -21,6 +23,7 @@ public class GameManager : SingletonObject<GameManager>
         mainCharacterController.ActiveMainCharacter();
         enemyController.SpawnEnemies();
         bossController.SpawnBosses();
+        SoundManager.Ins.PlayMusic(MusicTypeEnum.Normal);
     }
 
     public void RespawnEnemyAndBoss()
@@ -46,5 +49,15 @@ public class GameManager : SingletonObject<GameManager>
         ResetTargetEnemyAndBoss();
         ResultView resultView = ResultView.Show();
         resultView.SetUp(false);
+    }
+
+    private void OnTriggerBossFight(BossConfigData data)
+    {
+        SoundManager.Ins.PlayMusic(MusicTypeEnum.Boss);
+    }
+
+    private void OnResetBossFight()
+    {
+        SoundManager.Ins.PlayMusic(MusicTypeEnum.Normal);
     }
 }

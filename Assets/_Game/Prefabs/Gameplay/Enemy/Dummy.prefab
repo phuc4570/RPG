@@ -35,6 +35,9 @@ Transform:
   - {fileID: 8574532202457404128}
   - {fileID: 922278134763494276}
   - {fileID: 7926380518651665836}
+  - {fileID: 9066333531409865176}
+  - {fileID: 8964519723964265085}
+  - {fileID: 1267259055378915760}
   m_Father: {fileID: 5067986993406048580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3618654834559858928
@@ -189,6 +192,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterHitRange
   area: {fileID: 2152808332307249618}
   type: 0
+--- !u!1 &1512712446949287540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1267259055378915760}
+  m_Layer: 7
+  m_Name: VFXPoint_bodyRevertPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1267259055378915760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512712446949287540}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.015700007, y: 0.25529996, z: 0}
+  m_LocalScale: {x: -0.4, y: -0.4, z: -0.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 4181219697827998610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1575785823987992822
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,21 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIStatusEffectList
   spacing: 2
   iconPrefab: {fileID: 7019668194808440332, guid: 43fb104dc05b24c43a47f94e6d554c94, type: 3}
-  visualConfigs:
-  - effectType: 3
-    iconSprite: {fileID: -1611920951, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 7
-    iconSprite: {fileID: 1401011104, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 4
-    iconSprite: {fileID: 1019859777, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 6
-    iconSprite: {fileID: 695775810, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 5
-    iconSprite: {fileID: 2047992146, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 9
-    iconSprite: {fileID: -214298916, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
-  - effectType: 10
-    iconSprite: {fileID: 2062015785, guid: 080cb6d98b00c2645b2c41df5f69bc78, type: 3}
   enableEditorPreview: 0
   previewTypesToTest: 
 --- !u!1 &4182114031277714386
@@ -280,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4182114031277714386}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
@@ -310,6 +329,9 @@ MonoBehaviour:
   mainCollider: {fileID: 519745745575146596}
   hitBox: {fileID: 7548051392636328654}
   rb: {fileID: 8319150129876191108}
+  vfxStandingPoint: {fileID: 9066333531409865176}
+  vfxBodyPoint: {fileID: 8964519723964265085}
+  vfxBodyRevertPoint: {fileID: 1267259055378915760}
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -882,6 +904,37 @@ SpriteMask:
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
   m_MaskSource: 1
+--- !u!1 &6401163191755559724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8964519723964265085}
+  m_Layer: 7
+  m_Name: VFXPoint_bodyPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8964519723964265085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401163191755559724}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0157, y: 0.25530002, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 4181219697827998610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7341850960194976203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,6 +1119,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8841143397515594133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9066333531409865176}
+  m_Layer: 7
+  m_Name: VFXPoint_standingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9066333531409865176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8841143397515594133}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4181219697827998610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9179426543368237270
 GameObject:
   m_ObjectHideFlags: 0

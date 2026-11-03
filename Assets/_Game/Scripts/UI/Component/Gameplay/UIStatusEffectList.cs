@@ -5,18 +5,9 @@ using System;
 [ExecuteAlways]
 public class UIStatusEffectList : MonoBehaviour
 {
-    [Serializable]
-    public struct StatusEffectVisualConfig
-    {
-        public StatusEffectType effectType;
-        public Sprite iconSprite;
-    }
-
     [SerializeField] private float spacing = 0.5f;
     [SerializeField] private GameObject iconPrefab;
-    [SerializeField] private List<StatusEffectVisualConfig> visualConfigs = new List<StatusEffectVisualConfig>();
 
-    private Dictionary<StatusEffectType, Sprite> spriteDict = new Dictionary<StatusEffectType, Sprite>();
     private Dictionary<StatusEffectType, GameObject> activeIcons = new Dictionary<StatusEffectType, GameObject>();
     private List<GameObject> iconPool = new List<GameObject>();
 
@@ -25,31 +16,12 @@ public class UIStatusEffectList : MonoBehaviour
     [SerializeField] private List<StatusEffectType> previewTypesToTest = new List<StatusEffectType>();
     private List<StatusEffectType> lastPreviewTypes = new List<StatusEffectType>();
 
-    private void Awake()
-    {
-        InitializeConfig();
-    }
-
-    private void InitializeConfig()
-    {
-        spriteDict.Clear();
-        foreach (var config in visualConfigs)
-        {
-            if (!spriteDict.ContainsKey(config.effectType))
-            {
-                spriteDict.Add(config.effectType, config.iconSprite);
-            }
-        }
-    }
-
     public void AddStatusEffect(StatusEffectType type)
     {
         if (activeIcons.ContainsKey(type)) return;
 
-        // Đảm bảo dict đã được khởi tạo nếu gọi nhanh trong editor
-        if (spriteDict.Count == 0) InitializeConfig();
-
-        if (!spriteDict.TryGetValue(type, out Sprite targetSprite))
+        Sprite targetSprite = VisualStatusConfig.Ins.GetData(type)?.Icon;
+        if (targetSprite == null)
         {
             return;
         }
@@ -127,8 +99,6 @@ public class UIStatusEffectList : MonoBehaviour
     {
         if (!Application.isPlaying)
         {
-            InitializeConfig();
-
             if (enableEditorPreview)
             {
                 if (!AreListsEqual(previewTypesToTest, lastPreviewTypes))

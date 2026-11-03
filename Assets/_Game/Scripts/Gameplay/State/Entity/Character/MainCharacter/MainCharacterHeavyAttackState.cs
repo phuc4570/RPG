@@ -33,6 +33,8 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
         mainCharacterInputReader.OnLightAttackPerformed += HandleLightAttackPerformed;
         mainCharacterInputReader.OnHeavyAttackCharged += HandleHeavyAttackCharged;
         mainCharacterInputReader.OnHeavyAttackPerformed += HandleHeavyAttackPerformed;
+
+        SoundManager.Ins.PlaySound(SoundTypeEnum.SwordSwing);
     }
 
     public override void Update(float deltaTime)
@@ -140,6 +142,7 @@ public class MainCharacterHeavyAttackState : EntityState<MainCharacter>
                 damageable?.TakeDamage(new DamageData(entity, entity.CharacterCombatController.AttackDamage * (chargeLevel + 1), AttackTypeEnum.HeavyAttack, entity.CharacterCombatController.AttackForce * 2));
 
                 entity.FocusSystem.IncreaseFocusFill(0.5f);
+                SoundManager.Ins.PlaySound(SoundTypeEnum.SwordHit);
             }
         }
     }

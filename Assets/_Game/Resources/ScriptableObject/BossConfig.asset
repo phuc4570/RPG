@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
   - type: 0
     prefab: {fileID: 5514335914556068819, guid: ca7f1095b4baa854aa2f47573d07f67a, type: 3}
-    health: 200
+    health: 400
     baseMovementSpeed: 0
     baseAttackDamage: 0
     baseAttackSpeed: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
     bossName: Super Dummy
   - type: 1
     prefab: {fileID: 2700579953409136613, guid: c3fcdb83e93612e4d9a9009f344dacd6, type: 3}
-    health: 100
+    health: 200
     baseMovementSpeed: 2
     baseAttackDamage: 30
     baseAttackSpeed: 0.5

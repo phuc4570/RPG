@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 5391186442010338111}
   - component: {fileID: 1692857052571590238}
   - component: {fileID: 3232316098924018726}
-  - component: {fileID: 8314987299988622688}
+  - component: {fileID: 459101830377311813}
   m_Layer: 6
   m_Name: PF Props - Statue 01
   m_TagString: Untagged
@@ -401,7 +401,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.000000037932303, y: 0.31819925}
   m_Size: {x: 2.7291868, y: 1.6326921}
   m_Direction: 1
---- !u!210 &8314987299988622688
+--- !u!210 &459101830377311813
 SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
